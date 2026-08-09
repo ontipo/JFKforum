@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Connexion — Forum</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div class="auth-shell">
+  <div class="auth-card" id="loginView">
+    <h1 class="auth-title">Se connecter</h1>
+    <p class="auth-sub">Accède à ton compte avec ton email et ton mot de passe.</p>
+
+    <div id="loginMsg" class="form-msg"></div>
+
+    <form id="loginForm">
+      <div class="field">
+        <label for="email">Adresse mail</label>
+        <input type="email" id="email" required />
+      </div>
+      <div class="field">
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" required />
+      </div>
+      <button type="submit" class="btn-primary">Connexion</button>
+    </form>
+
+    <div class="auth-footer">
+      <button class="btn-link" id="showRecovery">J'ai oublié mes informations</button>
+      <a href="register.html" class="btn-link">Créer un compte</a>
+    </div>
+  </div>
+
+  <!-- ================= RÉCUPÉRATION ================= -->
+  <div class="auth-card" id="recoveryView" style="display:none;">
+    <h1 class="auth-title">Récupérer mon compte</h1>
+    <p class="auth-sub">Joins le PDF de ton code de récupération et choisis un nouveau mot de passe.</p>
+
+    <div id="recoveryMsg" class="form-msg"></div>
+
+    <form id="recoveryForm">
+      <div class="field">
+        <label for="recEmail">Adresse mail du compte</label>
+        <input type="email" id="recEmail" required />
+      </div>
+
+      <div class="field">
+        <label for="recFile">Fichier PDF du code</label>
+        <input type="file" id="recFile" accept="application/pdf" required />
+      </div>
+
+      <div class="field">
+        <label for="newPassword">Nouveau mot de passe</label>
+        <input type="password" id="newPassword" minlength="8" required />
+      </div>
+
+      <button type="submit" class="btn-primary">Réinitialiser mon mot de passe</button>
+    </form>
+
+    <div class="auth-footer">
+      <button class="btn-link" id="backToLogin">Retour à la connexion</button>
+      <span></span>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/code-generator.js"></script>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+function showMsg(id, text, type = "error") {
+  const el = document.getElementById(id);
+  el.textContent = text;
+  el.className = `form-msg ${type}`;
+}
+
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) {
+    showMsg("loginMsg", "Email ou mot de passe incorrect.");
+    return;
+  }
+  window.location.href = "index.html";
+});
+
+document.getElementById("showRecovery").addEventListener("click", () => {
+  document.getElementById("loginView").style.display = "none";
+  document.getElementById("recoveryView").style.display = "block";
+});
+document.getElementById("backToLogin").addEventListener("click", () => {
+  document.getElementById("recoveryView").style.display = "none";
+  document.getElementById("loginView").style.display = "block";
+});
+
+// Extrait le texte brut d'un PDF (via pdf.js) et y retrouve le code
+// au format code:[240]NIP[320].
+async function extractCodeFromPdf(file) {
+  const buffer = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({ data: buffer }).promise;
+  let fullText = "";
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const content = await page.getTextContent();
+    fullText += content.items.map((it) => it.str).join("");
+  }
+  const match = fullText.match(/code:[A-Za-z0-9$?!%#@]{240}NIP[A-Za-z0-9$?!%#@]{320}/);
+  return match ? match[0] : null;
+}
+
+document.getElementById("recoveryForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const email = document.getElementById("recEmail").value.trim();
+  const file = document.getElementById("recFile").files[0];
+  const newPassword = document.getElementById("newPassword").value;
+  const btn = e.target.querySelector("button[type=submit]");
+
+  btn.disabled = true;
+  btn.textContent = "Vérification...";
+
+  try {
+    const code = await extractCodeFromPdf(file);
+    if (!code || !isValidCodeFormat(code)) {
+      throw new Error("Le PDF ne contient pas un code valide.");
+    }
+    const codeHash = await hashRecoveryCode(code);
+
+    // Cet appel passe par une Edge Function Supabase (voir
+    // supabase/functions/recover-account) car seule une fonction
+    // côté serveur, avec la clé service_role, peut vérifier le hash
+    // et réinitialiser le mot de passe sans exposer de secret au client.
+    const { data, error } = await supabase.functions.invoke("recover-account", {
+      body: { email, codeHash, newPassword },
+    });
+
+    if (error || data?.error) {
+      throw new Error(data?.error || "Code invalide pour ce compte.");
+    }
+
+    showMsg("recoveryMsg", "Mot de passe réinitialisé. Tu peux te reconnecter.", "success");
+    setTimeout(() => {
+      document.getElementById("recoveryView").style.display = "none";
+      document.getElementById("loginView").style.display = "block";
+    }, 1800);
+  } catch (err) {
+    showMsg("recoveryMsg", err.message || "Une erreur est survenue.");
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Réinitialiser mon mot de passe";
+  }
+});
+</script>
+</body>
+</html>
