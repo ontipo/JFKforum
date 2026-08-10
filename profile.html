@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forum — Profil</title>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <header class="navbar" id="navbar-root"></header>
+
+  <main class="page">
+    <p id="loading-msg" class="muted center" style="margin-top:40px">Chargement…</p>
+    <p id="not-found-msg" class="muted center hidden" style="margin-top:40px">Ce profil n'existe pas.</p>
+
+    <div id="profile-box" class="hidden">
+      <div class="profile-banner" id="banner-slot"></div>
+
+      <div class="profile-header">
+        <div class="profile-avatar" id="avatar-slot"></div>
+        <div class="profile-name-row" id="name-row-slot"></div>
+      </div>
+
+      <div style="padding:16px">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+          <div class="title-stars" id="stars-slot"></div>
+          <div id="action-slot"></div>
+        </div>
+
+        <p class="hint-text font-mono" id="stats-slot" style="margin-top:10px"></p>
+        <p id="last-seen-slot" class="hint-text" style="margin-top:2px"></p>
+
+        <div id="description-slot" style="margin-top:14px"></div>
+
+        <h2 class="font-display" style="font-size:15px;margin:24px 0 4px">Badges</h2>
+        <div class="badge-grid" id="badge-grid-slot"></div>
+
+        <h2 class="font-display" style="font-size:15px;margin:24px 0 4px">Publications</h2>
+        <div id="posts-slot"></div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="assets/profile.js"></script>
+</body>
+</html>

@@ -37,6 +37,28 @@
         <p id="promote-success" class="hint-text hidden" style="margin-top:6px;color:var(--silver-300)"></p>
       </section>
 
+      <section id="badges-section" style="margin-bottom:32px">
+        <h2 class="font-display" style="font-size:16px;margin-bottom:10px">Décerner un badge</h2>
+        <form id="badge-form" style="display:flex;gap:8px;flex-wrap:wrap">
+          <input id="badge-username" class="input" placeholder="!pseudo de l'utilisateur" style="flex:1;min-width:160px" />
+          <select id="badge-select" class="input" style="flex:1;min-width:160px"></select>
+          <button type="submit" class="btn-outline" style="flex-shrink:0">Décerner</button>
+        </form>
+        <p id="badge-error" class="error-text hidden" style="margin-top:6px"></p>
+        <p id="badge-success" class="hint-text hidden" style="margin-top:6px;color:var(--silver-300)"></p>
+      </section>
+
+      <section style="margin-bottom:32px">
+        <h2 class="font-display" style="font-size:16px;margin-bottom:10px">Envoyer une notification personnalisée</h2>
+        <form id="notif-form" style="display:flex;gap:8px;flex-wrap:wrap">
+          <input id="notif-username" class="input" placeholder="!pseudo de l'utilisateur" style="flex:1;min-width:160px" />
+          <input id="notif-message" class="input" placeholder="Message (ex: ton code promo est XXXXXXXXX)" style="flex:2;min-width:200px" />
+          <button type="submit" class="btn-outline" style="flex-shrink:0">Envoyer</button>
+        </form>
+        <p id="notif-error" class="error-text hidden" style="margin-top:6px"></p>
+        <p id="notif-success" class="hint-text hidden" style="margin-top:6px;color:var(--silver-300)"></p>
+      </section>
+
       <section style="margin-bottom:32px">
         <h2 class="font-display" style="font-size:16px;margin-bottom:10px">Images en attente de validation</h2>
         <div id="pending-images-list" class="stack"></div>
