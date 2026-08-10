@@ -6,7 +6,7 @@ export async function renderNavbar() {
 
   root.innerHTML = `
     <div class="navbar-inner">
-      <a href="/" class="navbar-logo">Tous</a>
+      <a href="index.html" class="navbar-logo">Tous</a>
       <form class="navbar-search" id="navbar-search-form">
         <input id="navbar-search-input" placeholder="Rechercher un #hashtag, un titre…" />
       </form>
