@@ -107,6 +107,12 @@ async function submitImage(field, inputId, errorId, size) {
     return;
   }
 
+  if (field === "banner" && !/\.gif(\?.*)?$/i.test(url)) {
+    errorEl.textContent = "La bannière doit être une image animée au format .gif.";
+    errorEl.classList.remove("hidden");
+    return;
+  }
+
   const validSize = await checkImageDimensions(url, size);
   if (!validSize) {
     errorEl.textContent = `L'image doit faire exactement ${size.width} × ${size.height} pixels.`;

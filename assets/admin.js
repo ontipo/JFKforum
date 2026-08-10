@@ -1,6 +1,6 @@
 import { supabase } from "./supabaseClient.js";
 import { renderNavbar } from "./navbar.js";
-import { escapeHtml, timeAgo } from "./utils.js";
+import { escapeHtml, timeAgo, AWARDABLE_BADGES } from "./utils.js";
 
 renderNavbar();
 
@@ -27,6 +27,9 @@ async function init() {
   document.getElementById("admin-box").classList.remove("hidden");
   if (profile.role !== "owner") {
     document.getElementById("admins-section").classList.add("hidden");
+    document.getElementById("badges-section").classList.add("hidden");
+  } else {
+    populateBadgeSelect();
   }
 
   await loadCategories();
@@ -226,5 +229,96 @@ async function loadPosts() {
     })
   );
 }
+
+// ------------------------------------------------------------
+// Badges décernables (owner uniquement)
+// ------------------------------------------------------------
+function populateBadgeSelect() {
+  const select = document.getElementById("badge-select");
+  select.innerHTML = AWARDABLE_BADGES.map((b) => `<option value="${b.code}">${escapeHtml(b.name)}</option>`).join("");
+}
+
+document.getElementById("badge-form")?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const errorEl = document.getElementById("badge-error");
+  const successEl = document.getElementById("badge-success");
+  errorEl.classList.add("hidden");
+  successEl.classList.add("hidden");
+
+  const usernameInput = document.getElementById("badge-username");
+  const username = usernameInput.value.trim();
+  const badgeCode = document.getElementById("badge-select").value;
+
+  const { data: target, error: findError } = await supabase
+    .from("profiles")
+    .select("id")
+    .eq("username", username)
+    .single();
+
+  if (findError || !target) {
+    errorEl.textContent = "Utilisateur introuvable.";
+    errorEl.classList.remove("hidden");
+    return;
+  }
+
+  const { error } = await supabase
+    .from("user_badges")
+    .insert({ user_id: target.id, badge_code: badgeCode, awarded_by: me.id });
+
+  if (error) {
+    errorEl.textContent = error.message;
+    errorEl.classList.remove("hidden");
+    return;
+  }
+
+  successEl.textContent = `Badge décerné à ${username}.`;
+  successEl.classList.remove("hidden");
+  usernameInput.value = "";
+});
+
+// ------------------------------------------------------------
+// Notifications personnalisées (staff)
+// ------------------------------------------------------------
+document.getElementById("notif-form")?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const errorEl = document.getElementById("notif-error");
+  const successEl = document.getElementById("notif-success");
+  errorEl.classList.add("hidden");
+  successEl.classList.add("hidden");
+
+  const usernameInput = document.getElementById("notif-username");
+  const messageInput = document.getElementById("notif-message");
+  const username = usernameInput.value.trim();
+  const message = messageInput.value.trim();
+
+  if (!message) return;
+
+  const { data: target, error: findError } = await supabase
+    .from("profiles")
+    .select("id")
+    .eq("username", username)
+    .single();
+
+  if (findError || !target) {
+    errorEl.textContent = "Utilisateur introuvable.";
+    errorEl.classList.remove("hidden");
+    return;
+  }
+
+  const { error } = await supabase
+    .from("notifications")
+    .insert({ user_id: target.id, type: "custom", message, actor_id: me.id });
+
+  if (error) {
+    errorEl.textContent = error.message;
+    errorEl.classList.remove("hidden");
+    return;
+  }
+
+  successEl.textContent = `Notification envoyée à ${username}.`;
+  successEl.classList.remove("hidden");
+  usernameInput.value = "";
+  messageInput.value = "";
+});
 
 init();

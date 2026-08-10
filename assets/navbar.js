@@ -10,7 +10,7 @@ export async function renderNavbar() {
     <div class="navbar-inner">
       <a href="index.html" class="navbar-logo">Tous</a>
       <form class="navbar-search" id="navbar-search-form">
-        <input id="navbar-search-input" placeholder="Rechercher un #hashtag, un titre…" />
+        <input id="navbar-search-input" placeholder="Rechercher… (!pseudo pour un utilisateur)" />
       </form>
       <div id="navbar-notif"></div>
       <div id="navbar-admin-link"></div>
@@ -21,7 +21,12 @@ export async function renderNavbar() {
   document.getElementById("navbar-search-form").addEventListener("submit", (e) => {
     e.preventDefault();
     const q = document.getElementById("navbar-search-input").value.trim();
-    if (q) window.location.href = `index.html?recherche=${encodeURIComponent(q)}`;
+    if (!q) return;
+    if (q.startsWith("!")) {
+      window.location.href = `users.html?q=${encodeURIComponent(q.slice(1))}`;
+    } else {
+      window.location.href = `index.html?recherche=${encodeURIComponent(q)}`;
+    }
   });
 
   await refreshAccountArea();
@@ -63,12 +68,15 @@ async function refreshAccountArea() {
     <a href="account.html" class="navbar-account">
       <span class="avatar">${
         profile.pfp_url
-          ? `<img src="${profile.pfp_url}" alt="" />`
+          ? `<img src="${profile.pfp_url}" alt="" width="32" height="32" />`
           : (profile.username[1] || "?").toUpperCase()
       }</span>
       <span class="hidden-mobile">${profile.username}</span>
     </a>
   `;
+
+  // Heartbeat : met à jour la dernière connexion (silencieux, sans bloquer l'affichage)
+  supabase.from("profiles").update({ last_seen_at: new Date().toISOString() }).eq("id", session.user.id);
 
   if (adminArea) {
     adminArea.innerHTML = ["moderator", "owner"].includes(profile.role)
@@ -134,12 +142,12 @@ const NOTIF_LABEL = {
 async function loadNotifDropdown(dropdown, userId) {
   const { data } = await supabase
     .from("notifications")
-    .select("id, type, read, created_at, source_post_id, profiles:actor_id (username)")
+    .select("id, type, message, read, created_at, source_post_id, profiles:actor_id (username)")
     .eq("user_id", userId)
     .order("created_at", { ascending: false })
     .limit(20);
 
-  const { timeAgo } = await import("./utils.js");
+  const { timeAgo, escapeHtml } = await import("./utils.js");
 
   if (!data || data.length === 0) {
     dropdown.innerHTML = `<p class="muted" style="font-size:13px;padding:8px">Aucune notification.</p>`;
@@ -149,13 +157,14 @@ async function loadNotifDropdown(dropdown, userId) {
   dropdown.innerHTML = data
     .map((n) => {
       const actorName = n.profiles?.username || "Quelqu'un";
-      const label = (NOTIF_LABEL[n.type] || (() => "Notification"))(actorName);
-      const href = n.source_post_id ? `index.html?=${n.source_post_id}` : "#";
+      const label =
+        n.type === "custom" ? n.message || "Notification" : (NOTIF_LABEL[n.type] || (() => "Notification"))(actorName);
+      const href = n.type === "custom" ? "#" : n.source_post_id ? `index.html?=${n.source_post_id}` : "#";
       return `
         <a href="${href}" data-notif="${n.id}" style="display:block;padding:8px;border-radius:8px;font-size:13px;${
         n.read ? "opacity:0.6" : "background:var(--raised)"
       }">
-          ${label}
+          ${escapeHtml(label)}
           <div class="hint-text">${timeAgo(n.created_at)}</div>
         </a>
       `;

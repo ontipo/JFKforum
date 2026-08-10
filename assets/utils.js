@@ -137,6 +137,47 @@ export const ROLE_LABEL = {
 };
 
 // ------------------------------------------------------------
+// Badges automatiques (calculés à partir des stats du profil)
+// ------------------------------------------------------------
+export const AUTO_BADGES = [
+  { code: "debutant", name: "Débutant", check: (s) => s.postsCount >= 1 },
+  { code: "publieur", name: "Publieur", check: (s) => s.postsCount >= 5 },
+  { code: "yappeur", name: "Yappeur", check: (s) => s.postsCount >= 20 },
+  { code: "spammeur", name: "Spammeur", check: (s) => s.postsCount >= 50 },
+  { code: "shut-up", name: "Shut up!!! (blague!)", check: (s) => s.postsCount >= 100 },
+  { code: "auto-jaime", name: "Auto-j'aime", check: (s) => s.likesReceived >= 3 },
+  { code: "aime", name: "Aimé", check: (s) => s.likesReceived >= 10 },
+  { code: "beaucoup-aime", name: "Beaucoup aimé", check: (s) => s.likesReceived >= 50 },
+  { code: "trop-aime", name: "Trop aimé", check: (s) => s.likesReceived >= 200 },
+  { code: "bot-des-likes", name: "Bot des likes", check: (s) => s.likesReceived >= 500 },
+  { code: "populaire", name: "Populaire", check: (s) => s.likesReceived >= 1000 },
+  { code: "amitie", name: "Amitié", check: (s) => s.friendsCount >= 1 },
+  { code: "amis-proches", name: "Amis proches", check: (s) => s.friendsCount >= 3 },
+  { code: "beaucoup-damis", name: "Beaucoup d'amis", check: (s) => s.friendsCount >= 10 },
+  { code: "sage", name: "Sage", check: (s) => s.friendsCount >= 30 },
+  { code: "amitie-accordee", name: "Amitié accordée", check: (s) => s.hasStaffFriend },
+  { code: "amitie-couronnee", name: "Amitié couronnée", check: (s) => s.hasOwnerFriend }
+];
+
+// Badges décernables uniquement par le fondateur (via le panneau admin)
+export const AWARDABLE_BADGES = [
+  { code: "croix-de-fer", name: "Croix de fer" },
+  { code: "croix-laudienne", name: "Croix Laudienne" },
+  { code: "croix-arcienne", name: "Croix Arcienne" },
+  { code: "croix-de-merite", name: "Croix de mérite" },
+  { code: "croix-honorifique", name: "Croix honorifique" }
+];
+
+export function badgeImagePath(code) {
+  return `img/private/${code}.svg`;
+}
+
+// Calcule la liste des badges automatiques obtenus à partir des stats du profil
+export function computeAutoBadges(stats) {
+  return AUTO_BADGES.filter((b) => b.check(stats));
+}
+
+// ------------------------------------------------------------
 // Petit helper d'échappement HTML (contenu utilisateur)
 // ------------------------------------------------------------
 export function escapeHtml(str) {

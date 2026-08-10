@@ -31,11 +31,11 @@ export function createPostCard(post, { currentUserId, currentProfile, forceExpan
 
     const avatarHtml = post.is_anonymous
       ? `<span class="post-avatar">?</span>`
-      : `<span class="post-avatar">${
+      : `<a href="profile.html?user=${encodeURIComponent(post.profiles?.username || "")}" class="avatar-link" onclick="event.stopPropagation()"><span class="post-avatar">${
           post.profiles?.pfp_url
-            ? `<img src="${post.profiles.pfp_url}" alt="" />`
+            ? `<img src="${post.profiles.pfp_url}" alt="" width="36" height="36" />`
             : escapeHtml((post.profiles?.username?.[1] || "?").toUpperCase())
-        }</span>`;
+        }</span></a>`;
 
     const hashtagsHtml =
       post.hashtags?.length > 0

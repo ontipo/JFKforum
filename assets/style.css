@@ -331,19 +331,142 @@ textarea.input { resize: vertical; }
   color: var(--silver-300);
 }
 .role-tag.owner { border-color: var(--silver-100); color: var(--silver-100); box-shadow: var(--shadow-glow); }
-.level-badge {
-  width: 16px;
-  height: 16px;
+.level-badge-img {
+  height: 22px;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+}
+.post-avatar {
+  width: 36px;
+  height: 36px;
   border-radius: 999px;
-  background: linear-gradient(135deg, var(--silver-100), var(--silver-700));
+  background: var(--raised);
+  border: 1px solid var(--line);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 9px;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--void);
-  font-weight: 700;
+  font-size: 13px;
+  color: var(--silver-500);
+  overflow: hidden;
+  flex-shrink: 0;
 }
+.post-avatar img { width: 100%; height: 100%; object-fit: cover; }
+/* Garantit que TOUS les avatars restent ronds et à taille fixe, peu importe
+   la taille réelle de l'image envoyée par l'utilisateur (corrige le bug
+   d'avatar géant). */
+.avatar,
+.post-avatar,
+.comment-avatar,
+.account-avatar,
+.profile-avatar {
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  flex-shrink: 0;
+}
+.avatar img,
+.post-avatar img,
+.comment-avatar img,
+.account-avatar img,
+.profile-avatar img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  border-radius: 50% !important;
+  display: block;
+}
+a.avatar-link { display: inline-block; line-height: 0; }
+
+/* --------------------- Page de profil --------------------- */
+.profile-banner {
+  width: 100%;
+  height: 220px;
+  border-radius: 16px;
+  background: var(--raised);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  position: relative;
+}
+.profile-banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.profile-header {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  margin-top: -48px;
+  padding: 0 16px;
+}
+.profile-avatar {
+  width: 96px;
+  height: 96px;
+  border: 3px solid var(--void);
+  background: var(--raised);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: var(--silver-500);
+}
+.profile-name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding-bottom: 6px;
+}
+
+.title-stars { display: flex; gap: 2px; }
+.title-stars svg { width: 18px; height: 18px; }
+
+.badge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+.badge-item { text-align: center; }
+.badge-item img { width: 100%; aspect-ratio: 1; object-fit: contain; }
+.badge-item span { display: block; font-size: 10px; color: var(--silver-700); margin-top: 4px; }
+
+.friend-btn {
+  font-size: 13px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--silver-100);
+  background: transparent;
+  transition: all 0.2s;
+}
+.friend-btn:hover { border-color: var(--silver-500); box-shadow: var(--shadow-glow); }
+.friend-btn.accepted { border-color: var(--silver-100); background: var(--raised); }
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  gap: 12px;
+}
+.settings-row:last-child { border-bottom: none; }
+.toggle {
+  position: relative;
+  width: 40px;
+  height: 22px;
+  flex-shrink: 0;
+}
+.toggle input { opacity: 0; width: 0; height: 0; }
+.toggle-track {
+  position: absolute; inset: 0; background: var(--raised); border: 1px solid var(--line);
+  border-radius: 999px; transition: 0.2s; cursor: pointer;
+}
+.toggle-track::before {
+  content: ""; position: absolute; width: 16px; height: 16px; left: 2px; top: 2px;
+  background: var(--silver-500); border-radius: 50%; transition: 0.2s;
+}
+.toggle input:checked + .toggle-track { border-color: var(--silver-100); }
+.toggle input:checked + .toggle-track::before { transform: translateX(18px); background: var(--silver-100); }
+
 .au-tag {
   font-size: 10px;
   font-family: 'JetBrains Mono', monospace;
