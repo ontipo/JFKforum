@@ -24,20 +24,44 @@
       <div class="account-card" style="text-align:left">
         <h2 class="font-display" style="font-size:15px;margin:0 0 10px">Photo de profil</h2>
         <div id="pfp-status" class="hint-text" style="margin-bottom:8px"></div>
+        <p class="hint-text" style="margin-bottom:8px">L'image doit faire exactement <strong>150 × 150 pixels</strong>.</p>
+
+        <div style="display:flex;gap:14px;margin-bottom:8px;font-size:13px;color:var(--silver-300)">
+          <label style="display:flex;gap:6px;align-items:center">
+            <input type="radio" name="pfp-hosting" value="online" checked /> Hébergement en ligne (gratuit, expire après 3 mois)
+          </label>
+          <label style="display:flex;gap:6px;align-items:center">
+            <input type="radio" name="pfp-hosting" value="physical" /> Hébergement physique (1,99$, permanent)
+          </label>
+        </div>
+
         <div style="display:flex;gap:8px">
-          <input id="pfp-url-input" class="input" placeholder="Lien vers l'image hébergée" />
+          <input id="pfp-url-input" class="input" placeholder="Lien vers l'image hébergée (150x150)" />
           <button id="pfp-submit-btn" class="btn-outline" style="flex-shrink:0">Envoyer</button>
         </div>
+        <p id="pfp-error" class="error-text hidden" style="margin-top:6px"></p>
         <p class="hint-text" style="margin-top:6px">Un modérateur doit approuver le lien avant qu'il n'apparaisse publiquement.</p>
       </div>
 
       <div class="account-card" style="text-align:left">
         <h2 class="font-display" style="font-size:15px;margin:0 0 10px">Bannière</h2>
         <div id="banner-status" class="hint-text" style="margin-bottom:8px"></div>
+        <p class="hint-text" style="margin-bottom:8px">L'image doit faire exactement <strong>1500 × 500 pixels</strong>.</p>
+
+        <div style="display:flex;gap:14px;margin-bottom:8px;font-size:13px;color:var(--silver-300)">
+          <label style="display:flex;gap:6px;align-items:center">
+            <input type="radio" name="banner-hosting" value="online" checked /> Hébergement en ligne (gratuit, expire après 3 mois)
+          </label>
+          <label style="display:flex;gap:6px;align-items:center">
+            <input type="radio" name="banner-hosting" value="physical" /> Hébergement physique (1,99$, permanent)
+          </label>
+        </div>
+
         <div style="display:flex;gap:8px">
-          <input id="banner-url-input" class="input" placeholder="Lien vers l'image hébergée" />
+          <input id="banner-url-input" class="input" placeholder="Lien vers l'image hébergée (1500x500)" />
           <button id="banner-submit-btn" class="btn-outline" style="flex-shrink:0">Envoyer</button>
         </div>
+        <p id="banner-error" class="error-text hidden" style="margin-top:6px"></p>
       </div>
 
       <p class="hint-text center">
