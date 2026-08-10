@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forum — Administration</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+  <header class="navbar" id="navbar-root"></header>
+
+  <main class="page">
+    <p id="denied-msg" class="muted center hidden" style="margin-top:60px">
+      Cette page est réservée aux modérateurs et au fondateur.
+    </p>
+
+    <div id="admin-box" class="hidden">
+      <h1 class="font-display" style="font-size:22px;font-weight:600;margin-bottom:20px">Administration</h1>
+
+      <section style="margin-bottom:32px">
+        <h2 class="font-display" style="font-size:16px;margin-bottom:10px">Créer une catégorie</h2>
+        <form id="category-form" style="display:flex;gap:8px">
+          <input id="category-name" class="input" placeholder="Nom de la catégorie" />
+          <button type="submit" class="btn-outline" style="flex-shrink:0">Créer</button>
+        </form>
+        <p id="category-error" class="error-text hidden" style="margin-top:6px"></p>
+        <div id="category-list" class="hashtags" style="margin-top:12px"></div>
+      </section>
+
+      <section id="admins-section" style="margin-bottom:32px">
+        <h2 class="font-display" style="font-size:16px;margin-bottom:10px">Nommer un modérateur</h2>
+        <form id="promote-form" style="display:flex;gap:8px">
+          <input id="promote-username" class="input" placeholder="!pseudo de l'utilisateur" />
+          <button type="submit" class="btn-outline" style="flex-shrink:0">Promouvoir</button>
+        </form>
+        <p id="promote-error" class="error-text hidden" style="margin-top:6px"></p>
+        <p id="promote-success" class="hint-text hidden" style="margin-top:6px;color:var(--silver-300)"></p>
+      </section>
+
+      <section style="margin-bottom:32px">
+        <h2 class="font-display" style="font-size:16px;margin-bottom:10px">Images en attente de validation</h2>
+        <div id="pending-images-list" class="stack"></div>
+        <p id="pending-images-empty" class="muted hidden">Aucune demande en attente.</p>
+      </section>
+
+      <section>
+        <h2 class="font-display" style="font-size:16px;margin-bottom:10px">Publications récentes (suppression)</h2>
+        <div id="posts-admin-list" class="stack"></div>
+      </section>
+    </div>
+  </main>
+
+  <script type="module" src="/assets/admin.js"></script>
+</body>
+</html>

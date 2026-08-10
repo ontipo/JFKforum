@@ -21,8 +21,27 @@
 
       <button id="logout-btn" class="btn-outline">Se déconnecter</button>
 
+      <div class="account-card" style="text-align:left">
+        <h2 class="font-display" style="font-size:15px;margin:0 0 10px">Photo de profil</h2>
+        <div id="pfp-status" class="hint-text" style="margin-bottom:8px"></div>
+        <div style="display:flex;gap:8px">
+          <input id="pfp-url-input" class="input" placeholder="Lien vers l'image hébergée" />
+          <button id="pfp-submit-btn" class="btn-outline" style="flex-shrink:0">Envoyer</button>
+        </div>
+        <p class="hint-text" style="margin-top:6px">Un modérateur doit approuver le lien avant qu'il n'apparaisse publiquement.</p>
+      </div>
+
+      <div class="account-card" style="text-align:left">
+        <h2 class="font-display" style="font-size:15px;margin:0 0 10px">Bannière</h2>
+        <div id="banner-status" class="hint-text" style="margin-bottom:8px"></div>
+        <div style="display:flex;gap:8px">
+          <input id="banner-url-input" class="input" placeholder="Lien vers l'image hébergée" />
+          <button id="banner-submit-btn" class="btn-outline" style="flex-shrink:0">Envoyer</button>
+        </div>
+      </div>
+
       <p class="hint-text center">
-        La photo de profil, la bannière et le fil d'actualité personnalisé arrivent dans une prochaine mise à jour.
+        Le fil d'actualité personnalisé arrive dans une prochaine mise à jour.
       </p>
     </div>
   </main>

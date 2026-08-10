@@ -16,6 +16,18 @@ Identique à la version précédente, mais en HTML pur :
 
 Phase 2 (pas encore fait) : panneau admin, photo de profil/bannière validée par un admin, notifications, ToS détaillées.
 
+## Nouveau — Phase 2
+
+- **Panneau d'administration** (`admin.html`, visible dans la navbar via l'icône ⚙ pour le staff) : créer des catégories, nommer un modérateur (fondateur uniquement), approuver/refuser les photos de profil et bannières en attente, supprimer n'importe quelle publication récente.
+- **Photo de profil / bannière** (`account.html`) : chaque utilisateur soumet un lien vers une image déjà hébergée ailleurs ; elle reste invisible publiquement tant qu'un modérateur ne l'a pas approuvée dans le panneau admin.
+- **Notifications** (cloche 🔔 dans la navbar) : déclenchées automatiquement (triggers SQL) sur mention (`@!pseudo`), like/superlike reçu, et réponse reçue. Cliquer sur une notification l'ouvre et la marque comme lue.
+- **Publications officielles** : le staff peut cocher « Publication officielle » en publiant, ce qui affiche un badge « Officiel ».
+- **Conditions d'utilisation** (`tos.html`) : l'inscription exige maintenant de cocher une case d'acceptation.
+
+### Étape supplémentaire : appliquer la migration phase 2
+
+Dans Supabase → **SQL Editor** → New query → collez tout `supabase/migrations_phase2.sql` → Run (à faire une seule fois, après `schema.sql`).
+
 ## Étape 1 — Créer le projet Supabase
 
 1. [supabase.com](https://supabase.com) → New project (gratuit).
@@ -82,15 +94,18 @@ puis ouvrez l'adresse affichée.
 ```
 index.html              → fil d'actualité, recherche, publication, vue post partagé
 login.html / register.html / forgot-password.html / account.html
+admin.html               → panneau d'administration (staff)
+tos.html                 → conditions d'utilisation
 assets/
   style.css              → thème sombre/argenté
   config.js               → vos clés Supabase (à remplir)
   supabaseClient.js
   utils.js, hash.js, recoveryPdf.js
   navbar.js, userBadge.js, voteButtons.js, commentSection.js, postCard.js, postModal.js
-  feed.js, auth-register.js, auth-login.js, auth-forgot.js, account.js
+  feed.js, auth-register.js, auth-login.js, auth-forgot.js, account.js, admin.js, tos.js
 supabase/
-  schema.sql              → tables + sécurité (RLS) + triggers
+  schema.sql              → tables + sécurité (RLS) + triggers (socle)
+  migrations_phase2.sql   → notifications, images en attente, posts officiels
   functions/reset-password/index.ts  → fonction serveur (mot de passe oublié)
 ```
 
