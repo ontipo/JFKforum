@@ -1,7 +1,8 @@
 import { supabase } from "./supabaseClient.js";
 import { containsLink, parseHashtags, parseMentions, escapeHtml } from "./utils.js";
 
-export function openPostModal({ categories, currentUserId, onCreated }) {
+export function openPostModal({ categories, currentUserId, currentProfile, onCreated }) {
+  const isStaff = ["moderator", "owner"].includes(currentProfile?.role);
   const overlay = document.createElement("div");
   overlay.className = "modal-overlay";
 
@@ -25,6 +26,15 @@ export function openPostModal({ categories, currentUserId, onCreated }) {
         <input type="checkbox" id="post-anon" />
         Publier en tant qu'anonyme
       </label>
+
+      ${
+        isStaff
+          ? `<label class="checkbox-label">
+              <input type="checkbox" id="post-official" />
+              Publication officielle (staff)
+            </label>`
+          : ""
+      }
 
       <p id="post-error" class="error-text hidden"></p>
 
@@ -64,6 +74,7 @@ export function openPostModal({ categories, currentUserId, onCreated }) {
     const body = overlay.querySelector("#post-body").value.trim();
     const categoryId = overlay.querySelector("#post-category").value;
     const anonymous = overlay.querySelector("#post-anon").checked;
+    const official = isStaff ? overlay.querySelector("#post-official")?.checked || false : false;
     const hashtags = parseHashtags(hashtagsInput.value);
 
     if (!title || !body) {
@@ -88,6 +99,7 @@ export function openPostModal({ categories, currentUserId, onCreated }) {
         body,
         author_id: currentUserId,
         is_anonymous: anonymous,
+        is_official: official,
         category_id: categoryId,
         hashtags,
         mentions

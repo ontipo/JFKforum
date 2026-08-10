@@ -35,6 +35,10 @@ form.addEventListener("submit", async (e) => {
     showError("Le mot de passe doit contenir au moins 8 caractères.");
     return;
   }
+  if (!document.getElementById("reg-tos").checked) {
+    showError("Vous devez accepter les conditions d'utilisation pour vous inscrire.");
+    return;
+  }
 
   submitBtn.disabled = true;
   submitBtn.textContent = "Création…";

@@ -33,6 +33,7 @@ export function createPostCard(post, { currentUserId, currentProfile, forceExpan
       <div class="post-head">
         <div class="post-head-left">
           ${nameHtml}
+          ${post.is_official ? '<span class="role-tag owner">Officiel</span>' : ""}
           <span class="post-time">${timeAgo(post.created_at)}</span>
         </div>
         <span class="post-category-badge">${escapeHtml(post.categories?.name || "")}</span>

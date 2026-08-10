@@ -12,6 +12,15 @@ const badgeSlot = document.getElementById("badge-slot");
 const pointsSlot = document.getElementById("points-slot");
 const logoutBtn = document.getElementById("logout-btn");
 
+const STATUS_LABEL = {
+  none: "Aucune image envoyée",
+  pending: "En attente de validation par un modérateur",
+  approved: "Approuvée ✓",
+  rejected: "Refusée par un modérateur"
+};
+
+let userId = null;
+
 async function load() {
   const {
     data: { session }
@@ -21,8 +30,9 @@ async function load() {
     window.location.href = "/login.html";
     return;
   }
+  userId = session.user.id;
 
-  const { data: profile } = await supabase.from("profiles").select("*").eq("id", session.user.id).single();
+  const { data: profile } = await supabase.from("profiles").select("*").eq("id", userId).single();
 
   loadingMsg.classList.add("hidden");
 
@@ -42,8 +52,29 @@ async function load() {
 
   pointsSlot.textContent = `${profile.likes_received} points · ${level.label}`;
 
+  document.getElementById("pfp-status").textContent = STATUS_LABEL[profile.pfp_status] || STATUS_LABEL.none;
+  document.getElementById("banner-status").textContent = STATUS_LABEL[profile.banner_status] || STATUS_LABEL.none;
+
   box.classList.remove("hidden");
 }
+
+async function submitImage(field, inputId) {
+  const input = document.getElementById(inputId);
+  const url = input.value.trim();
+  if (!url) return;
+
+  const patch =
+    field === "pfp"
+      ? { pfp_pending_url: url, pfp_status: "pending" }
+      : { banner_pending_url: url, banner_status: "pending" };
+
+  await supabase.from("profiles").update(patch).eq("id", userId);
+  input.value = "";
+  load();
+}
+
+document.getElementById("pfp-submit-btn").addEventListener("click", () => submitImage("pfp", "pfp-url-input"));
+document.getElementById("banner-submit-btn").addEventListener("click", () => submitImage("banner", "banner-url-input"));
 
 logoutBtn.addEventListener("click", async () => {
   await supabase.auth.signOut();
