@@ -43,7 +43,7 @@ export async function mountVoteButtons(container, { postId, authorId, currentUse
 
   async function vote(type) {
     if (!currentUserId) {
-      window.location.href = "/login.html";
+      window.location.href = "login.html";
       return;
     }
     if (isOwnPost || busy) return;
