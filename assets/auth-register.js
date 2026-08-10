@@ -61,11 +61,13 @@ form.addEventListener("submit", async (e) => {
   const code = generateRecoveryCode();
   const codeHash = await sha256Hex(code);
 
-  const { error: profileError } = await supabase.from("profiles").insert({
-    id: userId,
-    username,
-    recovery_code_hash: codeHash
-  });
+const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+  email,
+  password,
+  options: {
+    data: { username, recovery_code_hash: codeHash }
+  }
+});
 
   resetSubmit();
 
