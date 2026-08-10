@@ -31,7 +31,7 @@ export async function mountCommentSection(container, { postId, postAuthorId, cur
   async function load() {
     const { data } = await supabase
       .from("comments")
-      .select("id, body, is_anonymous, created_at, author_id, profiles:author_id (username, role, likes_received)")
+      .select("id, body, is_anonymous, created_at, author_id, profiles:author_id (username, role, likes_received, posts_count)")
       .eq("post_id", postId)
       .order("created_at", { ascending: true });
 
@@ -50,7 +50,12 @@ export async function mountCommentSection(container, { postId, postAuthorId, cur
 
     const nameHtml = c.is_anonymous
       ? `<span class="name">${escapeHtml(displayName)}</span>`
-      : userBadgeHtml({ username: displayName, role: c.profiles?.role, likesReceived: c.profiles?.likes_received });
+      : userBadgeHtml({
+          username: displayName,
+          role: c.profiles?.role,
+          likesReceived: c.profiles?.likes_received,
+          postsCount: c.profiles?.posts_count
+        });
 
     return `
       <div class="comment-item">

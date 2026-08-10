@@ -5,7 +5,7 @@ import { openPostModal } from "./postModal.js";
 import { escapeHtml } from "./utils.js";
 
 const POST_SELECT =
-  "id, title, body, is_anonymous, is_official, category_id, hashtags, created_at, author_id, profiles:author_id (username, role, likes_received), categories:category_id (name, slug)";
+  "id, title, body, is_anonymous, is_official, category_id, hashtags, created_at, author_id, profiles:author_id (username, role, likes_received, posts_count, pfp_url), categories:category_id (name, slug)";
 
 let categories = [];
 let activeCategory = null;

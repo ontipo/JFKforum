@@ -57,7 +57,11 @@ async function load() {
     Object.assign(profile, patch);
   }
 
-  const level = getLevel(profile.likes_received);
+  const level = getLevel({
+    role: profile.role,
+    postsCount: profile.posts_count,
+    likesReceived: profile.likes_received
+  });
 
   avatarSlot.innerHTML = profile.pfp_url
     ? `<img src="${profile.pfp_url}" alt="" />`
@@ -66,10 +70,11 @@ async function load() {
   badgeSlot.innerHTML = userBadgeHtml({
     username: profile.username,
     role: profile.role,
-    likesReceived: profile.likes_received
+    likesReceived: profile.likes_received,
+    postsCount: profile.posts_count
   });
 
-  pointsSlot.textContent = `${profile.likes_received} points · ${level.label}`;
+  pointsSlot.textContent = `${profile.likes_received} points · ${profile.posts_count || 0} publications · ${level.label}`;
 
   document.getElementById("pfp-status").textContent = STATUS_LABEL[profile.pfp_status] || STATUS_LABEL.none;
   document.getElementById("banner-status").textContent = STATUS_LABEL[profile.banner_status] || STATUS_LABEL.none;

@@ -58,23 +58,36 @@ export function containsLink(text) {
 }
 
 // ------------------------------------------------------------
-// Niveaux / titres selon les likes reçus
+// Niveaux 0 à 7, selon publications + j'aimes reçus
+// (niveau 7 = modérateur ou fondateur, peu importe les stats)
 // ------------------------------------------------------------
 export const LEVELS = [
-  { level: 0, threshold: 0, label: "Sans titre" },
-  { level: 1, threshold: 10, label: "Niveau I" },
-  { level: 2, threshold: 50, label: "Niveau II" },
-  { level: 3, threshold: 100, label: "Niveau III" },
-  { level: 4, threshold: 250, label: "Niveau IV" },
-  { level: 5, threshold: 500, label: "Niveau V" }
+  { level: 0, posts: 0, likes: 0, label: "Nouveau" },
+  { level: 1, posts: 1, likes: 1, label: "Niveau I" },
+  { level: 2, posts: 2, likes: 20, label: "Niveau II" },
+  { level: 3, posts: 5, likes: 55, label: "Niveau III" },
+  { level: 4, posts: 7, likes: 100, label: "Niveau IV" },
+  { level: 5, posts: 10, likes: 200, label: "Niveau V" },
+  { level: 6, posts: 20, likes: 350, label: "Niveau VI" }
 ];
 
-export function getLevel(likesReceived) {
+// { role, postsCount, likesReceived } -> objet niveau (avec .level et .label)
+export function getLevel({ role, postsCount = 0, likesReceived = 0 } = {}) {
+  if (role === "moderator" || role === "owner") {
+    return { level: 7, posts: Infinity, likes: Infinity, label: "Niveau VII" };
+  }
   let current = LEVELS[0];
   for (const lvl of LEVELS) {
-    if (likesReceived >= lvl.threshold) current = lvl;
+    if (postsCount >= lvl.posts && likesReceived >= lvl.likes) current = lvl;
   }
   return current;
+}
+
+// Chemin + dimensions de l'image de badge pour un niveau donné (null si niveau 0, pas de badge)
+export function getLevelBadge(level) {
+  if (!level || level < 1) return null;
+  const size = level >= 4 ? { width: 230, height: 150 } : { width: 150, height: 150 };
+  return { src: `img/private/${level}-level.svg`, ...size };
 }
 
 // ------------------------------------------------------------

@@ -22,7 +22,20 @@ export function createPostCard(post, { currentUserId, currentProfile, forceExpan
   function render() {
     const nameHtml = post.is_anonymous
       ? `<span class="name">${escapeHtml(displayName)}</span>`
-      : userBadgeHtml({ username: displayName, role: post.profiles?.role, likesReceived: post.profiles?.likes_received });
+      : userBadgeHtml({
+          username: displayName,
+          role: post.profiles?.role,
+          likesReceived: post.profiles?.likes_received,
+          postsCount: post.profiles?.posts_count
+        });
+
+    const avatarHtml = post.is_anonymous
+      ? `<span class="post-avatar">?</span>`
+      : `<span class="post-avatar">${
+          post.profiles?.pfp_url
+            ? `<img src="${post.profiles.pfp_url}" alt="" />`
+            : escapeHtml((post.profiles?.username?.[1] || "?").toUpperCase())
+        }</span>`;
 
     const hashtagsHtml =
       post.hashtags?.length > 0
@@ -32,6 +45,7 @@ export function createPostCard(post, { currentUserId, currentProfile, forceExpan
     article.innerHTML = `
       <div class="post-head">
         <div class="post-head-left">
+          ${avatarHtml}
           ${nameHtml}
           ${post.is_official ? '<span class="role-tag owner">Officiel</span>' : ""}
           <span class="post-time">${timeAgo(post.created_at)}</span>
