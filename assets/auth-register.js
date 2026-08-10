@@ -43,39 +43,27 @@ form.addEventListener("submit", async (e) => {
   submitBtn.disabled = true;
   submitBtn.textContent = "Création…";
 
-  const { data: signUpData, error: signUpError } = await supabase.auth.signUp({ email, password });
+  // Le code est généré AVANT signUp, pour qu'il soit envoyé dans les métadonnées
+  // et récupéré par le trigger SQL "handle_new_user" (voir supabase/schema.sql).
+  const code = generateRecoveryCode();
+  const codeHash = await sha256Hex(code);
+
+  const { error: signUpError } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: { username, recovery_code_hash: codeHash }
+    }
+  });
+
+  resetSubmit();
 
   if (signUpError) {
-    resetSubmit();
     showError(signUpError.message);
     return;
   }
 
-  const userId = signUpData.user?.id;
-  if (!userId) {
-    resetSubmit();
-    showError("Confirmez votre adresse e-mail puis reconnectez-vous pour terminer l'inscription.");
-    return;
-  }
-
-  const code = generateRecoveryCode();
-  const codeHash = await sha256Hex(code);
-
-const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-  email,
-  password,
-  options: {
-    data: { username, recovery_code_hash: codeHash }
-  }
-});
-
-  resetSubmit();
-
-  if (profileError) {
-    showError(profileError.message);
-    return;
-  }
-
+  // Le PDF se télécharge tout de suite, que l'e-mail soit confirmé ou non.
   await downloadRecoveryPdf(username, code);
 
   form.classList.add("hidden");
