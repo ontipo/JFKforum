@@ -1,0 +1,45 @@
+et on peut répondre aux réponses d'un tweet aussi, et je peux pas liker, ni superlike ni dislike et je sais pas pourquoi, les tweet anonyme n'augmentent pas le score de l'auteur et l'auteur peut modifier ou supprimer ses réponses/commentaires mais modifier c'est 5 minutes après la publciation et modifier c'est 15 minutes après et on peut joindre une image *un lien* et l'image doit se faire approuver avant, si elle n'est pas approuvée encore ça met "EN COURS D'APPROBATION" et quand je cherche ça marche pas, quand quelqu'un publie on voit l'image du joueur à gauche du nom puis à droite l'image du niveau (fini de scripter les niveaux putain!! ils sont dans img/private/{QUEL LEVEL NUMÉRO}-level.svg. et quand on ouvre le profil de quelqu'un dautre on voit sa description, bannière, pfp, points, le titre (combien d'étoiles sur 7, quand elles les a elles sont grises, quand il a celles de 1 à 6 elles sont blanches et la 7ième est jaune doré) et à côté l'image du titre ( TOUTS LES BADGES EN DESSOUS DU NIVEAU 3 SONT 150x150 ET DE 4 à 7 ILS SONT 230x150(Largeurxhauteur) 
+
+Les niveaux 0 à 7 sont
+
+0: Aucune publication, aucun j'aime, nouveau, alors pas de badge 
+
+1: 1 publication, 1 j'aime (img/private/1-level.svg, 150x150)
+
+2: 2 publications, 20 j'aimes (img/private/2-level.svg, 150x150)
+
+3: 5 publications, 55  j'aimes (img/private/3-level.svg, 150x150)
+
+4: 7 publications, 100  j'aimes (img/private/4-level.svg, 230x150)
+
+5: 10 publications, 200  j'aimes (img/private/5-level.svg, 230x150)
+
+6: 20 publications, 350  j'aimes (img/private/6-level.svg, 230x150)
+
+7: modérateur ou owner(créateur) (img/private/7-level.svg, 230x150)
+
+
+
+ et PREND VRAIMENT TOUT L'ÉCRAN et en bas de leur description, il y a sa galerie de badge, les badges obtenables automatiquement (les images de badges sont dans img/private/{nom_badge}.svg. tous les badges sont 150x150 les badges automatiques: 
+
+Badge de débutant (1 publication), badge de publieur (5 publications), badge de yappeur (20 publications), badge de spammeur (50 publications), shut up!!! (blague!) (100 publications)
+
+Auto-j'aime (3 likes), Aimé (10 likes), Beaucoup aimé (50 likes), Trop aimé (200 likes), Bot des likes (500 likes), Populaire (1000 likes)
+
+Amitié (1 ami), amis proches (3 amis), beaucoup d'amis (10 amis), sage (30 amis), amitié accordée (ami avec un admin), amitié couronnée (ami avec le créateur)
+
+et il y a les badges gagnables qui peuvent être donnés par l'owner seulement:
+
+Croix de fer (pas nazie t'inquiète, c'est une badge crée), Croix Laudienne, Croix Arcienne, Croix de mérite, croix honorifique.
+
+et pour tagger il faut faire !"{USER}" dans la publication et quand il ouvre "{ on lui donne une liste de ses amis pour les tagger jusqu'a ce qu'il referme,
+
+dans ses paramètre il peut activer google traduction sur le site, mettre son email public, recevoir des emails du site, accepter que tout le monde le tag (si il refuse et que quelqu'un le tag dans sa publication, le tag disparaîtera), il peut mettre en privé ses amis aussi ou mettre aussi de refuser les demandes d'amitié qui va empêcher les autres de voir, et désactiver que quand on va sur son profil on peut voir sa dernière connection où s'il est en ligne en ce moment
+
+Ajoute un système d'amitié aussi où si tu vois le profile de quelqu'un d'autre tu peux l'ajouter
+
+après sur son profile après tout ce que je t'ai nommé on peut aussi voir ses publications (sauf les publications anonyme)
+
+
+
+et ils peuvent mettre une bannière annimée mais elle doit être gif et si ils ont pris l'option héberger physiquement et ils ont payés (quand ils ont finis de payer dans buy/pfp.html ça donne un code promotionnel de 9 chiffres constitués de ces caractères A-Z, a-z, 0-9 et quand ils demande héberger physiquement (1,99$) ça demande le Code promotionnel (mais on va scripter buy tantôt, alors pour le moment met un endroit où il faut qu'il rentre les infos de sa carte de crédit (ou une gift card) et son email et son username et on va payer puis lui envoyer une fois payé, les codes sont transférés sur supabase décryptés parce que je dois les voir pour les paiements, mais ils seront sécurisés et une fois accepté, ils receveront une notification avec leur code promotionnel, parce que met le dans le panneau admin que les admin peuvent envoyer des notifications personnalisées
