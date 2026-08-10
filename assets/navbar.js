@@ -40,7 +40,7 @@ async function refreshAccountArea() {
   } = await supabase.auth.getSession();
 
   if (!session) {
-    area.innerHTML = `<a href="/login.html" class="btn-outline">Se connecter</a>`;
+    area.innerHTML = `<a href="login.html" class="btn-outline">Se connecter</a>`;
     if (adminArea) adminArea.innerHTML = "";
     return;
   }
@@ -52,13 +52,13 @@ async function refreshAccountArea() {
     .single();
 
   if (!profile) {
-    area.innerHTML = `<a href="/login.html" class="btn-outline">Se connecter</a>`;
+    area.innerHTML = `<a href="login.html" class="btn-outline">Se connecter</a>`;
     if (adminArea) adminArea.innerHTML = "";
     return;
   }
 
   area.innerHTML = `
-    <a href="/account.html" class="navbar-account">
+    <a href="account.html" class="navbar-account">
       <span class="avatar">${
         profile.pfp_url
           ? `<img src="${profile.pfp_url}" alt="" />`
@@ -70,7 +70,7 @@ async function refreshAccountArea() {
 
   if (adminArea) {
     adminArea.innerHTML = ["moderator", "owner"].includes(profile.role)
-      ? `<a href="/admin.html" class="btn-outline" title="Administration">⚙</a>`
+      ? `<a href="admin.html" class="btn-outline" title="Administration">⚙</a>`
       : "";
   }
 }
