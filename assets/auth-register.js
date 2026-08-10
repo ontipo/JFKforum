@@ -68,7 +68,7 @@ form.addEventListener("submit", async (e) => {
 
   form.classList.add("hidden");
   document.getElementById("register-done").classList.remove("hidden");
-  setTimeout(() => (window.location.href = "/"), 2500);
+  setTimeout(() => (window.location.href = "index.html"), 2500);
 });
 
 function showError(msg) {

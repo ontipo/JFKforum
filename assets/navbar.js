@@ -21,7 +21,7 @@ export async function renderNavbar() {
   document.getElementById("navbar-search-form").addEventListener("submit", (e) => {
     e.preventDefault();
     const q = document.getElementById("navbar-search-input").value.trim();
-    if (q) window.location.href = `/?recherche=${encodeURIComponent(q)}`;
+    if (q) window.location.href = `index.html?recherche=${encodeURIComponent(q)}`;
   });
 
   await refreshAccountArea();
@@ -150,7 +150,7 @@ async function loadNotifDropdown(dropdown, userId) {
     .map((n) => {
       const actorName = n.profiles?.username || "Quelqu'un";
       const label = (NOTIF_LABEL[n.type] || (() => "Notification"))(actorName);
-      const href = n.source_post_id ? `/?=${n.source_post_id}` : "#";
+      const href = n.source_post_id ? `index.html?=${n.source_post_id}` : "#";
       return `
         <a href="${href}" data-notif="${n.id}" style="display:block;padding:8px;border-radius:8px;font-size:13px;${
         n.read ? "opacity:0.6" : "background:var(--raised)"

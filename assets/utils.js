@@ -79,9 +79,22 @@ export function getLevel(likesReceived) {
 
 // ------------------------------------------------------------
 // ID de post -> lien de partage [SITE]/?={id}
+// (calculé relativement au dossier courant, pour fonctionner
+// même si le site est servi depuis un sous-dossier, ex: GitHub Pages)
 // ------------------------------------------------------------
 export function postShareUrl(postId) {
-  return `${window.location.origin}/?=${postId}`;
+  const dir = window.location.pathname.replace(/[^/]*$/, "");
+  return `${window.location.origin}${dir}index.html?=${postId}`;
+}
+
+// ------------------------------------------------------------
+// Expiration des images hébergées gratuitement (3 mois après approbation)
+// ------------------------------------------------------------
+const THREE_MONTHS_MS = 90 * 24 * 60 * 60 * 1000;
+
+export function isImageExpired(status, hosting, approvedAt) {
+  if (status !== "approved" || hosting !== "online" || !approvedAt) return false;
+  return Date.now() - new Date(approvedAt).getTime() > THREE_MONTHS_MS;
 }
 
 // ------------------------------------------------------------

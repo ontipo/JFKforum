@@ -72,7 +72,7 @@ export async function mountCommentSection(container, { postId, postAuthorId, cur
     errorEl.classList.add("hidden");
 
     if (!currentUserId) {
-      window.location.href = "/login.html";
+      window.location.href = "login.html";
       return;
     }
     const body = input.value.trim();

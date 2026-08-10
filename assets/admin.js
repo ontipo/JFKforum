@@ -12,7 +12,7 @@ async function init() {
   } = await supabase.auth.getSession();
 
   if (!session) {
-    window.location.href = "/login.html";
+    window.location.href = "login.html";
     return;
   }
 
@@ -162,19 +162,33 @@ async function loadPendingImages() {
 
 async function resolveImage(e, approve) {
   const card = e.target.closest("[data-user]");
-  const userId = card.dataset.user;
+  const targetUserId = card.dataset.user;
   const field = card.dataset.field;
+  const pendingUrl = card.querySelector(".hint-text").textContent;
 
   const patch =
     field === "pfp"
       ? approve
-        ? { pfp_status: "approved", pfp_url: card.querySelector(".hint-text").textContent }
+        ? { pfp_status: "approved", pfp_url: pendingUrl, pfp_approved_at: new Date().toISOString() }
         : { pfp_status: "rejected" }
       : approve
-      ? { banner_status: "approved", banner_url: card.querySelector(".hint-text").textContent }
+      ? { banner_status: "approved", banner_url: pendingUrl, banner_approved_at: new Date().toISOString() }
       : { banner_status: "rejected" };
 
-  await supabase.from("profiles").update(patch).eq("id", userId);
+  const { data, error } = await supabase.from("profiles").update(patch).eq("id", targetUserId).select();
+
+  if (error) {
+    alert("Échec de la mise à jour : " + error.message);
+    return;
+  }
+  if (!data || data.length === 0) {
+    alert(
+      "La mise à jour n'a touché aucune ligne — c'est presque toujours un problème de policy RLS. " +
+        "Vérifie que la policy « staff modifie tous les profils » de supabase/migrations_phase2.sql a bien été exécutée dans Supabase."
+    );
+    return;
+  }
+
   loadPendingImages();
 }
 

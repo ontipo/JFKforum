@@ -51,7 +51,10 @@ export async function mountVoteButtons(container, { postId, authorId, currentUse
 
     await supabase.from("votes").delete().eq("post_id", postId).eq("user_id", currentUserId);
     if (myVote !== type) {
-      await supabase.from("votes").insert({ post_id: postId, user_id: currentUserId, type });
+      const { error } = await supabase.from("votes").insert({ post_id: postId, user_id: currentUserId, type });
+      if (error) {
+        alert("Le vote a échoué : " + error.message);
+      }
     }
     await loadVotes();
     busy = false;

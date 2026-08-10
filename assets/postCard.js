@@ -64,7 +64,7 @@ export function createPostCard(post, { currentUserId, currentProfile, forceExpan
     article.querySelector("#share-btn").addEventListener("click", (e) => {
       e.stopPropagation();
       if (!currentUserId) {
-        window.location.href = "/login.html";
+        window.location.href = "login.html";
         return;
       }
       navigator.clipboard.writeText(postShareUrl(post.id));

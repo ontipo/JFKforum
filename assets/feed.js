@@ -43,7 +43,7 @@ async function init() {
       searchBanner.innerHTML = `Résultats pour « ${escapeHtml(q)} » — <button id="clear-search" class="link-underline" style="background:none;border:none;padding:0">effacer</button>`;
       searchBanner.querySelector("#clear-search").addEventListener("click", () => {
         searchTerm = null;
-        history.replaceState(null, "", "/");
+        history.replaceState(null, "", window.location.pathname);
         searchBanner.classList.add("hidden");
         loadPosts();
       });
@@ -95,8 +95,10 @@ async function loadPosts() {
   let query = supabase.from("posts").select(POST_SELECT).order("created_at", { ascending: false });
   if (activeCategory) query = query.eq("category_id", activeCategory);
   if (searchTerm) {
-    const clean = searchTerm.replace(/^#/, "").toLowerCase();
-    query = query.or(`title.ilike.%${searchTerm}%,hashtags.cs.{${clean}}`);
+    // PostgREST : dans un filtre .or(), le joker s'écrit "*" (pas "%"), et les
+    // virgules/parenthèses cassent la syntaxe du filtre — on les retire.
+    const clean = searchTerm.replace(/^#/, "").trim().replace(/[,()]/g, "");
+    query = query.or(`title.ilike.*${clean}*,hashtags.cs.{${clean.toLowerCase()}}`);
   }
 
   const { data } = await query;
@@ -125,7 +127,7 @@ async function showSharedPost(id) {
 }
 
 document.getElementById("back-to-feed").addEventListener("click", () => {
-  history.replaceState(null, "", "/");
+  history.replaceState(null, "", window.location.pathname);
   sharedView.classList.add("hidden");
   feedView.classList.remove("hidden");
   renderTabs();
@@ -142,7 +144,7 @@ shuffleBtn.addEventListener("click", () => {
 
 publishFab.addEventListener("click", () => {
   if (!currentUserId) {
-    window.location.href = "/login.html";
+    window.location.href = "login.html";
     return;
   }
   openPostModal({

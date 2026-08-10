@@ -71,7 +71,7 @@ resetForm.addEventListener("submit", async (e) => {
 
     resetForm.classList.add("hidden");
     doneEl.classList.remove("hidden");
-    setTimeout(() => (window.location.href = "/login.html"), 2000);
+    setTimeout(() => (window.location.href = "login.html"), 2000);
   } catch {
     submitBtn.disabled = false;
     submitBtn.textContent = "Réinitialiser le mot de passe";
