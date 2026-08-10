@@ -1,3 +1,5 @@
+//update
+
 import { supabase } from "./supabaseClient.js";
 
 export async function renderNavbar() {
