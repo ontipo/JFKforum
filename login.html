@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forum — Se connecter</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+  <header class="navbar" id="navbar-root"></header>
+
+  <main class="page-narrow">
+    <form id="login-form" class="stack">
+      <h1 class="font-display center" style="font-size:24px;font-weight:600">Se connecter</h1>
+
+      <input id="login-email" type="email" class="input" placeholder="Adresse e-mail" />
+      <input id="login-password" type="password" class="input" placeholder="Mot de passe" />
+
+      <p id="login-error" class="error-text hidden"></p>
+
+      <button type="submit" id="login-submit" class="btn-primary">Se connecter</button>
+
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <a href="/register.html" class="link-underline hint-text">Créer un compte</a>
+        <a href="/forgot-password.html" class="link-underline hint-text">J'ai oublié mes informations</a>
+      </div>
+    </form>
+  </main>
+
+  <script type="module" src="/assets/auth-login.js"></script>
+</body>
+</html>

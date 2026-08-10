@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forum — Tous</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+  <header class="navbar" id="navbar-root"></header>
+
+  <main class="page">
+    <div id="shared-view" class="hidden">
+      <button id="back-to-feed" class="refresh-btn" style="margin-bottom:16px">← retour au fil</button>
+      <div id="shared-post-slot"></div>
+    </div>
+
+    <div id="feed-view">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+        <div id="tabs" class="tabs"></div>
+        <button id="shuffle-btn" class="refresh-btn" title="Mélanger le fil (FYP)">⟳ actualiser</button>
+      </div>
+
+      <p id="search-banner" class="hint-text hidden" style="margin-bottom:12px"></p>
+
+      <p id="loading-msg" class="muted hidden">Chargement…</p>
+      <p id="empty-msg" class="muted hidden">Aucune publication pour le moment.</p>
+
+      <div id="posts-list"></div>
+    </div>
+  </main>
+
+  <button id="publish-fab" class="publish-fab">+ Publier</button>
+
+  <script type="module" src="/assets/feed.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forum — Mon compte</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+  <header class="navbar" id="navbar-root"></header>
+
+  <main class="page-narrow">
+    <p id="loading-msg" class="muted center" style="margin-top:40px">Chargement…</p>
+
+    <div id="account-box" class="stack hidden">
+      <div class="account-card">
+        <div class="account-avatar" id="avatar-slot"></div>
+        <div id="badge-slot"></div>
+        <p class="hint-text font-mono" id="points-slot" style="margin-top:8px"></p>
+      </div>
+
+      <button id="logout-btn" class="btn-outline">Se déconnecter</button>
+
+      <p class="hint-text center">
+        La photo de profil, la bannière et le fil d'actualité personnalisé arrivent dans une prochaine mise à jour.
+      </p>
+    </div>
+  </main>
+
+  <script type="module" src="/assets/account.js"></script>
+</body>
+</html>
