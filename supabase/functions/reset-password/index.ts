@@ -1,4 +1,5 @@
-// Fonction Supabase Edge — vérifie le code de récupération et change le mot de passe.
+// Fonction Supabase Edge — vérifie le code de récupération, change le mot de passe,
+// puis génère un NOUVEAU code de récupération (l'ancien devient invalide).
 // Déployée avec : supabase functions deploy reset-password
 // Les variables SUPABASE_URL et SUPABASE_SERVICE_ROLE_KEY sont injectées automatiquement.
 
@@ -8,6 +9,20 @@ const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type"
 };
+
+const CODE_CHARSET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$?!%#@";
+
+function randomSegment(length) {
+  const array = new Uint32Array(length);
+  crypto.getRandomValues(array);
+  let out = "";
+  for (let i = 0; i < length; i++) out += CODE_CHARSET[array[i] % CODE_CHARSET.length];
+  return out;
+}
+
+function generateRecoveryCode() {
+  return `code:${randomSegment(240)}NIP${randomSegment(320)}`;
+}
 
 async function sha256Hex(text) {
   const data = new TextEncoder().encode(text);
@@ -63,7 +78,12 @@ Deno.serve(async (req) => {
       });
     }
 
-    return new Response(JSON.stringify({ success: true, username: profile.username }), {
+    // Le code utilisé devient invalide : on en génère un nouveau immédiatement.
+    const newCode = generateRecoveryCode();
+    const newCodeHash = await sha256Hex(newCode);
+    await supabaseAdmin.from("profiles").update({ recovery_code_hash: newCodeHash }).eq("id", profile.id);
+
+    return new Response(JSON.stringify({ success: true, username: profile.username, newCode }), {
       status: 200,
       headers: { ...corsHeaders, "Content-Type": "application/json" }
     });
