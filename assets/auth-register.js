@@ -1,6 +1,6 @@
 import { supabase } from "./supabaseClient.js";
 import { renderNavbar } from "./navbar.js";
-import { generateRecoveryCode } from "./utils.js";
+import { generateRecoveryCode, containsBannedWord } from "./utils.js";
 import { sha256Hex } from "./hash.js";
 import { downloadRecoveryPdf } from "./recoveryPdf.js";
 
@@ -27,8 +27,12 @@ form.addEventListener("submit", async (e) => {
   const email = emailInput.value.trim();
   const password = passwordInput.value;
 
-  if (!username.startsWith("!") || username.length < 2) {
-    showError("Le nom d'utilisateur doit commencer par « ! ».");
+  if (!username.startsWith("!") || username.length < 3) {
+    showError("Le nom d'utilisateur doit commencer par « ! » et faire au moins 3 caractères.");
+    return;
+  }
+  if (await containsBannedWord(username)) {
+    showError("Ce nom d'utilisateur contient un mot interdit.");
     return;
   }
   if (password.length < 8) {

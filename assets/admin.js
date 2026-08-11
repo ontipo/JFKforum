@@ -34,6 +34,8 @@ async function init() {
 
   await loadCategories();
   await loadPendingImages();
+  await loadPendingPostImages();
+  await loadAgeVerifications();
   await loadPosts();
 }
 
@@ -196,12 +198,119 @@ async function resolveImage(e, approve) {
 }
 
 // ------------------------------------------------------------
+// Images jointes à une publication (refuser / accepter / 18+)
+// ------------------------------------------------------------
+async function loadPendingPostImages() {
+  const { data } = await supabase
+    .from("posts")
+    .select("id, title, image_pending_url, profiles:author_id (username)")
+    .eq("image_status", "pending");
+
+  const list = document.getElementById("pending-post-images-list");
+  const emptyMsg = document.getElementById("pending-post-images-empty");
+
+  if (!data || data.length === 0) {
+    list.innerHTML = "";
+    emptyMsg.classList.remove("hidden");
+    return;
+  }
+  emptyMsg.classList.add("hidden");
+
+  list.innerHTML = data
+    .map(
+      (p) => `
+    <div class="post-card" style="padding:14px" data-post="${p.id}">
+      <p style="margin:0 0 8px"><strong>${escapeHtml(p.profiles?.username || "?")}</strong> — ${escapeHtml(p.title)}</p>
+      <p class="hint-text" style="word-break:break-all;margin-bottom:10px" data-url>${escapeHtml(p.image_pending_url)}</p>
+      <div style="display:flex;gap:8px">
+        <button class="btn-outline post-img-accept" style="flex:1">Accepter</button>
+        <button class="btn-outline post-img-18" style="flex:1">18+</button>
+        <button class="btn-outline post-img-reject" style="flex:1">Refuser</button>
+      </div>
+    </div>
+  `
+    )
+    .join("");
+
+  list.querySelectorAll("[data-post]").forEach((card) => {
+    const postId = card.dataset.post;
+    const url = card.querySelector("[data-url]").textContent;
+    card.querySelector(".post-img-accept").addEventListener("click", () => resolvePostImage(postId, url, "approved"));
+    card.querySelector(".post-img-18").addEventListener("click", () => resolvePostImage(postId, url, "18+"));
+    card.querySelector(".post-img-reject").addEventListener("click", () => resolvePostImage(postId, url, "rejected"));
+  });
+}
+
+async function resolvePostImage(postId, url, status) {
+  const patch = status === "rejected" ? { image_status: "rejected" } : { image_status: status, image_url: url };
+  const { error } = await supabase.from("posts").update(patch).eq("id", postId);
+  if (error) {
+    alert("Échec : " + error.message);
+    return;
+  }
+  loadPendingPostImages();
+}
+
+// ------------------------------------------------------------
+// Vérification d'âge (photo avec pièce d'identité gouvernementale)
+// ------------------------------------------------------------
+async function loadAgeVerifications() {
+  const { data } = await supabase
+    .from("profiles")
+    .select("id, username, age_verification_url")
+    .eq("age_verification_status", "pending");
+
+  const list = document.getElementById("age-verif-list");
+  const emptyMsg = document.getElementById("age-verif-empty");
+
+  if (!data || data.length === 0) {
+    list.innerHTML = "";
+    emptyMsg.classList.remove("hidden");
+    return;
+  }
+  emptyMsg.classList.add("hidden");
+
+  list.innerHTML = data
+    .map(
+      (u) => `
+    <div class="post-card" style="padding:14px" data-user="${u.id}">
+      <p style="margin:0 0 8px"><strong>${escapeHtml(u.username)}</strong></p>
+      <p class="hint-text" style="word-break:break-all;margin-bottom:10px">${escapeHtml(u.age_verification_url)}</p>
+      <div style="display:flex;gap:8px">
+        <button class="btn-outline age-accept" style="flex:1">Approuver (18+)</button>
+        <button class="btn-outline age-reject" style="flex:1">Refuser</button>
+      </div>
+    </div>
+  `
+    )
+    .join("");
+
+  list.querySelectorAll("[data-user]").forEach((card) => {
+    const userId = card.dataset.user;
+    card.querySelector(".age-accept").addEventListener("click", async () => {
+      await supabase
+        .from("profiles")
+        .update({ age_verification_status: "approved", age_verified: true })
+        .eq("id", userId);
+      loadAgeVerifications();
+    });
+    card.querySelector(".age-reject").addEventListener("click", async () => {
+      await supabase
+        .from("profiles")
+        .update({ age_verification_status: "rejected", age_verified: false })
+        .eq("id", userId);
+      loadAgeVerifications();
+    });
+  });
+}
+
+// ------------------------------------------------------------
 // Suppression de posts
 // ------------------------------------------------------------
 async function loadPosts() {
   const { data } = await supabase
     .from("posts")
-    .select("id, title, created_at, is_anonymous, profiles:author_id (username)")
+    .select("id, title, created_at, is_anonymous, is_pinned, admin_boosted, profiles:author_id (username)")
     .order("created_at", { ascending: false })
     .limit(30);
 
@@ -209,25 +318,54 @@ async function loadPosts() {
   list.innerHTML = (data || [])
     .map(
       (p) => `
-    <div class="post-card" style="padding:14px;display:flex;align-items:center;justify-content:space-between;gap:12px" data-post="${p.id}">
-      <div style="min-width:0">
-        <p style="margin:0;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(p.title)}</p>
-        <p class="hint-text" style="margin:2px 0 0">${escapeHtml(p.is_anonymous ? "Anonyme" : p.profiles?.username || "")} · ${timeAgo(p.created_at)}</p>
+    <div class="post-card" style="padding:14px" data-post="${p.id}">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+        <div style="min-width:0">
+          <p style="margin:0;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(p.title)}</p>
+          <p class="hint-text" style="margin:2px 0 0">${escapeHtml(p.is_anonymous ? "Anonyme" : p.profiles?.username || "")} · ${timeAgo(p.created_at)}</p>
+        </div>
       </div>
-      <button class="btn-outline delete-post-btn" style="flex-shrink:0">Supprimer</button>
+      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+        <button class="btn-outline pin-post-btn" style="flex:1;min-width:100px">${p.is_pinned ? "Désépingler" : "Épingler"}</button>
+        <button class="btn-outline boost-post-btn" style="flex:1;min-width:100px" ${p.admin_boosted ? "disabled" : ""}>${
+        p.admin_boosted ? "Déjà boosté" : "+50 j'aimes"
+      }</button>
+        <button class="btn-outline delete-post-btn" style="flex:1;min-width:100px">Supprimer</button>
+      </div>
     </div>
   `
     )
     .join("");
 
-  list.querySelectorAll(".delete-post-btn").forEach((btn) =>
-    btn.addEventListener("click", async (e) => {
-      const card = e.target.closest("[data-post]");
+  list.querySelectorAll("[data-post]").forEach((card) => {
+    const postId = card.dataset.post;
+
+    card.querySelector(".delete-post-btn").addEventListener("click", async () => {
       if (!confirm("Supprimer définitivement cette publication ?")) return;
-      await supabase.from("posts").delete().eq("id", card.dataset.post);
+      await supabase.from("posts").delete().eq("id", postId);
       card.remove();
-    })
-  );
+    });
+
+    card.querySelector(".pin-post-btn").addEventListener("click", async (e) => {
+      const currentlyPinned = e.target.textContent.trim() === "Désépingler";
+      const { error } = await supabase.from("posts").update({ is_pinned: !currentlyPinned }).eq("id", postId);
+      if (error) {
+        alert("Échec : " + error.message);
+        return;
+      }
+      loadPosts();
+    });
+
+    card.querySelector(".boost-post-btn").addEventListener("click", async (e) => {
+      const { error } = await supabase.rpc("admin_grant_like_boost", { p_post_id: postId });
+      if (error) {
+        alert("Échec : " + error.message);
+        return;
+      }
+      e.target.disabled = true;
+      e.target.textContent = "Déjà boosté";
+    });
+  });
 }
 
 // ------------------------------------------------------------

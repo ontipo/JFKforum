@@ -1,0 +1,6 @@
+# Un mot ou une expression par ligne, insensible à la casse.
+# Les pseudos, titres, textes de publication et descriptions contenant un de ces mots
+# sont automatiquement refusés. Complète cette liste selon les règles de ta communauté.
+spam
+arnaque
+escroquerie

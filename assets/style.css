@@ -467,6 +467,30 @@ a.avatar-link { display: inline-block; line-height: 0; }
 .toggle input:checked + .toggle-track { border-color: var(--silver-100); }
 .toggle input:checked + .toggle-track::before { transform: translateX(18px); background: var(--silver-100); }
 
+.post-image {
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-top: 12px;
+  border: 1px solid var(--line);
+}
+.post-image-placeholder {
+  display: block;
+  width: 100%;
+  padding: 28px 16px;
+  margin-top: 12px;
+  border-radius: 12px;
+  border: 1px dashed var(--line);
+  text-align: center;
+  font-size: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.04em;
+  color: var(--silver-500);
+}
+.post-image-18 { color: var(--silver-300); text-decoration: none; }
+.post-image-18:hover { border-color: var(--silver-500); }
+
 .au-tag {
   font-size: 10px;
   font-family: 'JetBrains Mono', monospace;

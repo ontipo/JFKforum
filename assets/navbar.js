@@ -12,6 +12,7 @@ export async function renderNavbar() {
       <form class="navbar-search" id="navbar-search-form">
         <input id="navbar-search-input" placeholder="Rechercher… (!pseudo pour un utilisateur)" />
       </form>
+      <div id="navbar-kc"></div>
       <div id="navbar-notif"></div>
       <div id="navbar-admin-link"></div>
       <div id="navbar-account"></div>
@@ -54,7 +55,7 @@ async function refreshAccountArea() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("username, pfp_url, role")
+    .select("username, pfp_url, role, kc_balance")
     .eq("id", session.user.id)
     .single();
 
@@ -82,6 +83,13 @@ async function refreshAccountArea() {
     adminArea.innerHTML = ["moderator", "owner"].includes(profile.role)
       ? `<a href="admin.html" class="btn-outline" title="Administration">⚙</a>`
       : "";
+  }
+
+  const kcArea = document.getElementById("navbar-kc");
+  if (kcArea) {
+    const { formatKc } = await import("./utils.js");
+    const isStaff = ["moderator", "owner"].includes(profile.role);
+    kcArea.innerHTML = `<a href="kc.html" class="btn-outline">${isStaff ? "∞ K$" : formatKc(profile.kc_balance || 0)}</a>`;
   }
 }
 

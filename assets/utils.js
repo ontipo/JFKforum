@@ -130,6 +130,45 @@ export function timeAgo(dateString) {
   return "à l'instant";
 }
 
+// ------------------------------------------------------------
+// KennedCoins (K$)
+// ------------------------------------------------------------
+export const KC_RATE_CAD = 0.1165; // valeur d'un K$ en CAD
+
+export function cadToKc(cad) {
+  return Math.round((cad / KC_RATE_CAD) * 100) / 100;
+}
+
+export function formatKc(amount) {
+  return `${Number(amount).toFixed(2)} K$`;
+}
+
+// ------------------------------------------------------------
+// Liste des mots bannis (assets/banned.txt) — pseudos, titres, textes, descriptions
+// ------------------------------------------------------------
+let bannedWordsCache = null;
+
+export async function loadBannedWords() {
+  if (bannedWordsCache) return bannedWordsCache;
+  try {
+    const res = await fetch("assets/banned.txt");
+    const text = await res.text();
+    bannedWordsCache = text
+      .split("\n")
+      .map((l) => l.trim().toLowerCase())
+      .filter((l) => l && !l.startsWith("#"));
+  } catch {
+    bannedWordsCache = [];
+  }
+  return bannedWordsCache;
+}
+
+export async function containsBannedWord(text) {
+  const words = await loadBannedWords();
+  const lower = (text || "").toLowerCase();
+  return words.some((w) => lower.includes(w));
+}
+
 export const ROLE_LABEL = {
   owner: "Fondateur",
   moderator: "Modérateur",

@@ -42,12 +42,15 @@ export function createPostCard(post, { currentUserId, currentProfile, forceExpan
         ? `<div class="hashtags">${post.hashtags.map((h) => `<span class="hashtag">#${escapeHtml(h)}</span>`).join("")}</div>`
         : "";
 
+    const imageHtml = renderImageBlock();
+
     article.innerHTML = `
       <div class="post-head">
         <div class="post-head-left">
           ${avatarHtml}
           ${nameHtml}
           ${post.is_official ? '<span class="role-tag owner">Officiel</span>' : ""}
+          ${post.is_pinned ? '<span class="role-tag">📌 Épinglé</span>' : ""}
           <span class="post-time">${timeAgo(post.created_at)}</span>
         </div>
         <span class="post-category-badge">${escapeHtml(post.categories?.name || "")}</span>
@@ -56,6 +59,7 @@ export function createPostCard(post, { currentUserId, currentProfile, forceExpan
       <p class="post-body">${escapeHtml(expanded ? post.body : preview)}${
       !expanded && truncated ? ' <span class="see-more">— voir plus</span>' : ""
     }</p>
+      ${imageHtml}
       ${hashtagsHtml}
       <div class="post-actions">
         <div id="vote-slot"></div>
@@ -100,6 +104,24 @@ export function createPostCard(post, { currentUserId, currentProfile, forceExpan
         }
       });
     }
+  }
+
+  function renderImageBlock() {
+    if (post.image_status === "pending") {
+      return `<div class="post-image-placeholder">VÉRIFICATION EN COURS D'APPROBATION</div>`;
+    }
+    if (post.image_status === "approved") {
+      return `<img src="${post.image_url}" alt="" class="post-image" />`;
+    }
+    if (post.image_status === "18+") {
+      if (currentProfile?.age_verified) {
+        return `<img src="${post.image_url}" alt="" class="post-image" />`;
+      }
+      return `<a href="age-verification.html" class="post-image-placeholder post-image-18" onclick="event.stopPropagation()">
+        🔞 Contenu 18+ — vérification d'âge requise (cliquer pour vérifier)
+      </a>`;
+    }
+    return "";
   }
 
   async function refreshCommentCount() {

@@ -1,5 +1,5 @@
 import { supabase } from "./supabaseClient.js";
-import { containsLink, parseHashtags, parseMentions, escapeHtml } from "./utils.js";
+import { containsLink, parseHashtags, parseMentions, escapeHtml, containsBannedWord } from "./utils.js";
 
 export function openPostModal({ categories, currentUserId, currentProfile, onCreated }) {
   const isStaff = ["moderator", "owner"].includes(currentProfile?.role);
@@ -21,6 +21,8 @@ export function openPostModal({ categories, currentUserId, currentProfile, onCre
       <textarea id="post-body" class="input" rows="6" placeholder="Votre texte… (mentionnez avec @!pseudo)"></textarea>
       <input id="post-hashtags" class="input" placeholder="#hashtags séparés par des espaces (50 max)" />
       <p id="hashtag-count" class="hint-text hidden"></p>
+
+      <input id="post-image" class="input" placeholder="Lien d'image à joindre (optionnel — doit être approuvé avant d'être visible)" />
 
       <label class="checkbox-label">
         <input type="checkbox" id="post-anon" />
@@ -76,6 +78,7 @@ export function openPostModal({ categories, currentUserId, currentProfile, onCre
     const anonymous = overlay.querySelector("#post-anon").checked;
     const official = isStaff ? overlay.querySelector("#post-official")?.checked || false : false;
     const hashtags = parseHashtags(hashtagsInput.value);
+    const imageUrl = overlay.querySelector("#post-image").value.trim();
 
     if (!title || !body) {
       errorEl.textContent = "Le titre et le texte sont obligatoires.";
@@ -84,6 +87,11 @@ export function openPostModal({ categories, currentUserId, currentProfile, onCre
     }
     if (containsLink(title) || containsLink(body)) {
       errorEl.textContent = "Les liens sont interdits dans les publications.";
+      errorEl.classList.remove("hidden");
+      return;
+    }
+    if ((await containsBannedWord(title)) || (await containsBannedWord(body))) {
+      errorEl.textContent = "Cette publication contient un mot interdit.";
       errorEl.classList.remove("hidden");
       return;
     }
@@ -102,7 +110,9 @@ export function openPostModal({ categories, currentUserId, currentProfile, onCre
         is_official: official,
         category_id: categoryId,
         hashtags,
-        mentions
+        mentions,
+        image_pending_url: imageUrl || null,
+        image_status: imageUrl ? "pending" : "none"
       })
       .select()
       .single();

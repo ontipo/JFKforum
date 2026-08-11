@@ -8,7 +8,8 @@ import {
   badgeImagePath,
   ROLE_LABEL,
   escapeHtml,
-  timeAgo
+  timeAgo,
+  containsBannedWord
 } from "./utils.js";
 import { userBadgeHtml } from "./userBadge.js";
 import { createPostCard } from "./postCard.js";
@@ -137,6 +138,10 @@ function renderDescription(isOwn) {
     `;
     document.getElementById("description-save-btn").addEventListener("click", async () => {
       const value = document.getElementById("description-input").value.trim();
+      if (await containsBannedWord(value)) {
+        alert("Cette description contient un mot interdit.");
+        return;
+      }
       await supabase.from("profiles").update({ description: value }).eq("id", me);
     });
   } else {

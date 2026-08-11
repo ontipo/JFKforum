@@ -5,16 +5,17 @@ import { openPostModal } from "./postModal.js";
 import { escapeHtml } from "./utils.js";
 
 const POST_SELECT =
-  "id, title, body, is_anonymous, is_official, category_id, hashtags, created_at, author_id, profiles:author_id (username, role, likes_received, posts_count, pfp_url), categories:category_id (name, slug)";
+  "id, title, body, is_anonymous, is_official, is_pinned, admin_boosted, score, image_url, image_status, category_id, hashtags, created_at, author_id, profiles:author_id (username, role, likes_received, posts_count, pfp_url), categories:category_id (name, slug)";
 
 let categories = [];
 let activeCategory = null;
 let searchTerm = null;
 let currentUserId = null;
 let currentProfile = null;
+let sortMode = "recent";
 
 const tabsEl = document.getElementById("tabs");
-const shuffleBtn = document.getElementById("shuffle-btn");
+const sortSelect = document.getElementById("sort-select");
 const searchBanner = document.getElementById("search-banner");
 const loadingMsg = document.getElementById("loading-msg");
 const emptyMsg = document.getElementById("empty-msg");
@@ -92,13 +93,23 @@ async function loadPosts() {
   emptyMsg.classList.add("hidden");
   postsList.innerHTML = "";
 
-  let query = supabase.from("posts").select(POST_SELECT).order("created_at", { ascending: false });
+  let query = supabase.from("posts").select(POST_SELECT);
   if (activeCategory) query = query.eq("category_id", activeCategory);
   if (searchTerm) {
     // PostgREST : dans un filtre .or(), le joker s'écrit "*" (pas "%"), et les
     // virgules/parenthèses cassent la syntaxe du filtre — on les retire.
     const clean = searchTerm.replace(/^#/, "").trim().replace(/[,()]/g, "");
     query = query.or(`title.ilike.*${clean}*,hashtags.cs.{${clean.toLowerCase()}}`);
+  }
+
+  if (sortMode === "liked") {
+    query = query.order("score", { ascending: false });
+  } else if (sortMode === "pinned") {
+    query = query.order("is_pinned", { ascending: false }).order("created_at", { ascending: false });
+  } else {
+    // "recent" et "random" partent toutes les deux du plus récent ;
+    // "random" est ensuite mélangé côté client juste après le rendu.
+    query = query.order("created_at", { ascending: false });
   }
 
   const { data } = await query;
@@ -112,6 +123,16 @@ async function loadPosts() {
   data.forEach((post) => {
     postsList.appendChild(createPostCard(post, { currentUserId, currentProfile }));
   });
+
+  if (sortMode === "random") shuffleFeed();
+}
+
+function shuffleFeed() {
+  const cards = Array.from(postsList.children);
+  for (let i = cards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    postsList.insertBefore(cards[j], cards[i]);
+  }
 }
 
 async function showSharedPost(id) {
@@ -134,12 +155,9 @@ document.getElementById("back-to-feed").addEventListener("click", () => {
   loadPosts();
 });
 
-shuffleBtn.addEventListener("click", () => {
-  const cards = Array.from(postsList.children);
-  for (let i = cards.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    postsList.insertBefore(cards[j], cards[i]);
-  }
+sortSelect.addEventListener("change", () => {
+  sortMode = sortSelect.value;
+  loadPosts();
 });
 
 publishFab.addEventListener("click", () => {
