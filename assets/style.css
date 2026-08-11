@@ -529,6 +529,30 @@ a.avatar-link { display: inline-block; line-height: 0; }
 
 .comment-form { display: flex; flex-direction: column; gap: 8px; }
 .comment-form-footer { display: flex; align-items: center; justify-content: space-between; }
+
+.comment-children { margin-top: 10px; }
+.reply-toggle {
+  background: none;
+  border: none;
+  color: var(--silver-500);
+  font-size: 12px;
+  padding: 0;
+  margin-top: 4px;
+  cursor: pointer;
+}
+.reply-toggle:hover { color: var(--silver-100); }
+.see-more-replies {
+  background: none;
+  border: 1px solid var(--line);
+  color: var(--silver-500);
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-top: 8px;
+  cursor: pointer;
+}
+.see-more-replies:hover { border-color: var(--silver-500); color: var(--silver-100); }
 .checkbox-label { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--silver-500); }
 
 /* --------------------- Publish button + modal --------------------- */

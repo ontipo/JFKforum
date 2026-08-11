@@ -2,7 +2,7 @@ import { supabase } from "./supabaseClient.js";
 import { renderNavbar } from "./navbar.js";
 import { generateRecoveryCode, containsBannedWord } from "./utils.js";
 import { sha256Hex } from "./hash.js";
-import { downloadRecoveryPdf } from "./recoveryPdf.js";
+import { presentRecoveryChoice } from "./recoveryChoice.js";
 
 renderNavbar();
 
@@ -68,12 +68,13 @@ form.addEventListener("submit", async (e) => {
     return;
   }
 
-  // Le PDF se télécharge tout de suite, que l'e-mail soit confirmé ou non.
-  await downloadRecoveryPdf(username, code);
-
   form.classList.add("hidden");
+  const choiceBox = document.getElementById("recovery-choice-box");
+  choiceBox.classList.remove("hidden");
+  await presentRecoveryChoice(choiceBox, username, code);
+
+  choiceBox.classList.add("hidden");
   document.getElementById("register-done").classList.remove("hidden");
-  setTimeout(() => (window.location.href = "index.html"), 2500);
 });
 
 function showError(msg) {
@@ -83,5 +84,5 @@ function showError(msg) {
 
 function resetSubmit() {
   submitBtn.disabled = false;
-  submitBtn.textContent = "Créer mon compte et télécharger mon code";
+  submitBtn.textContent = "Créer mon compte";
 }

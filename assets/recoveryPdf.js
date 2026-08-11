@@ -65,6 +65,19 @@ export async function downloadRecoveryPdf(username, code) {
 
 // Extrait le texte brut d'un PDF (utilisé sur la page "mot de passe oublié")
 export async function extractTextFromPdf(file) {
+  const fullText = await extractRawTextFromPdf(file);
+  const match = fullText.match(/code:[A-Za-z0-9$?!%#@]+NIP[A-Za-z0-9$?!%#@]+/);
+  return match ? match[0] : null;
+}
+
+// Extrait un e-mail du PDF-modèle de récupération "sans code" (assets/password_reset_template2.pdf)
+export async function extractEmailFromPdf(file) {
+  const fullText = await extractRawTextFromPdf(file);
+  const match = fullText.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+  return match ? match[0] : null;
+}
+
+async function extractRawTextFromPdf(file) {
   const pdfjsLib = await import("https://esm.sh/pdfjs-dist@4.6.82/build/pdf.mjs");
   pdfjsLib.GlobalWorkerOptions.workerSrc =
     "https://esm.sh/pdfjs-dist@4.6.82/build/pdf.worker.min.mjs";
@@ -77,7 +90,5 @@ export async function extractTextFromPdf(file) {
     const content = await page.getTextContent();
     fullText += content.items.map((item) => item.str).join("");
   }
-
-  const match = fullText.match(/code:[A-Za-z0-9$?!%#@]+NIP[A-Za-z0-9$?!%#@]+/);
-  return match ? match[0] : null;
+  return fullText;
 }

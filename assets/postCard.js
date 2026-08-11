@@ -5,7 +5,7 @@ import { mountVoteButtons } from "./voteButtons.js";
 import { mountCommentSection } from "./commentSection.js";
 
 export function createPostCard(post, { currentUserId, currentProfile, forceExpanded = false }) {
-  let expanded = forceExpanded;
+  const mode = forceExpanded ? "full" : "preview";
 
   const article = document.createElement("article");
   article.className = "post-card";
@@ -56,8 +56,8 @@ export function createPostCard(post, { currentUserId, currentProfile, forceExpan
         <span class="post-category-badge">${escapeHtml(post.categories?.name || "")}</span>
       </div>
       <h3 class="post-title font-display">${escapeHtml(post.title)}</h3>
-      <p class="post-body">${escapeHtml(expanded ? post.body : preview)}${
-      !expanded && truncated ? ' <span class="see-more">— voir plus</span>' : ""
+      <p class="post-body">${escapeHtml(forceExpanded ? post.body : preview)}${
+      !forceExpanded && truncated ? ' <span class="see-more">— voir plus</span>' : ""
     }</p>
       ${imageHtml}
       ${hashtagsHtml}
@@ -92,16 +92,25 @@ export function createPostCard(post, { currentUserId, currentProfile, forceExpan
       setTimeout(() => (btn.textContent = original), 1500);
     });
 
-    if (expanded) {
+    if (mode === "full") {
       mountCommentSection(article.querySelector("#comments-slot"), {
         postId: post.id,
         postAuthorId: post.author_id,
         currentUserId,
         currentProfile,
+        mode: "full",
         onCountChange: (n) => {
           const slot = article.querySelector("#comment-count-slot");
           if (slot) slot.textContent = `${n} réponse${n === 1 ? "" : "s"}`;
         }
+      });
+    } else {
+      mountCommentSection(article.querySelector("#comments-slot"), {
+        postId: post.id,
+        postAuthorId: post.author_id,
+        currentUserId,
+        currentProfile,
+        mode: "preview"
       });
     }
   }
@@ -128,7 +137,8 @@ export function createPostCard(post, { currentUserId, currentProfile, forceExpan
     const { count } = await supabase
       .from("comments")
       .select("id", { count: "exact", head: true })
-      .eq("post_id", post.id);
+      .eq("post_id", post.id)
+      .is("parent_comment_id", null);
     const slot = article.querySelector("#comment-count-slot");
     if (slot) slot.textContent = `${count ?? 0} réponse${count === 1 ? "" : "s"}`;
   }
@@ -136,8 +146,7 @@ export function createPostCard(post, { currentUserId, currentProfile, forceExpan
   if (!forceExpanded) {
     article.addEventListener("click", (e) => {
       if (e.target.closest("#vote-slot, #share-btn, #comments-slot")) return;
-      expanded = !expanded;
-      render();
+      window.location.href = `index.html?=${post.id}`;
     });
   }
 
