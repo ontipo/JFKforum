@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forum — Vérification d'âge</title>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <header class="navbar" id="navbar-root"></header>
+
+  <main class="page-narrow">
+    <h1 class="font-display center" style="font-size:22px;font-weight:600">Vérification d'âge</h1>
+
+    <div class="account-card" style="text-align:left;margin-top:16px">
+      <p class="hint-text" style="margin-bottom:10px">
+        Pour accéder au contenu marqué 18+, envoie un lien vers une photo de toi tenant une pièce d'identité
+        gouvernementale, sur laquelle <strong>toutes les informations sont cachées sauf ton visage et ta date de
+        naissance</strong>. Un modérateur vérifiera manuellement.
+      </p>
+      <p class="hint-text" style="margin-bottom:14px;color:var(--silver-300)">
+        Important : n'envoie jamais de lien vers un hébergeur que tu ne contrôles pas et dont tu ne peux pas
+        retirer l'image plus tard. Cette information est sensible — n'utilise ce système que si tu comprends et
+        acceptes qu'un modérateur humain la consultera pour validation.
+      </p>
+
+      <div id="status-slot" class="hint-text" style="margin-bottom:10px"></div>
+
+      <div id="form-slot">
+        <input id="age-url-input" class="input" placeholder="Lien vers la photo" />
+        <button id="age-submit-btn" class="btn-outline" style="margin-top:8px">Envoyer pour vérification</button>
+      </div>
+      <p id="age-error" class="error-text hidden" style="margin-top:8px"></p>
+    </div>
+  </main>
+
+  <script type="module" src="assets/age-verification.js"></script>
+</body>
+</html>

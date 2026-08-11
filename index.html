@@ -18,7 +18,12 @@
     <div id="feed-view">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
         <div id="tabs" class="tabs"></div>
-        <button id="shuffle-btn" class="refresh-btn" title="Mélanger le fil (FYP)">⟳ actualiser</button>
+        <select id="sort-select" class="input" style="width:auto;flex-shrink:0;padding:6px 10px;font-size:13px">
+          <option value="recent">Plus récent</option>
+          <option value="liked">Plus aimé</option>
+          <option value="pinned">Épinglé</option>
+          <option value="random">Au hasard</option>
+        </select>
       </div>
 
       <p id="search-banner" class="hint-text hidden" style="margin-bottom:12px"></p>
