@@ -22,41 +22,6 @@
     <a href="buy/kc.html" class="btn-primary" style="display:block;text-align:center;margin-top:16px;text-decoration:none">
       Acheter des K$
     </a>
-
-    <div class="account-card" style="text-align:left;margin-top:16px">
-      <h2 class="font-display" style="font-size:15px;margin:0 0 10px">Envoyer un virement</h2>
-      <form id="send-form" class="stack">
-        <input id="send-username" class="input" placeholder="!pseudo du destinataire" />
-        <input id="send-amount" class="input" type="number" step="0.01" min="0.01" placeholder="Montant (K$)" />
-        <div style="font-size:13px;color:var(--silver-300)">
-          <label style="display:block;margin-bottom:4px">
-            <input type="radio" name="fee-mode" value="receiver_pays_fee" checked />
-            Le destinataire reçoit 97,5% (frais de 2,5% déduits de son côté)
-          </label>
-          <label style="display:block">
-            <input type="radio" name="fee-mode" value="sender_pays_extra" />
-            Je paie 2,5% de plus pour que le destinataire reçoive le montant complet
-          </label>
-        </div>
-        <input id="send-reason" class="input" placeholder="Motif (optionnel)" />
-        <input id="send-nip" class="input" placeholder="NIP à communiquer au destinataire" />
-        <p id="send-error" class="error-text hidden"></p>
-        <p id="send-preview" class="hint-text"></p>
-        <button type="submit" class="btn-outline">Envoyer</button>
-      </form>
-    </div>
-
-    <div class="account-card" style="text-align:left;margin-top:16px">
-      <h2 class="font-display" style="font-size:15px;margin:0 0 10px">Virements reçus en attente</h2>
-      <div id="incoming-list" class="stack"></div>
-      <p id="incoming-empty" class="muted hidden">Aucun virement en attente.</p>
-    </div>
-
-    <div class="account-card" style="text-align:left;margin-top:16px">
-      <h2 class="font-display" style="font-size:15px;margin:0 0 10px">Historique des virements</h2>
-      <div id="history-list" class="stack"></div>
-      <p id="history-empty" class="muted hidden">Aucun virement pour le moment.</p>
-    </div>
   </main>
 
   <script type="module" src="assets/kc.js"></script>

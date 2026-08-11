@@ -20,13 +20,15 @@
       </div>
 
       <button id="logout-btn" class="btn-outline">Se déconnecter</button>
+      <a href="settings.html" class="btn-outline" style="display:block;text-align:center;text-decoration:none">Paramètres</a>
+      <a id="public-profile-link" href="#" class="btn-outline" style="display:block;text-align:center;text-decoration:none">Voir mon profil public</a>
       <a href="kc.html" class="btn-outline" style="display:block;text-align:center;text-decoration:none">Portefeuille K$</a>
       <a href="age-verification.html" class="btn-outline" style="display:block;text-align:center;text-decoration:none">Vérification d'âge (18+)</a>
 
       <div class="account-card" style="text-align:left">
         <h2 class="font-display" style="font-size:15px;margin:0 0 10px">Photo de profil</h2>
         <div id="pfp-status" class="hint-text" style="margin-bottom:8px"></div>
-        <p class="hint-text" style="margin-bottom:8px">L'image doit faire exactement <strong>150 × 150 pixels</strong>.</p>
+        <p class="hint-text" style="margin-bottom:8px">L'image doit faire exactement <strong>150 × 150 pixels</strong>. On recommande <a href="https://postimages.org/" target="_blank" class="link-underline">postimages.org (PostIMG)</a> — hébergement sans expiration, redimensionne à 150×150.</p>
 
         <div style="display:flex;gap:14px;margin-bottom:8px;font-size:13px;color:var(--silver-300)">
           <label style="display:flex;gap:6px;align-items:center">
@@ -36,6 +38,8 @@
             <input type="radio" name="pfp-hosting" value="physical" /> Hébergement physique (1,99$, permanent)
           </label>
         </div>
+
+        <input id="pfp-code-input" class="input hidden" placeholder="Code promotionnel (obtenu après achat)" style="margin-bottom:8px" />
 
         <div style="display:flex;gap:8px">
           <input id="pfp-url-input" class="input" placeholder="Lien vers l'image hébergée (150x150)" />
@@ -48,7 +52,7 @@
       <div class="account-card" style="text-align:left">
         <h2 class="font-display" style="font-size:15px;margin:0 0 10px">Bannière</h2>
         <div id="banner-status" class="hint-text" style="margin-bottom:8px"></div>
-        <p class="hint-text" style="margin-bottom:8px">L'image doit faire exactement <strong>1500 × 500 pixels</strong> et être un <strong>.gif</strong> animé.</p>
+        <p class="hint-text" style="margin-bottom:8px">L'image doit faire exactement <strong>1500 × 500 pixels</strong> et être un <strong>.gif</strong> animé. On recommande <a href="https://x02.me/" target="_blank" class="link-underline">x02.me (X02)</a>.</p>
 
         <div style="display:flex;gap:14px;margin-bottom:8px;font-size:13px;color:var(--silver-300)">
           <label style="display:flex;gap:6px;align-items:center">
@@ -58,6 +62,8 @@
             <input type="radio" name="banner-hosting" value="physical" /> Hébergement physique (1,99$, permanent)
           </label>
         </div>
+
+        <input id="banner-code-input" class="input hidden" placeholder="Code promotionnel (obtenu après achat)" style="margin-bottom:8px" />
 
         <div style="display:flex;gap:8px">
           <input id="banner-url-input" class="input" placeholder="Lien vers l'image hébergée (1500x500)" />
