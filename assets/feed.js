@@ -38,7 +38,7 @@ async function init() {
   if (sharedId) {
     await showSharedPost(sharedId);
   } else {
-    if (q) {
+    if (q && currentUserId) {
       searchTerm = q;
       searchBanner.classList.remove("hidden");
       searchBanner.innerHTML = `Résultats pour « ${escapeHtml(q)} » — <button id="clear-search" class="link-underline" style="background:none;border:none;padding:0">effacer</button>`;
@@ -120,9 +120,19 @@ async function loadPosts() {
     return;
   }
 
-  data.forEach((post) => {
+  const visible = currentUserId ? data : data.slice(0, 5);
+
+  visible.forEach((post) => {
     postsList.appendChild(createPostCard(post, { currentUserId, currentProfile }));
   });
+
+  if (!currentUserId && data.length > 5) {
+    const prompt = document.createElement("div");
+    prompt.className = "post-card";
+    prompt.style.textAlign = "center";
+    prompt.innerHTML = `<p class="post-body">Connecte-toi pour voir plus de publications.</p><a href="login.html" class="btn-outline" style="display:inline-block;margin-top:8px">Se connecter</a>`;
+    postsList.appendChild(prompt);
+  }
 
   if (sortMode === "random") shuffleFeed();
 }
@@ -155,7 +165,7 @@ document.getElementById("back-to-feed").addEventListener("click", () => {
   loadPosts();
 });
 
-sortSelect.addEventListener("change", () => {
+sortSelect?.addEventListener("change", () => {
   sortMode = sortSelect.value;
   loadPosts();
 });

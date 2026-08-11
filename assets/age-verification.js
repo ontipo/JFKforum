@@ -1,5 +1,6 @@
 import { supabase } from "./supabaseClient.js";
 import { renderNavbar } from "./navbar.js";
+import { computeAge } from "./utils.js";
 
 renderNavbar();
 
@@ -25,9 +26,18 @@ async function load() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("age_verification_status, age_verified")
+    .select("age_verification_status, age_verified, birthdate")
     .eq("id", userId)
     .single();
+
+  const age = computeAge(profile?.birthdate);
+
+  if (age !== null && age < 18) {
+    document.getElementById("status-slot").textContent =
+      "Ta date de naissance indique que tu as moins de 18 ans — tu ne peux pas vérifier ton âge pour du contenu 18+.";
+    document.getElementById("form-slot").classList.add("hidden");
+    return;
+  }
 
   document.getElementById("status-slot").textContent = STATUS_LABEL[profile?.age_verification_status] || "";
 

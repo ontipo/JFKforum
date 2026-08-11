@@ -10,7 +10,9 @@ const TOGGLES = [
   { key: "accept_tags", label: "Accepter que tout le monde me mentionne (sinon, la mention disparaît)" },
   { key: "friends_private", label: "Rendre ma liste d'amis privée" },
   { key: "decline_friend_requests", label: "Refuser les demandes d'amitié" },
-  { key: "hide_last_seen", label: "Cacher ma dernière connexion / mon statut en ligne" }
+  { key: "hide_last_seen", label: "Cacher ma dernière connexion / mon statut en ligne" },
+  { key: "show_kc_balance", label: "Rendre mon solde de K$ visible publiquement" },
+  { key: "show_age_verified", label: "Rendre mon statut de vérification d'âge visible publiquement" }
 ];
 
 const DEFAULT_SETTINGS = {
@@ -20,7 +22,9 @@ const DEFAULT_SETTINGS = {
   accept_tags: true,
   friends_private: false,
   decline_friend_requests: false,
-  hide_last_seen: false
+  hide_last_seen: false,
+  show_kc_balance: false,
+  show_age_verified: false
 };
 
 let userId = null;

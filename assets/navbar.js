@@ -1,16 +1,22 @@
-//update
-
 import { supabase } from "./supabaseClient.js";
 
 export async function renderNavbar() {
   const root = document.getElementById("navbar-root");
   if (!root) return;
 
+  const {
+    data: { session }
+  } = await supabase.auth.getSession();
+
   root.innerHTML = `
     <div class="navbar-inner">
-      <a href="index.html" class="navbar-logo">Tous</a>
+      <a href="index.html" class="navbar-logo">
+        <img src="assets/site.svg" alt="Forum" style="height:32px;width:auto;display:block" />
+      </a>
       <form class="navbar-search" id="navbar-search-form">
-        <input id="navbar-search-input" placeholder="Rechercher… (!pseudo pour un utilisateur)" />
+        <input id="navbar-search-input" placeholder="${
+          session ? "Rechercher… (!pseudo pour un utilisateur)" : "Connecte-toi pour rechercher"
+        }" ${session ? "" : "disabled"} />
       </form>
       <div id="navbar-kc"></div>
       <div id="navbar-notif"></div>
@@ -21,6 +27,7 @@ export async function renderNavbar() {
 
   document.getElementById("navbar-search-form").addEventListener("submit", (e) => {
     e.preventDefault();
+    if (!session) return;
     const q = document.getElementById("navbar-search-input").value.trim();
     if (!q) return;
     if (q.startsWith("!")) {
@@ -36,12 +43,25 @@ export async function renderNavbar() {
     refreshAccountArea();
     refreshNotifBell();
   });
+
+  renderFooter();
+}
+
+function renderFooter() {
+  if (document.getElementById("site-footer")) return;
+  const footer = document.createElement("footer");
+  footer.id = "site-footer";
+  footer.style.cssText = "text-align:center;padding:24px 16px 40px;color:var(--silver-700);font-size:12px";
+  footer.textContent = "No-log policy - JFKforum.";
+  document.body.appendChild(footer);
 }
 
 async function refreshAccountArea() {
   const area = document.getElementById("navbar-account");
   const adminArea = document.getElementById("navbar-admin-link");
   if (!area) return;
+
+  const { avatarImgHtml, formatKc } = await import("./utils.js");
 
   const {
     data: { session }
@@ -50,6 +70,7 @@ async function refreshAccountArea() {
   if (!session) {
     area.innerHTML = `<a href="login.html" class="btn-outline">Se connecter</a>`;
     if (adminArea) adminArea.innerHTML = "";
+    document.getElementById("navbar-kc").innerHTML = "";
     return;
   }
 
@@ -67,17 +88,19 @@ async function refreshAccountArea() {
 
   area.innerHTML = `
     <a href="account.html" class="navbar-account">
-      <span class="avatar">${
-        profile.pfp_url
-          ? `<img src="${profile.pfp_url}" alt="" width="32" height="32" />`
-          : (profile.username[1] || "?").toUpperCase()
-      }</span>
+      <span class="avatar">${avatarImgHtml(profile.username, profile.pfp_url, 32)}</span>
       <span class="hidden-mobile">${profile.username}</span>
     </a>
   `;
 
-  // Heartbeat : met à jour la dernière connexion (silencieux, sans bloquer l'affichage)
-  supabase.from("profiles").update({ last_seen_at: new Date().toISOString() }).eq("id", session.user.id);
+  // Heartbeat : met à jour la dernière connexion (visible côté console si ça échoue)
+  supabase
+    .from("profiles")
+    .update({ last_seen_at: new Date().toISOString() })
+    .eq("id", session.user.id)
+    .then(({ error }) => {
+      if (error) console.error("Heartbeat last_seen_at a échoué :", error.message);
+    });
 
   if (adminArea) {
     adminArea.innerHTML = ["moderator", "owner"].includes(profile.role)
@@ -87,7 +110,6 @@ async function refreshAccountArea() {
 
   const kcArea = document.getElementById("navbar-kc");
   if (kcArea) {
-    const { formatKc } = await import("./utils.js");
     const isStaff = ["moderator", "owner"].includes(profile.role);
     kcArea.innerHTML = `<a href="kc.html" class="btn-outline">${isStaff ? "∞ K$" : formatKc(profile.kc_balance || 0)}</a>`;
   }
@@ -169,12 +191,15 @@ async function loadNotifDropdown(dropdown, userId) {
         n.type === "custom" ? n.message || "Notification" : (NOTIF_LABEL[n.type] || (() => "Notification"))(actorName);
       const href = n.type === "custom" ? "#" : n.source_post_id ? `index.html?=${n.source_post_id}` : "#";
       return `
-        <a href="${href}" data-notif="${n.id}" style="display:block;padding:8px;border-radius:8px;font-size:13px;${
-        n.read ? "opacity:0.6" : "background:var(--raised)"
-      }">
-          ${escapeHtml(label)}
-          <div class="hint-text">${timeAgo(n.created_at)}</div>
-        </a>
+        <div style="display:flex;align-items:flex-start;gap:4px;padding:8px;border-radius:8px;font-size:13px;${
+          n.read ? "opacity:0.6" : "background:var(--raised)"
+        }">
+          <a href="${href}" data-notif="${n.id}" style="flex:1;min-width:0">
+            ${escapeHtml(label)}
+            <div class="hint-text">${timeAgo(n.created_at)}</div>
+          </a>
+          <button data-delete-notif="${n.id}" title="Supprimer" style="background:none;border:none;color:var(--silver-700);font-size:14px;flex-shrink:0;cursor:pointer">×</button>
+        </div>
       `;
     })
     .join("");
@@ -182,6 +207,15 @@ async function loadNotifDropdown(dropdown, userId) {
   dropdown.querySelectorAll("[data-notif]").forEach((el) => {
     el.addEventListener("click", async () => {
       await supabase.from("notifications").update({ read: true }).eq("id", el.dataset.notif);
+    });
+  });
+
+  dropdown.querySelectorAll("[data-delete-notif]").forEach((el) => {
+    el.addEventListener("click", async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      await supabase.from("notifications").delete().eq("id", el.dataset.deleteNotif);
+      loadNotifDropdown(dropdown, userId);
     });
   });
 }

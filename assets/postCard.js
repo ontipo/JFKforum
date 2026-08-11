@@ -1,5 +1,5 @@
 import { supabase } from "./supabaseClient.js";
-import { truncateBody, timeAgo, postShareUrl, escapeHtml } from "./utils.js";
+import { truncateBody, timeAgo, postShareUrl, escapeHtml, avatarImgHtml } from "./utils.js";
 import { userBadgeHtml } from "./userBadge.js";
 import { mountVoteButtons } from "./voteButtons.js";
 import { mountCommentSection } from "./commentSection.js";
@@ -31,11 +31,11 @@ export function createPostCard(post, { currentUserId, currentProfile, forceExpan
 
     const avatarHtml = post.is_anonymous
       ? `<span class="post-avatar">?</span>`
-      : `<a href="profile.html?user=${encodeURIComponent(post.profiles?.username || "")}" class="avatar-link" onclick="event.stopPropagation()"><span class="post-avatar">${
-          post.profiles?.pfp_url
-            ? `<img src="${post.profiles.pfp_url}" alt="" width="36" height="36" />`
-            : escapeHtml((post.profiles?.username?.[1] || "?").toUpperCase())
-        }</span></a>`;
+      : `<a href="profile.html?user=${encodeURIComponent(post.profiles?.username || "")}" class="avatar-link" onclick="event.stopPropagation()"><span class="post-avatar">${avatarImgHtml(
+          post.profiles?.username,
+          post.profiles?.pfp_url,
+          36
+        )}</span></a>`;
 
     const hashtagsHtml =
       post.hashtags?.length > 0

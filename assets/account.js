@@ -1,6 +1,6 @@
 import { supabase } from "./supabaseClient.js";
 import { renderNavbar } from "./navbar.js";
-import { getLevel, escapeHtml, isImageExpired } from "./utils.js";
+import { getLevel, escapeHtml, isImageExpired, avatarImgHtml, isValidUrl } from "./utils.js";
 import { userBadgeHtml } from "./userBadge.js";
 
 renderNavbar();
@@ -11,6 +11,7 @@ const avatarSlot = document.getElementById("avatar-slot");
 const badgeSlot = document.getElementById("badge-slot");
 const pointsSlot = document.getElementById("points-slot");
 const logoutBtn = document.getElementById("logout-btn");
+const publicProfileLink = document.getElementById("public-profile-link");
 
 const PFP_SIZE = { width: 150, height: 150 };
 const BANNER_SIZE = { width: 1500, height: 500 };
@@ -23,6 +24,7 @@ const STATUS_LABEL = {
 };
 
 let userId = null;
+let currentUsername = null;
 
 async function load() {
   const {
@@ -40,6 +42,8 @@ async function load() {
   loadingMsg.classList.add("hidden");
 
   if (!profile) return;
+  currentUsername = profile.username;
+  publicProfileLink.href = `profile.html?user=${encodeURIComponent(profile.username)}`;
 
   // Expiration lazy : si l'image approuvée en hébergement "en ligne" a plus de 3 mois,
   // on la retire silencieusement et on repasse le statut à "none".
@@ -63,9 +67,7 @@ async function load() {
     likesReceived: profile.likes_received
   });
 
-  avatarSlot.innerHTML = profile.pfp_url
-    ? `<img src="${profile.pfp_url}" alt="" />`
-    : `<span style="font-size:20px;color:var(--silver-500)">${escapeHtml((profile.username[1] || "?").toUpperCase())}</span>`;
+  avatarSlot.innerHTML = avatarImgHtml(profile.username, profile.pfp_url, 64);
 
   badgeSlot.innerHTML = userBadgeHtml({
     username: profile.username,
@@ -92,6 +94,17 @@ function checkImageDimensions(url, { width, height }) {
   });
 }
 
+// Bascule l'affichage du champ "code promotionnel" selon le mode d'hébergement choisi
+["pfp", "banner"].forEach((field) => {
+  document.querySelectorAll(`input[name="${field}-hosting"]`).forEach((radio) => {
+    radio.addEventListener("change", () => {
+      const codeInput = document.getElementById(`${field}-code-input`);
+      const isPhysical = document.querySelector(`input[name="${field}-hosting"]:checked`).value === "physical";
+      codeInput.classList.toggle("hidden", !isPhysical);
+    });
+  });
+});
+
 async function submitImage(field, inputId, errorId, size) {
   const input = document.getElementById(inputId);
   const errorEl = document.getElementById(errorId);
@@ -100,10 +113,35 @@ async function submitImage(field, inputId, errorId, size) {
   const url = input.value.trim();
   if (!url) return;
 
+  if (!isValidUrl(url)) {
+    errorEl.textContent = "Ce n'est pas un lien valide (doit commencer par http:// ou https://).";
+    errorEl.classList.remove("hidden");
+    return;
+  }
+
   const hostingChoice = document.querySelector(`input[name="${field}-hosting"]:checked`).value;
 
   if (hostingChoice === "physical") {
-    window.location.href = `buy/${field}.html`;
+    const code = document.getElementById(`${field}-code-input`).value.trim();
+    if (!code) {
+      errorEl.textContent = "Entre ton code promotionnel (obtenu après l'achat) pour soumettre la demande.";
+      errorEl.classList.remove("hidden");
+      return;
+    }
+
+    const patch =
+      field === "pfp"
+        ? { pfp_pending_url: url, pfp_status: "pending", pfp_hosting: "physical", pfp_promo_code: code }
+        : { banner_pending_url: url, banner_status: "pending", banner_hosting: "physical", banner_promo_code: code };
+
+    const { error } = await supabase.from("profiles").update(patch).eq("id", userId);
+    if (error) {
+      errorEl.textContent = error.message;
+      errorEl.classList.remove("hidden");
+      return;
+    }
+    input.value = "";
+    load();
     return;
   }
 

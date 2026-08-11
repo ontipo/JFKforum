@@ -169,6 +169,55 @@ export async function containsBannedWord(text) {
   return words.some((w) => lower.includes(w));
 }
 
+// ------------------------------------------------------------
+// Résolution de l'avatar / bannière : essaie d'abord le dossier
+// géré manuellement sur GitHub (img/public/{user}/…), sinon retombe
+// sur le lien approuvé par un modérateur (Supabase), sinon rien.
+// ------------------------------------------------------------
+export function avatarImgHtml(username, fallbackUrl, size, cssClass = "") {
+  const clean = (username || "").replace(/^!/, "");
+  const initial = escapeHtml((username?.[1] || "?").toUpperCase());
+  const localSrc = `img/public/${clean}/pfp.png`;
+  const onSupabaseError = `this.remove();this.parentElement.textContent='${initial}';`;
+  const onLocalError = fallbackUrl
+    ? `this.onerror=function(){${onSupabaseError}};this.src='${fallbackUrl}';`
+    : onSupabaseError;
+  return `<img src="${localSrc}" alt="" width="${size}" height="${size}" class="${cssClass}" onerror="${onLocalError}" />`;
+}
+
+export function bannerImgHtml(username, fallbackUrl) {
+  const clean = (username || "").replace(/^!/, "");
+  const pngSrc = `img/public/${clean}/banner.png`;
+  const gifSrc = `img/public/${clean}/banner.gif`;
+  const fallback = fallbackUrl ? `this.onerror=null;this.src='${fallbackUrl}';` : `this.remove();`;
+  return `<img src="${pngSrc}" alt="" onerror="this.onerror=null;this.src='${gifSrc}';this.onerror=function(){${fallback}};" />`;
+}
+
+// ------------------------------------------------------------
+// Validation basique de lien (utilisé partout où un lien d'image est soumis)
+// ------------------------------------------------------------
+export function isValidUrl(str) {
+  try {
+    const u = new URL(str);
+    return u.protocol === "http:" || u.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
+// ------------------------------------------------------------
+// Âge à partir d'une date de naissance (format YYYY-MM-DD)
+// ------------------------------------------------------------
+export function computeAge(birthdate) {
+  if (!birthdate) return null;
+  const b = new Date(birthdate);
+  const now = new Date();
+  let age = now.getFullYear() - b.getFullYear();
+  const m = now.getMonth() - b.getMonth();
+  if (m < 0 || (m === 0 && now.getDate() < b.getDate())) age--;
+  return age;
+}
+
 export const ROLE_LABEL = {
   owner: "Fondateur",
   moderator: "Modérateur",

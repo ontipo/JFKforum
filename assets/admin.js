@@ -123,7 +123,9 @@ document.getElementById("promote-form")?.addEventListener("submit", async (e) =>
 async function loadPendingImages() {
   const { data } = await supabase
     .from("profiles")
-    .select("id, username, pfp_pending_url, banner_pending_url, pfp_status, banner_status")
+    .select(
+      "id, username, pfp_pending_url, banner_pending_url, pfp_status, banner_status, pfp_hosting, banner_hosting, pfp_promo_code, banner_promo_code"
+    )
     .or("pfp_status.eq.pending,banner_status.eq.pending");
 
   const list = document.getElementById("pending-images-list");
@@ -131,8 +133,10 @@ async function loadPendingImages() {
 
   const rows = [];
   (data || []).forEach((p) => {
-    if (p.pfp_status === "pending" && p.pfp_pending_url) rows.push({ ...p, field: "pfp" });
-    if (p.banner_status === "pending" && p.banner_pending_url) rows.push({ ...p, field: "banner" });
+    if (p.pfp_status === "pending" && p.pfp_pending_url)
+      rows.push({ ...p, field: "pfp", hosting: p.pfp_hosting, code: p.pfp_promo_code });
+    if (p.banner_status === "pending" && p.banner_pending_url)
+      rows.push({ ...p, field: "banner", hosting: p.banner_hosting, code: p.banner_promo_code });
   });
 
   if (rows.length === 0) {
@@ -146,8 +150,15 @@ async function loadPendingImages() {
     .map(
       (r) => `
     <div class="post-card" style="padding:14px" data-user="${r.id}" data-field="${r.field}">
-      <p style="margin:0 0 8px"><strong>${escapeHtml(r.username)}</strong> — ${r.field === "pfp" ? "photo de profil" : "bannière"}</p>
+      <p style="margin:0 0 8px"><strong>${escapeHtml(r.username)}</strong> — ${r.field === "pfp" ? "photo de profil" : "bannière"}
+        ${r.hosting === "physical" ? `<span class="role-tag">Hébergement physique</span>` : ""}
+      </p>
       <p class="hint-text" style="word-break:break-all;margin-bottom:10px">${escapeHtml(r.field === "pfp" ? r.pfp_pending_url : r.banner_pending_url)}</p>
+      ${
+        r.hosting === "physical"
+          ? `<p class="hint-text" style="margin-bottom:10px">Code fourni : <strong>${escapeHtml(r.code || "—")}</strong> — à vérifier manuellement.</p>`
+          : ""
+      }
       <div style="display:flex;gap:8px">
         <button class="btn-outline approve-btn" style="flex:1">Approuver</button>
         <button class="btn-outline reject-btn" style="flex:1">Refuser</button>
@@ -290,7 +301,7 @@ async function loadAgeVerifications() {
     card.querySelector(".age-accept").addEventListener("click", async () => {
       await supabase
         .from("profiles")
-        .update({ age_verification_status: "approved", age_verified: true })
+        .update({ age_verification_status: "approved", age_verified: true, age_verified_by: me.id })
         .eq("id", userId);
       loadAgeVerifications();
     });

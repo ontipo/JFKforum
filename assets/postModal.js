@@ -1,5 +1,5 @@
 import { supabase } from "./supabaseClient.js";
-import { containsLink, parseHashtags, parseMentions, escapeHtml, containsBannedWord } from "./utils.js";
+import { containsLink, parseHashtags, parseMentions, escapeHtml, containsBannedWord, isValidUrl } from "./utils.js";
 
 export function openPostModal({ categories, currentUserId, currentProfile, onCreated }) {
   const isStaff = ["moderator", "owner"].includes(currentProfile?.role);
@@ -82,6 +82,21 @@ export function openPostModal({ categories, currentUserId, currentProfile, onCre
 
     if (!title || !body) {
       errorEl.textContent = "Le titre et le texte sont obligatoires.";
+      errorEl.classList.remove("hidden");
+      return;
+    }
+    if (title.length < 5 || title.length > 60) {
+      errorEl.textContent = "Le titre doit faire entre 5 et 60 caractères.";
+      errorEl.classList.remove("hidden");
+      return;
+    }
+    if (body.length < 20) {
+      errorEl.textContent = "Le texte doit faire au moins 20 caractères.";
+      errorEl.classList.remove("hidden");
+      return;
+    }
+    if (imageUrl && !isValidUrl(imageUrl)) {
+      errorEl.textContent = "Le lien d'image n'est pas valide (doit commencer par http:// ou https://).";
       errorEl.classList.remove("hidden");
       return;
     }

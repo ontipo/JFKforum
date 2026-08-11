@@ -26,6 +26,7 @@ form.addEventListener("submit", async (e) => {
   const username = usernameInput.value.trim();
   const email = emailInput.value.trim();
   const password = passwordInput.value;
+  const birthdate = document.getElementById("reg-birthdate").value;
 
   if (!username.startsWith("!") || username.length < 3) {
     showError("Le nom d'utilisateur doit commencer par « ! » et faire au moins 3 caractères.");
@@ -56,7 +57,7 @@ form.addEventListener("submit", async (e) => {
     email,
     password,
     options: {
-      data: { username, recovery_code_hash: codeHash }
+      data: { username, recovery_code_hash: codeHash, birthdate: birthdate || null }
     }
   });
 
