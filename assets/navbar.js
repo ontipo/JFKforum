@@ -10,8 +10,8 @@ export async function renderNavbar() {
 
   root.innerHTML = `
     <div class="navbar-inner">
-      <a href="index.html" class="navbar-logo">
-        <img src="assets/site.svg" alt="Forum" style="height:32px;width:auto;display:block" />
+      <a href="https://ontipo.github.io/JFKforum/index.html" class="navbar-logo">
+        <img src="https://ontipo.github.io/JFKforum/assets/site.svg" alt="Forum" style="height:32px;width:auto;display:block" />
       </a>
       <form class="navbar-search" id="navbar-search-form">
         <input id="navbar-search-input" placeholder="${
