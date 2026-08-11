@@ -13,6 +13,22 @@ const passwordInput = document.getElementById("reg-password");
 const errorEl = document.getElementById("reg-error");
 const submitBtn = document.getElementById("reg-submit");
 
+// ------------------------------------------------------------
+// Bannière de parrainage (?sponsor=CODE dans l'URL)
+// ------------------------------------------------------------
+const sponsorCode = new URLSearchParams(window.location.search).get("sponsor");
+
+async function showSponsorBanner() {
+  if (!sponsorCode) return;
+  const { data } = await supabase.from("profiles").select("username").eq("sponsor_code", sponsorCode).single();
+  if (!data) return;
+
+  document.getElementById("sponsor-text").textContent =
+    `Vous avez été invité(e) à rejoindre JFKforum par l'utilisateur ${data.username}, et c'est pourquoi vous avez ce lien de parrainage. Créez votre compte dès maintenant pour profiter des avantages que vous pourriez avoir.`;
+  document.getElementById("sponsor-banner").classList.remove("hidden");
+}
+showSponsorBanner();
+
 usernameInput.addEventListener("input", () => {
   if (!usernameInput.value.startsWith("!")) {
     usernameInput.value = "!" + usernameInput.value.replace(/^!*/, "");
@@ -57,7 +73,12 @@ form.addEventListener("submit", async (e) => {
     email,
     password,
     options: {
-      data: { username, recovery_code_hash: codeHash, birthdate: birthdate || null }
+      data: {
+        username,
+        recovery_code_hash: codeHash,
+        birthdate: birthdate || null,
+        referred_by_code: sponsorCode || null
+      }
     }
   });
 
