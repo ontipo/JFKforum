@@ -1,6 +1,6 @@
 import { supabase } from "./supabaseClient.js";
 import { renderNavbar } from "./navbar.js";
-import { formatKc, escapeHtml, timeAgo } from "./utils.js";
+import { formatKc, escapeHtml, timeAgo } from "utils.js";
 
 renderNavbar();
 
