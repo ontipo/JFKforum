@@ -1,6 +1,6 @@
 import { renderNavbar } from "./navbar.js";
-import { isBogonIp, maskIp } from "./utils.js";
-import { SUPABASE_URL, SUPABASE_ANON_KEY, PROXYCHECK_API_KEY } from "./config.js";
+import { maskIp } from "./utils.js";
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./config.js";
 
 renderNavbar();
 
@@ -32,78 +32,45 @@ const CHECK_ROWS = [
 ];
 
 async function run() {
-  try {
-    const ipRes = await fetch("https://api.ipify.org?format=json");
-    const ipJson = await ipRes.json();
-    detectedIp = ipJson.ip;
-  } catch {
-    scanStatus.textContent = "Impossible de détecter ton adresse IP. Réessaie plus tard.";
-    return;
-  }
-
-  if (isBogonIp(detectedIp)) {
-    renderResults(detectedIp, {
-      vpn: false, proxy: false, tor: false, datacenter: false, hosting: false, cloud: false,
-      residential: false, mobile: false, reputation: false, bot: false, bogon: true
-    }, false);
-    return;
-  }
+  scanStatus.textContent = "Analyse de connexion en cours…";
 
   try {
-    const banRes = await fetch("assets/ip-ban.txt");
-    const banText = await banRes.text();
-    const bannedIps = banText.split("\n").map((l) => l.trim()).filter((l) => l && !l.startsWith("#"));
-    if (bannedIps.includes(detectedIp)) {
-      scanStatus.textContent = `Analyse de connexion — ${maskIp(detectedIp)}`;
-      scanResult.classList.remove("hidden");
-      scanResult.innerHTML = `<p class="error-text">Cette adresse IP est bannie du forum.</p>`;
-      return;
-    }
-  } catch {
-    // Liste indisponible : on continue, la table Supabase ip_bans reste vérifiée côté serveur.
-  }
-
-  try {
-    // proxycheck.io : palier gratuit accessible sans clé API (limité en volume).
-    // Une clé optionnelle (PROXYCHECK_API_KEY dans config.js) augmente la limite si besoin.
-    const keyParam = PROXYCHECK_API_KEY ? `&key=${PROXYCHECK_API_KEY}` : "";
-    const res = await fetch(
-      `https://proxycheck.io/v2/${detectedIp}?vpn=1&asn=1&risk=1${keyParam}`
-    );
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/ip-check`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`
+      }
+    });
     const json = await res.json();
-    const data = json[detectedIp] || {};
 
-    if (json.status !== "ok" && json.status !== "warning") {
-      scanStatus.textContent = "Le service de vérification est indisponible pour le moment. Réessaie plus tard.";
+    if (!res.ok || !json.ip) {
+      scanStatus.textContent = json.error || "Le service de vérification est indisponible pour le moment. Réessaie plus tard.";
       return;
     }
 
-    const providerText = `${data.provider || ""} ${data.organisation || ""}`.toLowerCase();
-    const cloudKeywords = ["amazon", "aws", "google", "microsoft", "azure", "digitalocean", "ovh", "hetzner", "linode", "vultr", "cloud", "hosting", "datacenter", "data center", "server"];
-    const mobileKeywords = ["mobile", "wireless", "cellular", "lte", "4g", "5g"];
+    detectedIp = json.ip;
 
-    const isProxy = data.proxy === "yes";
-    const type = (data.type || "").toUpperCase();
-    const looksLikeCloud = cloudKeywords.some((k) => providerText.includes(k));
-    const looksLikeMobile = mobileKeywords.some((k) => providerText.includes(k));
+    // Vérification supplémentaire contre la liste statique (en plus de la table
+    // Supabase ip_bans, déjà revérifiée côté serveur au moment de l'inscription).
+    try {
+      const banRes = await fetch("assets/ip-ban.txt");
+      const banText = await banRes.text();
+      const bannedIps = banText.split("\n").map((l) => l.trim()).filter((l) => l && !l.startsWith("#"));
+      if (bannedIps.includes(detectedIp)) {
+        scanStatus.textContent = `Analyse de connexion — ${maskIp(detectedIp)}`;
+        scanResult.classList.remove("hidden");
+        scanResult.innerHTML = `<p class="error-text">Cette adresse IP est bannie du forum.</p>`;
+        return;
+      }
+    } catch {
+      // Liste indisponible : on continue, la table Supabase reste vérifiée côté serveur.
+    }
 
-    const flags = {
-      vpn: isProxy && type === "VPN",
-      proxy: isProxy && type !== "VPN" && type !== "TOR",
-      tor: isProxy && type === "TOR",
-      datacenter: looksLikeCloud,
-      hosting: looksLikeCloud,
-      cloud: looksLikeCloud,
-      residential: !isProxy && !looksLikeCloud,
-      mobile: looksLikeMobile,
-      reputation: (parseInt(data.risk, 10) || 0) >= 75,
-      bot: type === "SES", // moteur de recherche / robot connu de proxycheck.io
-      bogon: false
-    };
-
-    renderResults(detectedIp, flags, true);
+    renderResults(detectedIp, json.flags, true);
   } catch {
-    scanStatus.textContent = "Le service de vérification est indisponible pour le moment. Réessaie plus tard.";
+    scanStatus.textContent = "Impossible de contacter le serveur de vérification. Réessaie plus tard.";
   }
 }
 
@@ -111,14 +78,10 @@ function renderResults(ip, flags, apiUsed) {
   scanStatus.textContent = `Analyse de connexion — ${maskIp(ip)}`;
   scanResult.classList.remove("hidden");
 
-  const badRows = ["vpn", "proxy", "tor", "datacenter", "hosting", "cloud", "mobile", "reputation", "bot", "bogon"];
-  const goodRows = ["residential"];
-
   scanResult.innerHTML = `
     <div class="stack" style="margin-top:12px">
       ${CHECK_ROWS.map((row) => {
         const value = flags[row.key];
-        const isBad = badRows.includes(row.key) ? value : goodRows.includes(row.key) ? !value : value;
         const icon = row.key === "residential" ? (value ? "✅" : "❌") : value ? "❌" : "✅";
         const answer =
           row.key === "residential" || row.key === "mobile"
