@@ -84,6 +84,32 @@
         <h2 class="font-display" style="font-size:16px;margin-bottom:10px">Publications récentes (suppression, épingle, like admin)</h2>
         <div id="posts-admin-list" class="stack"></div>
       </section>
+
+      <section style="margin-top:32px">
+        <h2 class="font-display" style="font-size:16px;margin-bottom:10px">Bannir un e-mail (temporaire)</h2>
+        <form id="ban-email-form" style="display:flex;gap:8px;flex-wrap:wrap">
+          <input id="ban-email-username" class="input" placeholder="!pseudo de l'utilisateur" style="flex:1;min-width:160px" />
+          <select id="ban-email-duration" class="input" style="flex:1;min-width:140px">
+            <option value="1">1 heure</option>
+            <option value="24">1 jour</option>
+            <option value="168">7 jours</option>
+            <option value="720" selected>30 jours</option>
+          </select>
+          <button type="submit" class="btn-outline" style="flex-shrink:0">Bannir</button>
+        </form>
+        <p id="ban-email-error" class="error-text hidden" style="margin-top:6px"></p>
+        <p id="ban-email-success" class="hint-text hidden" style="margin-top:6px;color:var(--silver-300)"></p>
+      </section>
+
+      <section style="margin-top:32px">
+        <h2 class="font-display" style="font-size:16px;margin-bottom:10px">Bannir une IP (permanent)</h2>
+        <form id="ban-ip-form" style="display:flex;gap:8px">
+          <input id="ban-ip-input" class="input" placeholder="Adresse IP" />
+          <button type="submit" class="btn-outline" style="flex-shrink:0">Bannir</button>
+        </form>
+        <p id="ban-ip-error" class="error-text hidden" style="margin-top:6px"></p>
+        <p id="ban-ip-success" class="hint-text hidden" style="margin-top:6px;color:var(--silver-300)"></p>
+      </section>
     </div>
   </main>
 

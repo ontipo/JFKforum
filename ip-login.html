@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forum — Utiliser mon IP comme porte-parole</title>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <header class="navbar" id="navbar-root"></header>
+
+  <main class="page-narrow">
+    <h1 class="font-display center" style="font-size:22px;font-weight:600">Utiliser mon adresse IP comme porte-parole</h1>
+    <p class="muted center" style="margin-top:8px">
+      Aucun e-mail, aucun mot de passe. Ton adresse IP devient ton identité publique sur le forum, avec des droits
+      limités (réponses aux publications uniquement).
+    </p>
+
+    <div id="scan-box" class="account-card" style="text-align:left;margin-top:20px">
+      <p id="scan-status" class="hint-text">Analyse de ta connexion en cours…</p>
+      <div id="scan-result" class="hidden"></div>
+    </div>
+
+    <div id="consent-box" class="account-card hidden" style="text-align:left;margin-top:16px">
+      <h2 class="font-display" style="font-size:15px;margin:0 0 10px">Avant de continuer, tu acceptes que :</h2>
+      <label class="checkbox-label" style="display:block;margin-bottom:8px">
+        <input type="checkbox" class="consent-item" /> Mes droits sur le site seront plus limités.
+      </label>
+      <label class="checkbox-label" style="display:block;margin-bottom:8px">
+        <input type="checkbox" class="consent-item" /> Mon IP sera visible à autrui.
+      </label>
+      <label class="checkbox-label" style="display:block;margin-bottom:8px">
+        <input type="checkbox" class="consent-item" /> Je n'utilise pas de réseau interdit (VPN, proxy, etc.).
+      </label>
+      <label class="checkbox-label" style="display:block;margin-bottom:14px">
+        <input type="checkbox" class="consent-item" /> Je ne ferai pas de mal, car je suis anonyme.
+      </label>
+      <button id="confirm-ip-btn" class="btn-primary" disabled>J'accepte le traitement d'IP comme porte-parole de tous mes dires</button>
+      <p id="confirm-error" class="error-text hidden" style="margin-top:8px"></p>
+    </div>
+  </main>
+
+  <script type="module" src="assets/ip-login.js"></script>
+</body>
+</html>
