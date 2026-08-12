@@ -3,4 +3,775 @@
 # (après les épinglées et les publications propres, triées par date). Complète cette
 # liste selon ce que ta communauté considère comme peu recommandé (pas forcément interdit).
 clickbait
-arnaque
+
+communism
+communisme
+communist
+communiste
+communists
+communistes
+communistic
+communiste
+communization
+communisation
+communize
+communiser
+communized
+communisé
+communist party
+parti communiste
+communism theory
+théorie communiste
+Karl Marx
+Karl
+Marx
+Marxism
+marxisme
+Marxist
+marxiste
+Marxists
+marxistes
+Marxian
+marxien
+Marxianism
+marxisme
+Friedrich Engels
+Engels
+Lenin
+Lénine
+Leninism
+léninisme
+Leninist
+léniniste
+Bolshevik
+bolchevik
+Bolshevism
+bolchevisme
+Bolshevism
+bolchevisme
+Soviet
+soviétique
+Sovietism
+soviétisme
+USSR
+URSS
+Soviet Union
+Union soviétique
+proletariat
+prolétariat
+proletarian
+prolétaire
+bourgeoisie
+bourgeois
+class struggle
+lutte des classes
+class conflict
+conflit de classes
+classless society
+société sans classes
+workers' revolution
+révolution ouvrière
+communist revolution
+révolution communiste
+dictatorship of the proletariat
+dictature du prolétariat
+collective ownership
+propriété collective
+common ownership
+propriété commune
+means of production
+moyens de production
+collectivization
+collectivisation
+collectivized
+collectivisé
+collective
+collectif
+collectivism
+collectivisme
+socialist
+socialiste
+socialism
+socialisme
+socialist revolution
+révolution socialiste
+revolutionary socialism
+socialisme révolutionnaire
+scientific socialism
+socialisme scientifique
+historical materialism
+matérialisme historique
+dialectical materialism
+matérialisme dialectique
+dialectical
+dialectique
+materialism
+matérialisme
+proletarianism
+prolétarianisme
+internationalism
+internationalisme
+proletarian internationalism
+internationalisme prolétarien
+class consciousness
+conscience de classe
+class warfare
+guerre des classes
+labor movement
+mouvement ouvrier
+workers' movement
+mouvement des travailleurs
+workers' state
+État ouvrier
+communist state
+État communiste
+planned economy
+économie planifiée
+centrally planned economy
+économie centralisée
+command economy
+économie dirigée
+collective farm
+ferme collective
+collectivized agriculture
+agriculture collectivisée
+commune
+communard
+communalism
+communalisme
+vanguard party
+parti d'avant-garde
+revolutionary party
+parti révolutionnaire
+Communist Party
+Parti communiste
+Internationale communiste
+Communist International
+Comintern
+Third International
+Troisième Internationale
+red
+rouge
+red flag
+drapeau rouge
+hammer and sickle
+marteau et faucille
+workers of the world
+travailleurs du monde
+proletarian revolution
+révolution prolétarienne
+communist manifesto
+manifeste communiste
+Manifesto of the Communist Party
+Manifeste du Parti communiste
+Das Kapital
+Le Capital
+capital
+capitalisme
+capitalism
+capitalist
+capitaliste
+anti-capitalism
+anticapitalisme
+anti-capitalist
+anticapitaliste
+egalitarianism
+égalitarisme
+egalitarian
+égalitaire
+classless
+sans classes
+revolutionary
+révolutionnaire
+revolution
+révolution
+counterrevolution
+contre-révolution
+counterrevolutionary
+contre-révolutionnaire
+communist ideology
+idéologie communiste
+communist doctrine
+doctrine communiste
+communist ideology
+idéologie marxiste
+communist theory
+théorie communiste
+Oui — **uniquement de nouveaux termes liés à l’URSS**, sans reprendre ceux des deux listes précédentes :
+
+```text
+Soviet Russia
+Russie rouge
+Red Russia
+Russie soviétique
+Union of Soviet Socialist Republics
+Union des républiques socialistes soviétiques
+Sovetskaya Rossiya
+Советский Союз
+СССР
+CCCP
+Soyuz
+Союз
+Sovetskaya
+Советская
+Sovetsky
+Советский
+Sovetskaya Rossiya
+Советская Россия
+RSFSR
+РСФСР
+Russian Soviet Federative Socialist Republic
+RSS de Russie
+SSR Ukraine
+RSS d’Ukraine
+SSR Belarus
+RSS de Biélorussie
+SSR Georgia
+RSS de Géorgie
+SSR Armenia
+RSS d’Arménie
+SSR Azerbaijan
+RSS d’Azerbaïdjan
+SSR Kazakhstan
+RSS du Kazakhstan
+SSR Uzbekistan
+RSS d’Ouzbékistan
+SSR Turkmenistan
+RSS du Turkménistan
+SSR Tajikistan
+RSS du Tadjikistan
+SSR Kyrgyzstan
+RSS du Kirghizistan
+SSR Moldova
+RSS de Moldavie
+SSR Latvia
+RSS de Lettonie
+SSR Lithuania
+RSS de Lituanie
+SSR Estonia
+RSS d’Estonie
+Soviet citizen
+citoyen soviétique
+Soviet people
+peuple soviétique
+Soviet nationality
+nationalité soviétique
+Soviet passport
+passeport soviétique
+Soviet constitution
+constitution soviétique
+Soviet congress
+congrès soviétique
+Congress of Soviets
+Congrès des Soviets
+Supreme Soviet
+Soviet suprême
+Supreme Soviet Presidium
+Présidium du Soviet suprême
+Council of Ministers
+Conseil des ministres
+Sovnarkom
+Совнарком
+Council of People's Commissars
+Conseil des commissaires du peuple
+People's Commissariat
+commissariat du peuple
+People's Commissar
+commissaire du peuple
+Apparatchik
+apparatchik
+Komsomol
+Комсомол
+Young Pioneers
+Jeunes Pionniers
+Pioneer organization
+organisation des pionniers
+Octobrist
+Octobristes
+Kolkhoznik
+kolkhozien
+Sovkhoznik
+sovkhozien
+Stakhanovite
+stakhanoviste
+Stakhanovism
+stakhanovisme
+Stakhanovite movement
+mouvement stakhanoviste
+udarnik
+ударник
+shock worker
+travailleur de choc
+Dzerzhinsky
+Dzerjinski
+Trotsky
+Trotski
+Trotskyism
+trotskisme
+Trotskyist
+trotskiste
+Bukharin
+Boukharine
+Molotov
+Malenkov
+Yezhov
+Iejov
+Beria
+Beria
+Kalinin
+Kaganovich
+Kosygin
+Podgorny
+Suslov
+Soviet leadership
+direction soviétique
+Soviet bureaucracy
+bureaucratie soviétique
+Soviet nomenclature
+nomenclature soviétique
+Soviet dissident
+dissident soviétique
+dissidence soviétique
+samizdat
+самиздат
+tamizdat
+тамиздат
+glasnost
+perestroika
+apparat
+аппарат
+Agitprop
+агитпроп
+political commissar
+commissaire politique
+propaganda poster
+affiche de propagande
+Soviet poster
+affiche soviétique
+Soviet realism
+réalisme soviétique
+socialist realism
+réalisme socialiste
+Soviet architecture
+architecture soviétique
+Soviet cinema
+cinéma soviétique
+Soviet literature
+littérature soviétique
+Soviet art
+art soviétique
+Soviet science
+science soviétique
+Soviet space program
+programme spatial soviétique
+Soviet cosmonaut
+cosmonaute soviétique
+cosmonautics
+cosmonautique
+Vostok
+Восток
+Voskhod
+Восход
+Soyuz spacecraft
+vaisseau Soyouz
+Baikonur
+Baïkonour
+Sputnik
+Спутник
+Mir
+Мир
+Soviet space race
+course à l’espace soviétique
+Soviet nuclear program
+programme nucléaire soviétique
+Soviet atomic bomb
+bombe atomique soviétique
+Soviet tank
+char soviétique
+T-34
+T-54
+T-55
+T-62
+T-72
+AK-47
+AKM
+MiG
+Sukhoi
+Tupolev
+Ilyushin
+Antonov
+Soviet Union anthem
+hymne de l’Union soviétique
+Soviet coat of arms
+armoiries soviétiques
+Soviet emblem
+emblème soviétique
+Soviet star
+étoile soviétique
+red banner
+bannière rouge
+Soviet banner
+bannière soviétique
+Great Patriotic War
+Grande Guerre patriotique
+Eastern Front
+front de l’Est
+Soviet victory
+victoire soviétique
+Soviet occupation
+occupation soviétique
+Soviet intervention
+intervention soviétique
+Soviet invasion
+invasion soviétique
+Soviet withdrawal
+retrait soviétique
+Soviet-Afghan War
+guerre soviéto-afghane
+Cuban Missile Crisis
+crise des missiles de Cuba
+Berlin Blockade
+blocus de Berlin
+Berlin Wall
+mur de Berlin
+Hungarian Revolution
+révolution hongroise
+Prague Spring
+Printemps de Prague
+Korean War
+guerre de Corée
+Soviet-Afghan
+soviéto-afghan
+Dissolution of the USSR
+dissolution de l’URSS
+collapse of the Soviet Union
+chute de l’Union soviétique
+post-Soviet
+post-soviétique
+Soviet legacy
+héritage soviétique
+Soviet nostalgia
+nostalgie soviétique
+Sovietology
+soviétologie
+Sovietologist
+soviétologue
+RSFSR
+Russian SFSR
+République socialiste fédérative soviétique de Russie
+Soviet Socialist Republic
+République socialiste soviétique
+SSR
+RSS
+Soviet republic
+république soviétique
+CPSU
+PCUS
+Communist Party of the Soviet Union
+Parti communiste de l’Union soviétique
+Politburo
+Politburo
+Central Committee
+Comité central
+Supreme Soviet
+Soviet suprême
+Presidium
+Présidium
+General Secretary
+Secrétaire général
+Kremlin
+Kremlin
+Moscow
+Moscou
+Stalin
+Staline
+Khrushchev
+Khrouchtchev
+Brezhnev
+Brejnev
+Andropov
+Andropov
+Chernenko
+Tchernenko
+Gorbachev
+Gorbatchev
+perestroika
+perestroïka
+glasnost
+glasnost
+Red Army
+Armée rouge
+Soviet Army
+Armée soviétique
+Soviet Navy
+Marine soviétique
+Soviet Air Force
+Force aérienne soviétique
+KGB
+NKVD
+Cheka
+Tchéka
+OGPU
+MGB
+Gulag
+goulag
+kolkhoz
+kolkhoze
+sovkhoz
+sovkhoze
+five-year plan
+plan quinquennal
+nomenklatura
+nomenklatura
+Warsaw Pact
+Pacte de Varsovie
+Comecon
+COMECON
+Eastern Bloc
+bloc de l’Est
+Iron Curtain
+rideau de fer
+satellite state
+État satellite
+Soviet bloc
+bloc soviétique
+October Revolution
+révolution d’Octobre
+Great Patriotic War
+Grande Guerre patriotique
+Sputnik
+Sputnik
+Soyuz
+Soyouz
+Mir
+Mir
+Cosmonaut
+cosmonaute
+Yuri Gagarin
+Youri Gagarine
+Baikonur
+Baïkonour
+Soviet anthem
+hymne soviétique
+red star
+étoile rouge
+Order of Lenin
+Ordre de Lénine
+Hero of the Soviet Union
+Héros de l’Union soviétique
+Pravda
+Pravda
+Izvestia
+Izvestia
+Soviet Constitution
+Constitution soviétique
+Union republic
+république de l’Union
+Baltic SSR
+RSS baltes
+Soviet Ukraine
+Ukraine soviétique
+Soviet Belarus
+Biélorussie soviétique
+Soviet Kazakhstan
+Kazakhstan soviétique
+Soviet Georgia
+Géorgie soviétique
+Soviet Armenia
+Arménie soviétique
+Soviet Azerbaijan
+Azerbaïdjan soviétique
+Russian Soviet Federative Socialist Republic
+Russian SSR
+Cold War
+guerre froide
+Berlin Wall
+mur de Berlin
+Space Race
+course à l’espace
+Chernobyl
+Tchernobyl
+Soviet collapse
+chute de l’URSS
+dissolution of the USSR
+dissolution de l’URSS
+CIS
+CEI
+Commonwealth of Independent States
+Communauté des États indépendants
+RSFSR
+Russian SFSR
+République socialiste fédérative soviétique de Russie
+Soviet Socialist Republic
+République socialiste soviétique
+SSR
+RSS
+Soviet republic
+république soviétique
+Soviet republics
+républiques soviétiques
+CPSU
+PCUS
+Communist Party of the Soviet Union
+Parti communiste de l’Union soviétique
+Politburo
+Politburo
+Central Committee
+Comité central
+Supreme Soviet
+Soviet suprême
+Presidium
+Présidium
+General Secretary
+Secrétaire général
+Kremlin
+Kremlin
+Moscow
+Moscou
+Stalin
+Staline
+Khrushchev
+Khrouchtchev
+Brezhnev
+Brejnev
+Andropov
+Andropov
+Chernenko
+Tchernenko
+Gorbachev
+Gorbatchev
+Red Army
+Armée rouge
+Soviet Army
+armée soviétique
+Soviet Navy
+marine soviétique
+Soviet Air Force
+force aérienne soviétique
+KGB
+NKVD
+Cheka
+Tchéka
+OGPU
+MGB
+Gulag
+goulag
+Soviet intelligence
+renseignement soviétique
+Soviet propaganda
+propagande soviétique
+Soviet censorship
+censure soviétique
+five-year plan
+plan quinquennal
+kolkhoz
+kolkhoze
+sovkhoz
+sovkhoze
+nomenklatura
+nomenklatura
+perestroika
+perestroïka
+glasnost
+glasnost
+Eastern Bloc
+bloc de l’Est
+Warsaw Pact
+Pacte de Varsovie
+Comecon
+COMECON
+Iron Curtain
+rideau de fer
+satellite state
+État satellite
+October Revolution
+révolution d’Octobre
+Soviet anthem
+hymne soviétique
+Soviet symbols
+symboles soviétiques
+red star
+étoile rouge
+Soviet space program
+programme spatial soviétique
+Sputnik
+Sputnik
+Yuri Gagarin
+Youri Gagarine
+Soyuz
+Soyouz
+Mir
+Mir
+cosmonaut
+cosmonaute
+Baikonur
+Baïkonour
+Cold War
+guerre froide
+Soviet bloc
+bloc soviétique
+Eastern Europe
+Europe de l’Est
+Berlin Wall
+mur de Berlin
+Baltic SSR
+RSS baltes
+Soviet Ukraine
+Ukraine soviétique
+Soviet Belarus
+Biélorussie soviétique
+Soviet Kazakhstan
+Kazakhstan soviétique
+Soviet Georgia
+Géorgie soviétique
+Soviet Armenia
+Arménie soviétique
+Soviet Azerbaijan
+Azerbaïdjan soviétique
+dissolution of the USSR
+dissolution de l’URSS
+1991
+USSR collapse
+chute de l’URSS
+Soviet era
+époque soviétique
+Soviet period
+période soviétique
+Moscow Pact
+Pacte de Moscou
+Gosplan
+Gosplan
+state planning committee
+comité de planification d’État
+Stakhanovite
+stakhanoviste
+Stakhanovism
+stakhanovisme
+socialist realism
+réalisme socialiste
+pioneer movement
+mouvement des pionniers
+Young Pioneers
+Jeunes Pionniers
+Komsomol
+Komsomol
+Young Communist League
+Ligue des jeunes communistes
+Octoberists
+Octobristes
+Soviet passport
+passeport soviétique
+Red Banner
+Bannière rouge
+Order of Lenin
+Ordre de Lénine
+Hero of the Soviet Union
+Héros de l’Union soviétique
+Soviet constitution
+constitution soviétique
+Soviet citizenship
+citoyenneté soviétique
+ruble
+rouble
+Soviet ruble
+rouble soviétique
