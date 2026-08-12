@@ -775,3 +775,290 @@ ruble
 rouble
 Soviet ruble
 rouble soviétique
+
+LGBTQ
+LGBTQ+
+LGBT
+LGBTQIA
+LGBTQIA+
+LGBTQ2S+
+LGB
+LGBTI
+LGBTIQ
+LGBTIQ+
+queer
+gay
+homosexuel
+homosexual
+homosexualité
+homosexuality
+lesbian
+lesbienne
+lesbianism
+lesbianisme
+bisexual
+bisexuel
+bisexuality
+bisexualité
+bi
+pansexual
+pansexuel
+pansexuality
+pansexualité
+omnisexual
+omnisexuel
+omnisexuality
+omnisexualité
+asexual
+asexuel
+asexuality
+asexualité
+ace
+aromantic
+aromantique
+aromanticism
+aromantisme
+aro
+demisexual
+demisexuel
+demisexuality
+demisexualité
+demiromantic
+demiromantique
+graysexual
+gris-sexuel
+graysexuality
+grisexualité
+grayromantic
+gris-romantique
+transgender
+transgenre
+transsexual
+transsexuel
+transsexuality
+transsexualité
+trans man
+homme trans
+trans woman
+femme trans
+transmasculine
+transmasculin
+transmasculinity
+transmasculinité
+transfeminine
+transféminin
+transfemininity
+transféminité
+nonbinary
+non-binaire
+nonbinary person
+personne non binaire
+genderqueer
+genderqueer
+genderfluid
+genre fluide
+genderfluidity
+fluidité de genre
+agender
+agenre
+bigender
+bigenre
+pangender
+pangenre
+demigender
+demigenre
+demiboy
+demigarçon
+demigirl
+demifille
+neutrois
+neutrois
+androgynous
+androgyne
+androgyny
+androgynie
+gender identity
+identité de genre
+gender expression
+expression de genre
+gender
+genre
+sex assigned at birth
+sexe assigné à la naissance
+assigned female at birth
+assigné femme à la naissance
+assigned male at birth
+assigné homme à la naissance
+intersex
+intersexe
+intersex
+intersexuation
+intersexuality
+intersexuation
+intersex person
+personne intersexe
+ally
+allié
+LGBTQ ally
+allié LGBTQ
+coming out
+coming-out
+closeted
+dans le placard
+outing
+outing
+pride
+fierté
+LGBT pride
+fierté LGBTQ
+Pride Month
+Mois des Fiertés
+Pride flag
+drapeau de la Fierté
+rainbow flag
+drapeau arc-en-ciel
+rainbow
+arc-en-ciel
+Progress Pride flag
+drapeau Progress Pride
+transgender flag
+drapeau trans
+bisexual flag
+drapeau bisexuel
+lesbian flag
+drapeau lesbien
+pansexual flag
+drapeau pansexuel
+asexual flag
+drapeau asexuel
+aromantic flag
+drapeau aromantique
+nonbinary flag
+drapeau non-binaire
+intersex flag
+drapeau intersexe
+queer flag
+drapeau queer
+LGBT rights
+droits LGBTQ
+LGBTQ rights
+droits des personnes LGBTQ
+gay rights
+droits des homosexuels
+lesbian rights
+droits des lesbiennes
+trans rights
+droits trans
+LGBTQ equality
+égalité LGBTQ
+marriage equality
+égalité matrimoniale
+same-sex marriage
+mariage homosexuel
+same-sex couple
+couple de même sexe
+same-sex relationship
+relation entre personnes du même sexe
+civil union
+union civile
+sexual orientation
+orientation sexuelle
+romantic orientation
+orientation romantique
+gender diversity
+diversité de genre
+sexual diversity
+diversité sexuelle
+gender diversity
+diversité des genres
+LGBTQ community
+communauté LGBTQ
+gay community
+communauté gay
+lesbian community
+communauté lesbienne
+trans community
+communauté trans
+queer community
+communauté queer
+LGBTQ activism
+militantisme LGBTQ
+LGBT activism
+militantisme LGBT
+LGBTQ activist
+militant LGBTQ
+gay activist
+militant gay
+Pride parade
+défilé de la Fierté
+Pride march
+marche des Fiertés
+Pride festival
+festival des Fiertés
+LGBTQ organization
+organisation LGBTQ
+LGBT organization
+organisation LGBT
+LGBTQ movement
+mouvement LGBTQ
+gay liberation
+libération homosexuelle
+gay liberation movement
+mouvement de libération homosexuelle
+Stonewall
+Stonewall uprising
+émeutes de Stonewall
+Stonewall riots
+émeutes de Stonewall
+Harvey Milk
+Gilbert Baker
+rainbow community
+communauté arc-en-ciel
+two-spirit
+bispirituel
+Two-Spirit
+bispiritualité
+SOGIESC
+SOGIE
+sexual orientation and gender identity
+orientation sexuelle et identité de genre
+homophobia
+homophobie
+homophobic
+homophobe
+biphobia
+biphobie
+biphobic
+biphobe
+lesbophobia
+lesbophobie
+lesbophobic
+lesbophobe
+transphobia
+transphobie
+transphobic
+transphobe
+interphobia
+interphobie
+queerphobia
+queerphobie
+LGBTQ discrimination
+discrimination LGBTQ
+LGBT discrimination
+discrimination LGBT
+sexual minority
+minorité sexuelle
+gender minority
+minorité de genre
+LGBTQ representation
+représentation LGBTQ
+queer representation
+représentation queer
+LGBTQ visibility
+visibilité LGBTQ
+LGBTQ inclusion
+inclusion LGBTQ
+LGBTQ acceptance
+acceptation LGBTQ
+LGBTQIA+ community
+communauté LGBTQIA+
