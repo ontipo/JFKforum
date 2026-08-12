@@ -470,4 +470,71 @@ document.getElementById("notif-form")?.addEventListener("submit", async (e) => {
   messageInput.value = "";
 });
 
+// ------------------------------------------------------------
+// Ban d'e-mail (temporaire)
+// ------------------------------------------------------------
+document.getElementById("ban-email-form")?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const errorEl = document.getElementById("ban-email-error");
+  const successEl = document.getElementById("ban-email-success");
+  errorEl.classList.add("hidden");
+  successEl.classList.add("hidden");
+
+  const usernameInput = document.getElementById("ban-email-username");
+  const username = usernameInput.value.trim();
+  const hours = parseInt(document.getElementById("ban-email-duration").value, 10);
+
+  const { data: target, error: findError } = await supabase
+    .from("profiles")
+    .select("id")
+    .eq("username", username)
+    .single();
+
+  if (findError || !target) {
+    errorEl.textContent = "Utilisateur introuvable.";
+    errorEl.classList.remove("hidden");
+    return;
+  }
+
+  const bannedUntil = new Date(Date.now() + hours * 3600 * 1000).toISOString();
+  const { error } = await supabase.from("profiles").update({ banned_until: bannedUntil }).eq("id", target.id);
+
+  if (error) {
+    errorEl.textContent = error.message;
+    errorEl.classList.remove("hidden");
+    return;
+  }
+
+  successEl.textContent = `${username} est banni jusqu'au ${new Date(bannedUntil).toLocaleString("fr-CA")}.`;
+  successEl.classList.remove("hidden");
+  usernameInput.value = "";
+});
+
+// ------------------------------------------------------------
+// Ban d'IP (permanent)
+// ------------------------------------------------------------
+document.getElementById("ban-ip-form")?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const errorEl = document.getElementById("ban-ip-error");
+  const successEl = document.getElementById("ban-ip-success");
+  errorEl.classList.add("hidden");
+  successEl.classList.add("hidden");
+
+  const ipInput = document.getElementById("ban-ip-input");
+  const ip = ipInput.value.trim();
+  if (!ip) return;
+
+  const { error } = await supabase.from("ip_bans").insert({ ip, banned_by: me.id });
+
+  if (error) {
+    errorEl.textContent = error.message;
+    errorEl.classList.remove("hidden");
+    return;
+  }
+
+  successEl.textContent = `${ip} est banni définitivement.`;
+  successEl.classList.remove("hidden");
+  ipInput.value = "";
+});
+
 init();

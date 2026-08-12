@@ -1,6 +1,8 @@
 import { supabase } from "./supabaseClient.js";
-import { containsLink, timeAgo, escapeHtml } from "./utils.js";
+import { containsLink, timeAgo, escapeHtml, maskIp } from "./utils.js";
 import { userBadgeHtml } from "./userBadge.js";
+import { getIpIdentity } from "./ipIdentity.js";
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./config.js";
 
 const AUTO_VISIBLE_DEPTH = 2; // la publication elle-même = 0, ses réponses directes = 1, leurs réponses = 2
 
@@ -8,6 +10,8 @@ const AUTO_VISIBLE_DEPTH = 2; // la publication elle-même = 0, ses réponses di
 // mode "preview" -> carte du fil : réponses directes seulement, lecture seule, pas de formulaire
 export async function mountCommentSection(container, { postId, postAuthorId, currentUserId, currentProfile, onCountChange, mode = "full" }) {
   const expandedIds = new Set();
+  const ipIdentity = !currentUserId ? getIpIdentity() : null;
+  const canReply = !!currentUserId || !!ipIdentity;
   let allComments = [];
 
   container.innerHTML =
@@ -17,28 +21,28 @@ export async function mountCommentSection(container, { postId, postAuthorId, cur
       <div id="comments-list" class="stack"></div>
       <form id="comment-form" class="comment-form">
         <textarea id="comment-input" class="input" rows="2" placeholder="${
-          currentUserId ? "Écrire une réponse…" : "Connectez-vous pour répondre"
-        }" ${currentUserId ? "" : "disabled"}></textarea>
+          canReply ? "Écrire une réponse…" : "Connectez-vous pour répondre"
+        }" ${canReply ? "" : "disabled"}></textarea>
         <p id="comment-error" class="error-text hidden"></p>
         <div class="comment-form-footer">
           <label class="checkbox-label">
             <input type="checkbox" id="comment-anon" ${currentUserId ? "" : "disabled"} />
             Publier anonymement
           </label>
-          <button type="submit" class="btn-outline" ${currentUserId ? "" : "disabled"}>Répondre</button>
+          <button type="submit" class="btn-outline" ${canReply ? "" : "disabled"}>Répondre</button>
         </div>
       </form>
     </div>
   `
       : `<div class="comments-section" id="comments-list"></div>`;
 
-  const list = mode === "full" ? container.querySelector("#comments-list") : container.querySelector("#comments-list");
+  const list = container.querySelector("#comments-list");
 
   async function load() {
     const { data } = await supabase
       .from("comments")
       .select(
-        "id, body, is_anonymous, created_at, author_id, parent_comment_id, profiles:author_id (username, role, likes_received, posts_count)"
+        "id, body, is_anonymous, created_at, author_id, ip_author_id, parent_comment_id, profiles:author_id (username, role, likes_received, posts_count), ip_profiles:ip_author_id (ip)"
       )
       .eq("post_id", postId)
       .order("created_at", { ascending: true });
@@ -53,13 +57,11 @@ export async function mountCommentSection(container, { postId, postAuthorId, cur
   }
 
   function render() {
+    const topLevel = childrenOf(null);
     if (mode === "preview") {
-      const topLevel = childrenOf(null);
       list.innerHTML = topLevel.map((c) => renderCommentHtml(c, 1, false)).join("");
       return;
     }
-
-    const topLevel = childrenOf(null);
     list.innerHTML = topLevel.map((c) => renderThread(c, 1)).join("");
     wireInteractions();
   }
@@ -80,16 +82,19 @@ export async function mountCommentSection(container, { postId, postAuthorId, cur
     return renderCommentHtml(comment, depth, true, childrenHtml);
   }
 
-  function renderCommentHtml(c, depth, interactive, childrenHtml = "") {
+  function displayNameFor(c) {
+    if (c.ip_author_id) return `!p${maskIp(c.ip_profiles?.ip || "")}`;
     const isMod = ["moderator", "owner"].includes(currentProfile?.role);
-    const isAuthorReply = c.author_id === postAuthorId;
-    const displayName = c.is_anonymous
-      ? isMod
-        ? `Anonyme (@${c.profiles?.username})`
-        : "Anonyme"
-      : c.profiles?.username;
+    return c.is_anonymous ? (isMod ? `Anonyme (@${c.profiles?.username})` : "Anonyme") : c.profiles?.username;
+  }
 
-    const nameHtml = c.is_anonymous
+  function renderCommentHtml(c, depth, interactive, childrenHtml = "") {
+    const isAuthorReply = c.author_id && c.author_id === postAuthorId;
+    const displayName = displayNameFor(c);
+
+    const nameHtml = c.ip_author_id
+      ? `<span class="name">${escapeHtml(displayName)}</span>`
+      : c.is_anonymous
       ? `<span class="name">${escapeHtml(displayName)}</span>`
       : userBadgeHtml({
           username: displayName,
@@ -98,12 +103,12 @@ export async function mountCommentSection(container, { postId, postAuthorId, cur
           postsCount: c.profiles?.posts_count
         });
 
-    const replyToggle = interactive && currentUserId ? `<button class="reply-toggle" data-reply-to="${c.id}">Répondre</button>` : "";
+    const replyToggle = interactive && canReply ? `<button class="reply-toggle" data-reply-to="${c.id}">Répondre</button>` : "";
     const replyFormSlot = interactive ? `<div class="reply-form-slot" data-reply-form-for="${c.id}"></div>` : "";
 
     return `
       <div class="comment-item" style="margin-left:${Math.min(depth - 1, 6) * 20}px">
-        <div class="comment-avatar">${escapeHtml((displayName || "?")[0] || "?").toUpperCase()}</div>
+        <div class="comment-avatar">${c.ip_author_id ? "📶" : escapeHtml((displayName || "?")[0] || "?").toUpperCase()}</div>
         <div style="flex:1;min-width:0">
           <div class="comment-body-row">
             ${nameHtml}
@@ -142,7 +147,7 @@ export async function mountCommentSection(container, { postId, postAuthorId, cur
             <textarea class="input" rows="2" placeholder="Écrire une réponse…"></textarea>
             <p class="error-text hidden"></p>
             <div class="comment-form-footer">
-              <label class="checkbox-label"><input type="checkbox" /> Publier anonymement</label>
+              <label class="checkbox-label"><input type="checkbox" ${currentUserId ? "" : "disabled"} /> Publier anonymement</label>
               <button type="submit" class="btn-outline">Répondre</button>
             </div>
           </form>
@@ -161,7 +166,7 @@ export async function mountCommentSection(container, { postId, postAuthorId, cur
 
   async function submitComment(rawBody, anonymous, parentId, errorEl) {
     errorEl?.classList.add("hidden");
-    if (!currentUserId) {
+    if (!currentUserId && !ipIdentity) {
       window.location.href = "login.html";
       return;
     }
@@ -169,19 +174,44 @@ export async function mountCommentSection(container, { postId, postAuthorId, cur
     if (!body) return;
     if (containsLink(body)) {
       if (errorEl) {
-        errorEl.textContent = "Les liens ne sont pas autorisés dans les commentaires.";
+        errorEl.textContent = "Les liens ne sont pas autorisés (sauf ceux de ontipo.github.io).";
         errorEl.classList.remove("hidden");
       }
       return;
     }
 
-    const { error } = await supabase.from("comments").insert({
-      post_id: postId,
-      author_id: currentUserId,
-      body,
-      is_anonymous: anonymous,
-      parent_comment_id: parentId || null
-    });
+    let error = null;
+
+    if (currentUserId) {
+      ({ error } = await supabase.from("comments").insert({
+        post_id: postId,
+        author_id: currentUserId,
+        body,
+        is_anonymous: anonymous,
+        parent_comment_id: parentId || null
+      }));
+    } else {
+      try {
+        const res = await fetch(`${SUPABASE_URL}/functions/v1/ip-comment`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            apikey: SUPABASE_ANON_KEY,
+            Authorization: `Bearer ${SUPABASE_ANON_KEY}`
+          },
+          body: JSON.stringify({
+            ipProfileId: ipIdentity.id,
+            postId,
+            body,
+            parentCommentId: parentId || null
+          })
+        });
+        const json = await res.json();
+        if (!res.ok) error = { message: json.error || "Erreur serveur." };
+      } catch {
+        error = { message: "Impossible de contacter le serveur." };
+      }
+    }
 
     if (error) {
       if (errorEl) {

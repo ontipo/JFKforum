@@ -3,6 +3,7 @@ import { renderNavbar } from "./navbar.js";
 import { generateRecoveryCode, containsBannedWord } from "./utils.js";
 import { sha256Hex } from "./hash.js";
 import { presentRecoveryChoice } from "./recoveryChoice.js";
+import { setOgTags } from "./og.js";
 
 renderNavbar();
 
@@ -26,6 +27,12 @@ async function showSponsorBanner() {
   document.getElementById("sponsor-text").textContent =
     `Vous avez été invité(e) à rejoindre JFKforum par l'utilisateur ${data.username}, et c'est pourquoi vous avez ce lien de parrainage. Créez votre compte dès maintenant pour profiter des avantages que vous pourriez avoir.`;
   document.getElementById("sponsor-banner").classList.remove("hidden");
+
+  setOgTags({
+    title: `JFKforum - Parrainage de ${data.username}`,
+    description: `Rejoins JFKforum grâce au lien de parrainage de ${data.username}.`,
+    url: window.location.href
+  });
 }
 showSponsorBanner();
 

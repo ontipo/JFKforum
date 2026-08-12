@@ -50,11 +50,14 @@ export function parseMentions(text) {
 }
 
 // ------------------------------------------------------------
-// Détection de lien (interdit dans les posts/commentaires)
+// Détection de lien (interdit partout, SAUF les liens vers ontipo.github.io)
 // ------------------------------------------------------------
-const LINK_REGEX = /(https?:\/\/|www\.[a-z0-9-]+\.[a-z]{2,})/i;
+const LINK_REGEX = /(https?:\/\/|www\.[a-z0-9-]+\.[a-z]{2,})[^\s]*/gi;
+const ALLOWED_LINK_PREFIX = "https://ontipo.github.io/";
+
 export function containsLink(text) {
-  return LINK_REGEX.test(text);
+  const matches = (text || "").match(LINK_REGEX) || [];
+  return matches.some((m) => !m.toLowerCase().startsWith(ALLOWED_LINK_PREFIX));
 }
 
 // ------------------------------------------------------------
@@ -167,6 +170,50 @@ export async function containsBannedWord(text) {
   const words = await loadBannedWords();
   const lower = (text || "").toLowerCase();
   return words.some((w) => lower.includes(w));
+}
+
+// ------------------------------------------------------------
+// Code de parrainage (10 caractères, A-Z 0-9, majuscules seulement)
+// ------------------------------------------------------------
+const SPONSOR_CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+export function generateSponsorCode() {
+  const array = new Uint32Array(10);
+  crypto.getRandomValues(array);
+  let out = "";
+  for (let i = 0; i < 10; i++) out += SPONSOR_CHARSET[array[i] % SPONSOR_CHARSET.length];
+  return out;
+}
+
+// ------------------------------------------------------------
+// Porte-parole IP : masque les 3 derniers chiffres pour l'affichage,
+// mais l'IP complète reste stockée en base.
+// ------------------------------------------------------------
+export function maskIp(ip) {
+  const parts = (ip || "").split(".");
+  if (parts.length !== 4) return ip;
+  return `${parts[0]}.${parts[1]}.${parts[2]}.***`;
+}
+
+export function ipUsername(ip) {
+  return `!p${ip}`;
+}
+
+// ------------------------------------------------------------
+// IP bogon / réservée (RFC 1918, loopback, link-local, etc.)
+// Vérifiable localement, sans service tiers.
+// ------------------------------------------------------------
+export function isBogonIp(ip) {
+  const parts = (ip || "").split(".").map(Number);
+  if (parts.length !== 4 || parts.some((p) => Number.isNaN(p) || p < 0 || p > 255)) return true;
+  const [a, b] = parts;
+  if (a === 10) return true;
+  if (a === 172 && b >= 16 && b <= 31) return true;
+  if (a === 192 && b === 168) return true;
+  if (a === 127) return true;
+  if (a === 169 && b === 254) return true;
+  if (a === 0) return true;
+  if (a >= 224) return true; // multicast / réservé
+  return false;
 }
 
 // ------------------------------------------------------------

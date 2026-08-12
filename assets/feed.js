@@ -3,6 +3,7 @@ import { renderNavbar } from "./navbar.js";
 import { createPostCard } from "./postCard.js";
 import { openPostModal } from "./postModal.js";
 import { escapeHtml } from "./utils.js";
+import { setOgTags } from "./og.js";
 
 const POST_SELECT =
   "id, title, body, is_anonymous, is_official, is_pinned, admin_boosted, score, image_url, image_status, category_id, hashtags, created_at, author_id, profiles:author_id (username, role, likes_received, posts_count, pfp_url), categories:category_id (name, slug)";
@@ -152,6 +153,11 @@ async function showSharedPost(id) {
   sharedSlot.innerHTML = "";
   if (data) {
     sharedSlot.appendChild(createPostCard(data, { currentUserId, currentProfile, forceExpanded: true }));
+    setOgTags({
+      title: `JFKforum - Poste #${id}`,
+      description: data.title,
+      url: window.location.href
+    });
   } else {
     sharedSlot.innerHTML = `<p class="muted">Cette publication est introuvable.</p>`;
   }

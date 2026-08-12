@@ -553,6 +553,33 @@ a.avatar-link { display: inline-block; line-height: 0; }
   cursor: pointer;
 }
 .see-more-replies:hover { border-color: var(--silver-500); color: var(--silver-100); }
+
+.share-row { display: flex; gap: 10px; margin-top: 12px; }
+.share-btn-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.share-btn-icon:hover { border-color: var(--silver-500); box-shadow: var(--shadow-glow); }
+.share-btn-icon svg { width: 22px; height: 22px; }
+
+.friend-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-top: 8px;
+}
+.friend-avatar-link { display: block; }
+.friend-avatar-link img, .friend-avatar-link .post-avatar {
+  width: 100%;
+  aspect-ratio: 1;
+}
 .checkbox-label { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--silver-500); }
 
 /* --------------------- Publish button + modal --------------------- */

@@ -1,0 +1,2 @@
+# Une IP par ligne. Ces IP sont refusées pour le système "porte-parole IP",
+# en plus de celles bannies depuis le panneau admin (table ip_bans sur Supabase).

@@ -1,4 +1,5 @@
 import { supabase } from "./supabaseClient.js";
+import { getIpIdentity, clearIpIdentity } from "./ipIdentity.js";
 
 export async function renderNavbar() {
   const root = document.getElementById("navbar-root");
@@ -7,6 +8,8 @@ export async function renderNavbar() {
   const {
     data: { session }
   } = await supabase.auth.getSession();
+  const ipIdentity = !session ? getIpIdentity() : null;
+  const canSearch = !!session || !!ipIdentity;
 
   root.innerHTML = `
     <div class="navbar-inner">
@@ -15,8 +18,8 @@ export async function renderNavbar() {
       </a>
       <form class="navbar-search" id="navbar-search-form">
         <input id="navbar-search-input" placeholder="${
-          session ? "Rechercher… (!pseudo pour un utilisateur)" : "Connecte-toi pour rechercher"
-        }" ${session ? "" : "disabled"} />
+          canSearch ? "Rechercher… (!pseudo pour un utilisateur)" : "Connecte-toi pour rechercher"
+        }" ${canSearch ? "" : "disabled"} />
       </form>
       <div id="navbar-kc"></div>
       <div id="navbar-notif"></div>
@@ -27,7 +30,7 @@ export async function renderNavbar() {
 
   document.getElementById("navbar-search-form").addEventListener("submit", (e) => {
     e.preventDefault();
-    if (!session) return;
+    if (!canSearch) return;
     const q = document.getElementById("navbar-search-input").value.trim();
     if (!q) return;
     if (q.startsWith("!")) {
@@ -61,14 +64,29 @@ async function refreshAccountArea() {
   const adminArea = document.getElementById("navbar-admin-link");
   if (!area) return;
 
-  const { avatarImgHtml, formatKc } = await import("./utils.js");
+  const { avatarImgHtml, formatKc, maskIp } = await import("./utils.js");
 
   const {
     data: { session }
   } = await supabase.auth.getSession();
 
   if (!session) {
-    area.innerHTML = `<a href="login.html" class="btn-outline">Se connecter</a>`;
+    const ipIdentity = getIpIdentity();
+    if (ipIdentity) {
+      area.innerHTML = `
+        <a href="profile.html?user=${encodeURIComponent("!p" + ipIdentity.ip)}" class="navbar-account">
+          <span class="avatar">📶</span>
+          <span class="hidden-mobile">${maskIp(ipIdentity.ip)}</span>
+        </a>
+        <button id="ip-logout-btn" class="btn-outline" title="Se déconnecter">×</button>
+      `;
+      document.getElementById("ip-logout-btn")?.addEventListener("click", () => {
+        clearIpIdentity();
+        window.location.href = "index.html";
+      });
+    } else {
+      area.innerHTML = `<a href="login.html" class="btn-outline">Se connecter</a>`;
+    }
     if (adminArea) adminArea.innerHTML = "";
     document.getElementById("navbar-kc").innerHTML = "";
     return;

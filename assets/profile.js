@@ -15,6 +15,7 @@ import {
 } from "./utils.js";
 import { userBadgeHtml } from "./userBadge.js";
 import { createPostCard } from "./postCard.js";
+import { setOgTags } from "./og.js";
 
 renderNavbar();
 
@@ -29,6 +30,41 @@ const box = document.getElementById("profile-box");
 let me = null;
 let meProfile = null;
 let profile = null;
+
+async function showIpProfile(ip) {
+  const { data: ipProfile } = await supabase.from("ip_profiles").select("*").eq("ip", ip).single();
+  loadingMsg.classList.add("hidden");
+
+  if (!ipProfile) {
+    notFoundMsg.classList.remove("hidden");
+    return;
+  }
+
+  const username = `!p${ipProfile.ip}`;
+
+  setOgTags({
+    title: `JFKforum - Profil de ${username}`,
+    description: `Profil du porte-parole IP ${username} sur JFKforum`,
+    url: window.location.href
+  });
+
+  document.getElementById("banner-slot").innerHTML = "";
+  document.getElementById("avatar-slot").innerHTML = `<span style="font-size:28px">📶</span>`;
+  document.getElementById("name-row-slot").innerHTML = `<span class="user-badge"><span class="name">${escapeHtml(username)}</span></span>`;
+  document.getElementById("stars-slot").innerHTML = "";
+  document.getElementById("action-slot").innerHTML = "";
+  document.getElementById("stats-slot").textContent = "Profil porte-parole IP — sans rang ni Kennedcoins";
+  document.getElementById("last-seen-slot").textContent =
+    `Membre depuis le ${new Date(ipProfile.created_at).toLocaleDateString("fr-CA")} · Vu ${timeAgo(ipProfile.last_seen_at)}`;
+  document.getElementById("description-slot").innerHTML = `<p class="hint-text">Les porte-parole IP ne peuvent pas ajouter de description.</p>`;
+
+  document.getElementById("badge-grid-slot").innerHTML = `<p class="hint-text" style="grid-column:1/-1">Les porte-parole IP ne peuvent pas obtenir de badges.</p>`;
+
+  document.getElementById("posts-slot").innerHTML = `<p class="muted">Les porte-parole IP ne peuvent publier que des réponses, pas de publications.</p>`;
+
+  box.classList.remove("hidden");
+}
+
 
 async function init() {
   const {
@@ -47,6 +83,11 @@ async function init() {
     return;
   }
 
+  if (targetUsername.startsWith("!p")) {
+    await showIpProfile(targetUsername.slice(2));
+    return;
+  }
+
   const { data: p } = await supabase.from("profiles").select("*").eq("username", targetUsername).single();
   loadingMsg.classList.add("hidden");
 
@@ -55,6 +96,12 @@ async function init() {
     return;
   }
   profile = p;
+
+  setOgTags({
+    title: `JFKforum - Profil de ${profile.username}`,
+    description: profile.description || `Profil de ${profile.username} sur JFKforum`,
+    url: window.location.href
+  });
 
   const isOwn = me === profile.id;
 
@@ -244,28 +291,51 @@ async function renderFriendsList(isOwn, settings) {
 
   const { data } = await supabase
     .from("friends")
-    .select("requester_id, addressee_id, req:requester_id (username), add:addressee_id (username)")
+    .select(
+      "requester_id, addressee_id, req:requester_id (username, pfp_url), add:addressee_id (username, pfp_url)"
+    )
     .eq("status", "accepted")
     .or(`requester_id.eq.${profile.id},addressee_id.eq.${profile.id}`);
 
-  const names = (data || []).map((r) => (r.requester_id === profile.id ? r.add?.username : r.req?.username)).filter(Boolean);
+  const friendsList = (data || [])
+    .map((r) => (r.requester_id === profile.id ? r.add : r.req))
+    .filter(Boolean);
 
-  if (names.length === 0) {
+  if (friendsList.length === 0) {
     slot.innerHTML = `<p class="hint-text" style="margin-top:10px">Aucun ami pour le moment.</p>`;
     return;
   }
 
-  slot.innerHTML = `
-    <p class="hint-text" style="margin-top:14px;margin-bottom:6px">Amis</p>
-    <div class="hashtags">
-      ${names
-        .map(
-          (n) =>
-            `<a href="profile.html?user=${encodeURIComponent(n)}" class="hashtag" style="text-decoration:none">${escapeHtml(n)}</a>`
-        )
-        .join("")}
-    </div>
-  `;
+  slot.innerHTML = `<p class="hint-text" style="margin-top:14px;margin-bottom:6px">Amis</p><div id="friend-grid-slot"></div>`;
+  renderFriendGrid(document.getElementById("friend-grid-slot"), friendsList, false);
+}
+
+function renderFriendGrid(grid, friendsList, expanded) {
+  const PER_ROW = 5;
+  const LIMIT = expanded ? friendsList.length : PER_ROW * 2 - 1; // 2 rangées, la dernière case = "voir plus"
+
+  const shown = friendsList.slice(0, LIMIT);
+  const remaining = friendsList.length - shown.length;
+
+  grid.className = "friend-grid";
+  grid.innerHTML =
+    shown
+      .map(
+        (f) => `
+      <a href="profile.html?user=${encodeURIComponent(f.username)}" class="friend-avatar-link" title="${escapeHtml(f.username)}">
+        ${avatarImgHtml(f.username, f.pfp_url, 60, "")}
+      </a>
+    `
+      )
+      .join("") +
+    (remaining > 0
+      ? `<div class="badge-more" id="friends-more-btn" style="aspect-ratio:1">
+          <span>Voir plus !</span><span>+${remaining}</span>
+        </div>`
+      : "");
+
+  const moreBtn = document.getElementById("friends-more-btn");
+  if (moreBtn) moreBtn.addEventListener("click", () => renderFriendGrid(grid, friendsList, true));
 }
 
 async function renderBadges(friendsCount) {
