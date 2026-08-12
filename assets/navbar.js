@@ -1,3 +1,4 @@
+//go
 import { supabase } from "supabaseClient.js";
 import { getIpIdentity, clearIpIdentity } from "ipIdentity.js";
 
