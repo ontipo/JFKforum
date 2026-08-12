@@ -1,7 +1,7 @@
 import { supabase } from "./supabaseClient.js";
 import { escapeHtml } from "./utils.js";
 
-// Charge assets/ads/deploy.txt, choisit une pub au hasard (pondérée par le
+// Charge ads/deploy.txt, choisit une pub au hasard (pondérée par le
 // multiplicateur de chances) et l'affiche dans un encart fixe sur le côté.
 // Dimension recommandée pour les images : 300 x 600 px (format "half page",
 // très visible, standard IAB — évite de faire trop large pour ne pas gêner
@@ -37,7 +37,7 @@ export async function mountAds() {
   slot.innerHTML = `
     <p class="ad-label">Publicité</p>
     <a href="${chosen.link}" target="_blank" rel="noopener sponsored" id="ad-link">
-      <img src="assets/ads/${chosen.image}" alt="${escapeHtml(chosen.title)}" />
+      <img src="ads/${chosen.image}" alt="${escapeHtml(chosen.title)}" />
       <span class="ad-title">${escapeHtml(chosen.title)}</span>
     </a>
   `;
