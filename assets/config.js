@@ -9,5 +9,5 @@ export const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiO
 // Clé API IPQualityScore (palier gratuit disponible sur ipqualityscore.com).
 // Nécessaire pour la détection VPN/proxy/datacenter du système "porte-parole IP".
 // Sans cette clé, la vérification IP refusera tout par prudence.
-// Settings & Account Management > Api Keys (https://www.ipqualityscore.com/user/api-keys)
+// Settings & Account Management > Api Keys (https://www.ipqualityscore.com/user/api-keys).
 export const IPQS_API_KEY = "EFAvc1rCEILcXEorNf3Eo4ekDQTT8wPG";
