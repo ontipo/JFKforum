@@ -9,7 +9,7 @@ import { escapeHtml } from "./utils.js";
 export async function mountAds() {
   let ads = [];
   try {
-    const res = await fetch("assets/ads/deploy.txt");
+    const res = await fetch("ads/deploy.txt");
     const text = await res.text();
     ads = text
       .split("\n")
