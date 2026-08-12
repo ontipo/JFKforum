@@ -1,4 +1,0 @@
-# Format : multiplicateur_de_chances=titre=nom_image.png=https://lien.com
-# Le multiplicateur augmente les chances d'être tiré au sort par rapport aux
-# autres pubs (1 = chances normales, 3 = 3x plus de chances, etc.)
-# Les images vont dans assets/ads/{nom_image.png}
