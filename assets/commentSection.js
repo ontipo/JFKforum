@@ -1,17 +1,16 @@
 import { supabase } from "./supabaseClient.js";
-import { containsLink, timeAgo, escapeHtml, maskIp } from "./utils.js";
+import { containsLink, timeAgo, escapeHtml, maskIp, avatarImgHtml, isWithinMinutes } from "./utils.js";
 import { userBadgeHtml } from "./userBadge.js";
 import { getIpIdentity } from "./ipIdentity.js";
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./config.js";
 
-const AUTO_VISIBLE_DEPTH = 2; // la publication elle-même = 0, ses réponses directes = 1, leurs réponses = 2
+const AUTO_VISIBLE_DEPTH = 2;
 
-// mode "full"    -> page dédiée d'un post (index.html?=ID) : fil complet, imbrication infinie, formulaires de réponse
-// mode "preview" -> carte du fil : réponses directes seulement, lecture seule, pas de formulaire
 export async function mountCommentSection(container, { postId, postAuthorId, currentUserId, currentProfile, onCountChange, mode = "full" }) {
   const expandedIds = new Set();
   const ipIdentity = !currentUserId ? getIpIdentity() : null;
   const canReply = !!currentUserId || !!ipIdentity;
+  const isStaff = ["moderator", "owner"].includes(currentProfile?.role);
   let allComments = [];
 
   container.innerHTML =
@@ -42,7 +41,7 @@ export async function mountCommentSection(container, { postId, postAuthorId, cur
     const { data } = await supabase
       .from("comments")
       .select(
-        "id, body, is_anonymous, created_at, author_id, ip_author_id, parent_comment_id, profiles:author_id (username, role, likes_received, posts_count), ip_profiles:ip_author_id (ip)"
+        "id, body, is_anonymous, is_edited, created_at, author_id, ip_author_id, parent_comment_id, profiles:author_id (username, role, likes_received, posts_count, pfp_url), ip_profiles:ip_author_id (ip)"
       )
       .eq("post_id", postId)
       .order("created_at", { ascending: true });
@@ -91,32 +90,53 @@ export async function mountCommentSection(container, { postId, postAuthorId, cur
   function renderCommentHtml(c, depth, interactive, childrenHtml = "") {
     const isAuthorReply = c.author_id && c.author_id === postAuthorId;
     const displayName = displayNameFor(c);
+    const isOwnComment = currentUserId && c.author_id === currentUserId;
+    const showRealAvatar = !c.is_anonymous && !c.ip_author_id;
 
-    const nameHtml = c.ip_author_id
-      ? `<span class="name">${escapeHtml(displayName)}</span>`
-      : c.is_anonymous
-      ? `<span class="name">${escapeHtml(displayName)}</span>`
-      : userBadgeHtml({
-          username: displayName,
-          role: c.profiles?.role,
-          likesReceived: c.profiles?.likes_received,
-          postsCount: c.profiles?.posts_count
-        });
+    const nameHtml =
+      c.ip_author_id || c.is_anonymous
+        ? `<span class="name">${escapeHtml(displayName)}</span>`
+        : userBadgeHtml({
+            username: displayName,
+            role: c.profiles?.role,
+            likesReceived: c.profiles?.likes_received,
+            postsCount: c.profiles?.posts_count
+          });
+
+    const avatarInner = c.ip_author_id
+      ? "📶"
+      : showRealAvatar
+      ? avatarImgHtml(c.profiles?.username, c.profiles?.pfp_url, 28)
+      : escapeHtml((displayName || "?")[0] || "?").toUpperCase();
+
+    const avatarHtml = showRealAvatar
+      ? `<a href="profile.html?user=${encodeURIComponent(c.profiles?.username || "")}" class="avatar-link" onclick="event.stopPropagation()"><div class="comment-avatar">${avatarInner}</div></a>`
+      : `<div class="comment-avatar">${avatarInner}</div>`;
 
     const replyToggle = interactive && canReply ? `<button class="reply-toggle" data-reply-to="${c.id}">Répondre</button>` : "";
     const replyFormSlot = interactive ? `<div class="reply-form-slot" data-reply-form-for="${c.id}"></div>` : "";
 
+    const canEdit = interactive && isOwnComment && isWithinMinutes(c.created_at, 15);
+    const canDeleteSelf = interactive && isOwnComment && isWithinMinutes(c.created_at, 5);
+    const canDeleteStaff = interactive && isStaff && !isOwnComment;
+
+    const editBtn = canEdit ? `<button class="reply-toggle" data-edit="${c.id}">Modifier</button>` : "";
+    const deleteBtn =
+      canDeleteSelf || canDeleteStaff
+        ? `<button class="reply-toggle" data-delete="${c.id}" style="color:#f87171">Supprimer</button>`
+        : "";
+
     return `
-      <div class="comment-item" style="margin-left:${Math.min(depth - 1, 6) * 20}px">
-        <div class="comment-avatar">${c.ip_author_id ? "📶" : escapeHtml((displayName || "?")[0] || "?").toUpperCase()}</div>
+      <div class="comment-item" style="margin-left:${Math.min(depth - 1, 6) * 20}px" data-comment-id="${c.id}">
+        ${avatarHtml}
         <div style="flex:1;min-width:0">
           <div class="comment-body-row">
             ${nameHtml}
             ${isAuthorReply ? '<span class="au-tag">AU</span>' : ""}
-            <span class="post-time">${timeAgo(c.created_at)}</span>
+            <span class="post-time">${timeAgo(c.created_at)}${c.is_edited ? " · modifié" : ""}</span>
           </div>
-          <p class="comment-text">${escapeHtml(c.body)}</p>
-          ${replyToggle}
+          <p class="comment-text" data-comment-text>${escapeHtml(c.body)}</p>
+          ${replyToggle}${editBtn}${deleteBtn}
           ${replyFormSlot}
           ${childrenHtml}
         </div>
@@ -160,6 +180,54 @@ export async function mountCommentSection(container, { postId, postAuthorId, cur
           const anon = form.querySelector('input[type="checkbox"]').checked;
           await submitComment(textarea.value, anon, parentId, errorEl);
         });
+      });
+    });
+
+    list.querySelectorAll("[data-edit]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const commentId = btn.dataset.edit;
+        const item = list.querySelector(`[data-comment-id="${commentId}"]`);
+        const textEl = item.querySelector("[data-comment-text]");
+        const current = allComments.find((c) => c.id === commentId)?.body || "";
+
+        textEl.innerHTML = `
+          <textarea class="input edit-textarea" rows="2">${escapeHtml(current)}</textarea>
+          <p class="error-text hidden" style="margin-top:4px"></p>
+          <div style="display:flex;gap:8px;margin-top:6px">
+            <button class="btn-outline save-edit-btn">Enregistrer</button>
+            <button class="btn-outline cancel-edit-btn">Annuler</button>
+          </div>
+        `;
+
+        textEl.querySelector(".cancel-edit-btn").addEventListener("click", () => render());
+        textEl.querySelector(".save-edit-btn").addEventListener("click", async () => {
+          const newBody = textEl.querySelector("textarea").value.trim();
+          const errEl = textEl.querySelector(".error-text");
+          if (!newBody) return;
+          if (containsLink(newBody)) {
+            errEl.textContent = "Les liens ne sont pas autorisés (sauf ceux de ontipo.github.io).";
+            errEl.classList.remove("hidden");
+            return;
+          }
+          const { error } = await supabase
+            .from("comments")
+            .update({ body: newBody, is_edited: true })
+            .eq("id", commentId);
+          if (error) {
+            errEl.textContent = error.message;
+            errEl.classList.remove("hidden");
+            return;
+          }
+          load();
+        });
+      });
+    });
+
+    list.querySelectorAll("[data-delete]").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        if (!confirm("Supprimer cette réponse ?")) return;
+        await supabase.from("comments").delete().eq("id", btn.dataset.delete);
+        load();
       });
     });
   }

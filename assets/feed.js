@@ -2,18 +2,19 @@ import { supabase } from "./supabaseClient.js";
 import { renderNavbar } from "./navbar.js";
 import { createPostCard } from "./postCard.js";
 import { openPostModal } from "./postModal.js";
-import { escapeHtml } from "./utils.js";
+import { escapeHtml, containsPersonalizedWord } from "./utils.js";
 import { setOgTags } from "./og.js";
+import { mountAds } from "./ads.js";
 
 const POST_SELECT =
-  "id, title, body, is_anonymous, is_official, is_pinned, admin_boosted, score, image_url, image_status, category_id, hashtags, created_at, author_id, profiles:author_id (username, role, likes_received, posts_count, pfp_url), categories:category_id (name, slug)";
+  "id, title, body, is_anonymous, is_official, is_pinned, admin_boosted, is_18plus, is_edited, score, image_url, image_status, category_id, hashtags, created_at, author_id, profiles:author_id (username, role, likes_received, posts_count, pfp_url), categories:category_id (name, slug)";
 
 let categories = [];
 let activeCategory = null;
 let searchTerm = null;
 let currentUserId = null;
 let currentProfile = null;
-let sortMode = "recent";
+let sortMode = "personalized";
 
 const tabsEl = document.getElementById("tabs");
 const sortSelect = document.getElementById("sort-select");
@@ -28,6 +29,7 @@ const publishFab = document.getElementById("publish-fab");
 
 async function init() {
   await renderNavbar();
+  mountAds();
   await loadSession();
   supabase.auth.onAuthStateChange(() => loadSession());
   await loadCategories();
@@ -105,7 +107,7 @@ async function loadPosts() {
 
   if (sortMode === "liked") {
     query = query.order("score", { ascending: false });
-  } else if (sortMode === "pinned") {
+  } else if (sortMode === "pinned" || sortMode === "personalized") {
     query = query.order("is_pinned", { ascending: false }).order("created_at", { ascending: false });
   } else {
     // "recent" et "random" partent toutes les deux du plus récent ;
@@ -113,12 +115,16 @@ async function loadPosts() {
     query = query.order("created_at", { ascending: false });
   }
 
-  const { data } = await query;
+  let { data } = await query;
   loadingMsg.classList.add("hidden");
 
   if (!data || data.length === 0) {
     emptyMsg.classList.remove("hidden");
     return;
+  }
+
+  if (sortMode === "personalized") {
+    data = await sortPersonalized(data);
   }
 
   const visible = currentUserId ? data : data.slice(0, 5);
@@ -136,6 +142,19 @@ async function loadPosts() {
   }
 
   if (sortMode === "random") shuffleFeed();
+}
+
+// Tri "Personnalisé" (par défaut) : épinglés d'abord, puis les publications sans mot
+// non recommandé triées par date, puis celles qui en contiennent, tout en bas.
+async function sortPersonalized(data) {
+  const pinned = data.filter((p) => p.is_pinned);
+  const rest = data.filter((p) => !p.is_pinned);
+
+  const flags = await Promise.all(rest.map((p) => containsPersonalizedWord(`${p.title} ${p.body}`)));
+  const clean = rest.filter((_, i) => !flags[i]);
+  const flagged = rest.filter((_, i) => flags[i]);
+
+  return [...pinned, ...clean, ...flagged];
 }
 
 function shuffleFeed() {

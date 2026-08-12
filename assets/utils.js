@@ -173,6 +173,41 @@ export async function containsBannedWord(text) {
 }
 
 // ------------------------------------------------------------
+// Mots non recommandés (assets/personalized.txt) — utilisés pour le tri "Personnalisé"
+// ------------------------------------------------------------
+let personalizedWordsCache = null;
+
+export async function loadPersonalizedWords() {
+  if (personalizedWordsCache) return personalizedWordsCache;
+  try {
+    const res = await fetch("assets/personalized.txt");
+    const text = await res.text();
+    personalizedWordsCache = text
+      .split("\n")
+      .map((l) => l.trim().toLowerCase())
+      .filter((l) => l && !l.startsWith("#"));
+  } catch {
+    personalizedWordsCache = [];
+  }
+  return personalizedWordsCache;
+}
+
+export async function containsPersonalizedWord(text) {
+  const words = await loadPersonalizedWords();
+  const lower = (text || "").toLowerCase();
+  return words.some((w) => lower.includes(w));
+}
+
+// ------------------------------------------------------------
+// Fenêtres d'édition (15 min) / suppression (5 min)
+// ------------------------------------------------------------
+export function isWithinMinutes(dateString, minutes) {
+  return Date.now() - new Date(dateString).getTime() < minutes * 60 * 1000;
+}
+
+export const MASS_MENTION_TOKENS = ["!tous", "!all", "!everyone", "!membres"];
+
+// ------------------------------------------------------------
 // Code de parrainage (10 caractères, A-Z 0-9, majuscules seulement)
 // ------------------------------------------------------------
 const SPONSOR_CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

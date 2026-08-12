@@ -24,10 +24,12 @@ const DEFAULT_SETTINGS = {
   decline_friend_requests: false,
   hide_last_seen: false,
   show_kc_balance: false,
-  show_age_verified: false
+  show_age_verified: false,
+  blur_18plus_content: false
 };
 
 let userId = null;
+let ageVerified = false;
 let settings = { ...DEFAULT_SETTINGS };
 
 async function init() {
@@ -41,15 +43,28 @@ async function init() {
   }
   userId = session.user.id;
 
-  const { data: profile } = await supabase.from("profiles").select("settings").eq("id", userId).single();
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("settings, age_verified")
+    .eq("id", userId)
+    .single();
   settings = { ...DEFAULT_SETTINGS, ...(profile?.settings || {}) };
+  ageVerified = !!profile?.age_verified;
 
   render();
 }
 
 function render() {
   const list = document.getElementById("settings-list");
-  list.innerHTML = TOGGLES.map(
+  const rows = [...TOGGLES];
+  if (ageVerified) {
+    rows.push({
+      key: "blur_18plus_content",
+      label: "Avertissement sur les contenus 18 ans et plus (floute l'image jusqu'à ce que je clique)"
+    });
+  }
+
+  list.innerHTML = rows.map(
     (t) => `
     <div class="settings-row">
       <span>${t.label}</span>

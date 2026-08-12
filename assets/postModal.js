@@ -1,5 +1,6 @@
 import { supabase } from "./supabaseClient.js";
 import { containsLink, parseHashtags, parseMentions, escapeHtml, containsBannedWord, isValidUrl } from "./utils.js";
+import { attachMentionAutocomplete } from "./mentionAutocomplete.js";
 
 export function openPostModal({ categories, currentUserId, currentProfile, onCreated }) {
   const isStaff = ["moderator", "owner"].includes(currentProfile?.role);
@@ -30,6 +31,15 @@ export function openPostModal({ categories, currentUserId, currentProfile, onCre
       </label>
 
       ${
+        currentProfile?.age_verified
+          ? `<label class="checkbox-label">
+              <input type="checkbox" id="post-18plus" />
+              Marquer cette publication comme 18 ans et plus
+            </label>`
+          : ""
+      }
+
+      ${
         isStaff
           ? `<label class="checkbox-label">
               <input type="checkbox" id="post-official" />
@@ -45,6 +55,8 @@ export function openPostModal({ categories, currentUserId, currentProfile, onCre
   `;
 
   document.body.appendChild(overlay);
+
+  attachMentionAutocomplete(overlay.querySelector("#post-body"));
 
   const close = () => overlay.remove();
   overlay.addEventListener("click", (e) => {
@@ -76,6 +88,7 @@ export function openPostModal({ categories, currentUserId, currentProfile, onCre
     const body = overlay.querySelector("#post-body").value.trim();
     const categoryId = overlay.querySelector("#post-category").value;
     const anonymous = overlay.querySelector("#post-anon").checked;
+    const is18plus = overlay.querySelector("#post-18plus")?.checked || false;
     const official = isStaff ? overlay.querySelector("#post-official")?.checked || false : false;
     const hashtags = parseHashtags(hashtagsInput.value);
     const imageUrl = overlay.querySelector("#post-image").value.trim();
@@ -123,6 +136,7 @@ export function openPostModal({ categories, currentUserId, currentProfile, onCre
         author_id: currentUserId,
         is_anonymous: anonymous,
         is_official: official,
+        is_18plus: is18plus,
         category_id: categoryId,
         hashtags,
         mentions,

@@ -1,0 +1,6 @@
+# Un mot ou une expression par ligne, insensible à la casse.
+# Les publications contenant un de ces mots passent en dernier dans le tri "Personnalisé"
+# (après les épinglées et les publications propres, triées par date). Complète cette
+# liste selon ce que ta communauté considère comme peu recommandé (pas forcément interdit).
+clickbait
+arnaque

@@ -130,9 +130,10 @@ async function init() {
 
   const kcLine = isOwn || settings.show_kc_balance ? ` · ${formatKc(profile.kc_balance || 0)}` : "";
   const ageLine = isOwn || settings.show_age_verified ? ` · ${profile.age_verified ? "Âge vérifié ✓" : "Âge non vérifié"}` : "";
+  const emailLine = (isOwn || settings.public_email) && profile.email ? ` · ${profile.email}` : "";
 
   document.getElementById("stats-slot").textContent =
-    `${profile.likes_received} points · ${profile.posts_count || 0} publications · ${friendsCount} ami${friendsCount === 1 ? "" : "s"}${kcLine}${ageLine}`;
+    `${profile.likes_received} points · ${profile.posts_count || 0} publications · ${friendsCount} ami${friendsCount === 1 ? "" : "s"}${kcLine}${ageLine}${emailLine}`;
 
   const createdLabel = profile.created_at
     ? `Membre depuis le ${new Date(profile.created_at).toLocaleDateString("fr-CA")}`
