@@ -1,6 +1,6 @@
-import { renderNavbar } from "navbar.js";
-import { maskIp } from "utils.js";
-import { SUPABASE_URL, SUPABASE_ANON_KEY } from "config.js";
+import { renderNavbar } from "./navbar.js";
+import { maskIp } from "./utils.js";
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./config.js";
 
 renderNavbar();
 

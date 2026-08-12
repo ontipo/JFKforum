@@ -1,6 +1,5 @@
-//go
-import { supabase } from "supabaseClient.js";
-import { getIpIdentity, clearIpIdentity } from "ipIdentity.js";
+import { supabase } from "./supabaseClient.js";
+import { getIpIdentity, clearIpIdentity } from "./ipIdentity.js";
 
 export async function renderNavbar() {
   const root = document.getElementById("navbar-root");
@@ -65,7 +64,7 @@ async function refreshAccountArea() {
   const adminArea = document.getElementById("navbar-admin-link");
   if (!area) return;
 
-  const { avatarImgHtml, formatKc, maskIp } = await import("utils.js");
+  const { avatarImgHtml, formatKc, maskIp } = await import("./utils.js");
 
   const {
     data: { session }
@@ -196,7 +195,7 @@ async function loadNotifDropdown(dropdown, userId) {
     .order("created_at", { ascending: false })
     .limit(20);
 
-  const { timeAgo, escapeHtml } = await import("utils.js");
+  const { timeAgo, escapeHtml } = await import("./utils.js");
 
   if (!data || data.length === 0) {
     dropdown.innerHTML = `<p class="muted" style="font-size:13px;padding:8px">Aucune notification.</p>`;
