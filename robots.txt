@@ -1,0 +1,50 @@
+# Banni de base
+User-agent: AhrefsBot
+Disallow: /
+User-agent: SemrushBot
+Disallow: /
+User-agent: MJ12bot
+Disallow: /
+User-agent: DotBot
+Disallow: /
+User-agent: BLEXBot
+Disallow: /
+User-agent: DataForSeoBot
+Disallow: /
+User-agent: Bytespider
+Disallow: /
+User-agent: PetalBot
+Disallow: /
+User-agent: CCBot
+Disallow: /
+
+# Bannis à long terme
+User-agent: IPQS
+Disallow: /
+
+User-agent: IPQualityScore
+Disallow: /
+
+User-agent: IPQualityScoreBot
+Disallow: /
+
+User-agent: IPQSBot
+Disallow: /
+
+User-agent: IPQS-Crawler
+Disallow: /
+
+User-agent: IPQS-CrawlerBot
+Disallow: /
+
+User-agent: IPQSScanner
+Disallow: /
+
+User-agent: IPQS-Scanner
+Disallow: /
+
+User-agent: IPQSResearchBot
+Disallow: /
+
+User-agent: IPQSResearch
+Disallow: /
