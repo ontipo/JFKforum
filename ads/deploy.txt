@@ -4,8 +4,8 @@
 # Les images vont dans assets/ads/{nom_image.png}
 # 300 par 600 px
 
-10=JFKforum=base_ad_jfkforum.png=https://ontipo.github.io/JFKforum/register.html?sponsor=Q8G0J9NR4F
-10=JFKforum=base_ad_jfkforum2.png=https://ontipo.github.io/JFKforum/register.html?sponsor=Q8G0J9NR4F
+1=JFKforum=base_ad_jfkforum.png=https://ontipo.github.io/JFKforum/register.html?sponsor=Q8G0J9NR4F
+1=JFKforum=base_ad_jfkforum2.png=https://ontipo.github.io/JFKforum/register.html?sponsor=Q8G0J9NR4F
 
 # Banned
 0=Erotic porn video player (18+ ONLY CENSURED)=play-video.png=https://ontipo.github.io/JFKforum/register.html?sponsor=Q8G0J9NR4F
