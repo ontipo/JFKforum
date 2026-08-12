@@ -3,6 +3,8 @@
 # (après les épinglées et les publications propres, triées par date). Complète cette
 # liste selon ce que ta communauté considère comme peu recommandé (pas forcément interdit).
 
+test
+essai
 
 clickbait
 piège à clics
@@ -2279,7 +2281,6 @@ Al-Qurʾān al-Ḥakīm
 Al-Qurʾān al-Mubīn
 Al-Qurʾān al-Mubārak
 Al-Qurʾān al-ʿAzīz
-```text
 Al-Qur'an
 Al-Kitab
 Al-Furqan
@@ -2317,8 +2318,6 @@ Al-Qur'an al-Hakim
 Al-Qur'an al-Mubin
 Al-Qur'an al-Mubarak
 Al-Qur'an al-Aziz
-```
-```text
 Al Quran
 Al Kitab
 Al Furqan
@@ -2395,9 +2394,6 @@ Dhū al-Qarnayn
 ʿUzayr
 Zayd
 Abū Lahab
-Voici la liste **sans diacritiques**, en gardant les apostrophes `'` :
-
-```text
 Adam
 Idris
 Nuh
@@ -2436,8 +2432,6 @@ Luqman
 Dhu al-Qarnayn
 Zayd
 Abu Lahab
-```
-```text
 Adam
 Idris
 Nuh
@@ -2476,7 +2470,6 @@ Luqman
 Dhu al Qarnayn
 Zayd
 Abu Lahab
-```
 ☪
 ☪️
 ﷲ
@@ -2511,3 +2504,343 @@ Abu Lahab
 ۩
 ﴿
 ﴾
+
+Voici une liste de mots-clés associés à **l’abus de pouvoir d’un modérateur**, avec français/anglais :
+moderator abuse
+abus de modération
+moderator abuse of power
+abus de pouvoir d'un modérateur
+mod abuse
+abus de mod
+moderator misconduct
+faute de modération
+moderator misconduct
+mauvaise conduite d'un modérateur
+moderator corruption
+corruption d'un modérateur
+corrupt moderator
+modérateur corrompu
+moderator bias
+partialité du modérateur
+biased moderator
+modérateur partial
+moderator favoritism
+favoritisme du modérateur
+moderator favoritism
+favoritisme
+moderator harassment
+harcèlement par un modérateur
+moderator bullying
+intimidation par un modérateur
+moderator intimidation
+intimidation du modérateur
+moderator retaliation
+représailles du modérateur
+moderator censorship
+censure du modérateur
+unfair moderation
+modération injuste
+unfair moderator
+modérateur injuste
+abusive moderator
+modérateur abusif
+power abuse
+abus de pouvoir
+abuse of authority
+abus d'autorité
+misuse of power
+détournement de pouvoir
+misuse of authority
+abus d'autorité
+excessive moderation
+modération excessive
+overmoderation
+surmodération
+overmoderating
+surmodérer
+unfair ban
+bannissement injuste
+unjust ban
+ban injustifié
+wrongful ban
+bannissement abusif
+false ban
+faux bannissement
+unfair mute
+mute injustifié
+unfair kick
+expulsion injustifiée
+unfair warning
+avertissement injustifié
+unfair punishment
+punition injuste
+unjust punishment
+punition injustifiée
+arbitrary punishment
+punition arbitraire
+arbitrary ban
+bannissement arbitraire
+arbitrary moderation
+modération arbitraire
+abusive ban
+bannissement abusif
+abusive mute
+mute abusif
+abusive warning
+avertissement abusif
+mod abuse report
+signalement d'abus de modération
+moderator report
+signalement d'un modérateur
+report a moderator
+signaler un modérateur
+moderator complaint
+plainte contre un modérateur
+moderation complaint
+plainte concernant la modération
+appeal
+appel
+ban appeal
+appel de bannissement
+moderation appeal
+appel de modération
+appeal a ban
+faire appel d'un bannissement
+moderator review
+réexamen de la modération
+moderation review
+réexamen d'une décision
+moderator accountability
+responsabilité des modérateurs
+moderation accountability
+responsabilité de la modération
+moderator transparency
+transparence des modérateurs
+moderation transparency
+transparence de la modération
+abuse of privileges
+abus de privilèges
+abuse of permissions
+abus de permissions
+abuse of moderator permissions
+abus des permissions de modération
+misuse of moderator tools
+mauvaise utilisation des outils de modération
+moderator privileges
+privilèges de modérateur
+moderator powers
+pouvoirs du modérateur
+moderation powers
+pouvoirs de modération
+conflict of interest
+conflit d'intérêts
+moderator conflict
+conflit avec un modérateur
+retaliatory ban
+bannissement par représailles
+retaliatory moderation
+modération par représailles
+targeted moderation
+modération ciblée
+targeted harassment
+harcèlement ciblé
+selective enforcement
+application sélective des règles
+unequal enforcement
+application inégale des règles
+double standard
+double standard
+double standards
+doubles standards
+rule abuse
+abus des règles
+rules abuse
+abus du règlement
+rule manipulation
+manipulation des règles
+rule bending
+contournement des règles
+selective moderation
+modération sélective
+biased enforcement
+application partiale des règles
+inconsistent moderation
+modération incohérente
+inconsistent enforcement
+application incohérente des règles
+moderator misconduct report
+rapport de mauvaise conduite d'un modérateur
+abuse report
+signalement d'abus
+staff abuse
+abus du personnel
+staff misconduct
+faute du personnel
+admin abuse
+abus d'un administrateur
+administrator abuse
+abus de pouvoir d'un administrateur
+staff abuse of power
+abus de pouvoir du personnel
+moderator accountability
+reddition de comptes des modérateurs
+search manipulation
+manipulation des recherches
+search result manipulation
+manipulation des résultats de recherche
+search manipulation by moderator
+manipulation des recherches par un modérateur
+moderator search manipulation
+manipulation de recherche par un modérateur
+customized search
+recherche personnalisée
+customized search results
+résultats de recherche personnalisés
+biased search results
+résultats de recherche biaisés
+biased search
+recherche biaisée
+filtered search
+recherche filtrée
+search filtering
+filtrage des recherches
+selective search
+recherche sélective
+selective search results
+résultats de recherche sélectifs
+search result filtering
+filtrage des résultats de recherche
+search result censorship
+censure des résultats de recherche
+search censorship
+censure des recherches
+hidden search results
+résultats de recherche cachés
+suppressed search results
+résultats de recherche supprimés
+search suppression
+suppression des résultats
+result suppression
+suppression de résultats
+search ranking manipulation
+manipulation du classement des résultats
+ranking manipulation
+manipulation du classement
+search ranking bias
+biais du classement des recherches
+search engine manipulation
+manipulation du moteur de recherche
+search engine bias
+biais du moteur de recherche
+search engine censorship
+censure du moteur de recherche
+algorithm manipulation
+manipulation de l'algorithme
+algorithmic manipulation
+manipulation algorithmique
+algorithmic bias
+biais algorithmique
+algorithmic censorship
+censure algorithmique
+algorithmic filtering
+filtrage algorithmique
+personalized results
+résultats personnalisés
+personalized search
+recherche personnalisée
+targeted search results
+résultats de recherche ciblés
+targeted search
+recherche ciblée
+manipulated results
+résultats manipulés
+altered results
+résultats modifiés
+modified search results
+résultats de recherche modifiés
+edited search results
+résultats de recherche édités
+curated search results
+résultats de recherche sélectionnés
+handpicked results
+résultats sélectionnés manuellement
+cherry-picked results
+résultats triés sur le volet
+selective results
+résultats sélectifs
+controlled search results
+résultats de recherche contrôlés
+controlled search
+recherche contrôlée
+search result bias
+biais des résultats de recherche
+information filtering
+filtrage de l'information
+information manipulation
+manipulation de l'information
+information suppression
+suppression d'informations
+information control
+contrôle de l'information
+content filtering
+filtrage du contenu
+content suppression
+suppression de contenu
+content manipulation
+manipulation de contenu
+result manipulation
+manipulation des résultats
+search tampering
+altération des recherches
+search result tampering
+altération des résultats de recherche
+search interference
+ingérence dans les recherches
+search steering
+orientation des recherches
+search result steering
+orientation des résultats de recherche
+search bias
+biais de recherche
+search distortion
+déformation des résultats de recherche
+result distortion
+déformation des résultats
+information distortion
+déformation de l'information
+query manipulation
+manipulation des requêtes
+query filtering
+filtrage des requêtes
+query steering
+orientation des requêtes
+search personalization abuse
+abus de personnalisation des recherches
+personalized search abuse
+abus de recherche personnalisée
+moderator-controlled search
+recherche contrôlée par un modérateur
+moderator-controlled results
+résultats contrôlés par un modérateur
+moderator-curated results
+résultats sélectionnés par un modérateur
+moderator-filtered search
+recherche filtrée par un modérateur
+moderator-filtered results
+résultats filtrés par un modérateur
+moderator manipulation
+manipulation par un modérateur
+information gatekeeping
+contrôle de l'accès à l'information
+digital gatekeeping
+contrôle de l'information numérique
+https://ontipo.github.io/JFKforum/assets/personalized.txt
+personalized.txt
+/assets/personalized.txt
+./assets/personalized.txt
+../assets/personalized.txt
+assets/personalized.txt
+/JFKforum/assets/personalized.txt
+./JFKforum/assets/personalized.txt
+../JFKforum/assets/personalized.txt
+JFKforum/assets/personalized.txt
