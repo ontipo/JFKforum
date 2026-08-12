@@ -197,9 +197,6 @@ communist ideology
 idéologie marxiste
 communist theory
 théorie communiste
-Oui — **uniquement de nouveaux termes liés à l’URSS**, sans reprendre ceux des deux listes précédentes :
-
-```text
 Soviet Russia
 Russie rouge
 Red Russia
@@ -1062,3 +1059,1446 @@ LGBTQ acceptance
 acceptation LGBTQ
 LGBTQIA+ community
 communauté LGBTQIA+
+
+Satan
+satan
+Satanism
+satanisme
+Satanist
+sataniste
+Satanic
+satanique
+Devil
+diable
+Demon
+démon
+Demons
+démons
+Demonic
+démoniaque
+Lucifer
+Luciferian
+luciférien
+Luciferianism
+luciférisme
+Beelzebub
+Baal
+Belial
+Asmodeus
+Asmodée
+Leviathan
+Léviathan
+Mammon
+Abaddon
+Apollyon
+Azazel
+Moloch
+Lilith
+Mephistopheles
+Méphistophélès
+Astaroth
+Baphomet
+Samael
+Samaël
+Satanic Temple
+temple satanique
+Satanic Church
+église satanique
+Hell
+enfer
+underworld
+monde souterrain
+inferno
+géhenne
+Hades
+Hadès
+Demonology
+démonologie
+demonologist
+démonologue
+demonology
+démonologie
+demon possession
+possession démoniaque
+demonic possession
+possession par un démon
+exorcism
+exorcisme
+exorcist
+exorciste
+evil
+mal
+evil spirit
+esprit maléfique
+evil spirits
+esprits maléfiques
+evil entity
+entité maléfique
+dark spirit
+esprit des ténèbres
+darkness
+ténèbres
+fallen angel
+ange déchu
+fallen angels
+anges déchus
+fallen
+déchu
+infernal
+infernal
+infernalism
+infernalisme
+fiend
+démon
+fiendish
+démoniaque
+devilish
+diabolique
+diabolical
+diabolique
+diabolism
+diabolisme
+diabolist
+diaboliste
+diabolism
+diabolisme
+demon worship
+culte démoniaque
+devil worship
+culte du diable
+Satan worship
+culte de Satan
+demon worshipper
+adorateur de démons
+devil worshipper
+adorateur du diable
+Satan worshipper
+adorateur de Satan
+black magic
+magie noire
+dark magic
+magie noire
+occult
+occulte
+occultism
+occultisme
+occultist
+occultiste
+esotericism
+ésotérisme
+necromancy
+nécromancie
+black mass
+messe noire
+ritual
+rituel
+infernal ritual
+rituel infernal
+satanic ritual
+rituel satanique
+demonic ritual
+rituel démoniaque
+pentagram
+pentagramme
+inverted pentagram
+pentagramme inversé
+666
+number of the beast
+nombre de la Bête
+mark of the beast
+marque de la Bête
+beast
+Bête
+Antichrist
+Antéchrist
+Antichrist
+Antéchrist
+Book of Revelation
+Apocalypse
+Revelation
+Révélation
+Beast
+Bête
+dragon
+dragon
+serpent
+serpent
+temptation
+tentation
+sin
+péché
+original sin
+péché originel
+evil
+mal
+wickedness
+méchanceté
+damnation
+damnation
+eternal damnation
+damnation éternelle
+hellfire
+feu de l'enfer
+brimstone
+soufre
+lake of fire
+lac de feu
+eternal punishment
+châtiment éternel
+Satan's kingdom
+royaume de Satan
+kingdom of darkness
+royaume des ténèbres
+prince of darkness
+prince des ténèbres
+lord of darkness
+seigneur des ténèbres
+father of lies
+père du mensonge
+tempter
+tentateur
+adversary
+adversaire
+accuser
+accusateur
+morning star
+étoile du matin
+Lucifer's fall
+chute de Lucifer
+fall of the angels
+chute des anges
+war in heaven
+guerre dans les cieux
+fallen angel
+ange déchu
+demon king
+roi des démons
+demon lord
+seigneur démoniaque
+demon prince
+prince démoniaque
+demonology
+démonologie
+infernal
+infernal
+diabolic
+diabolique
+satanic
+satanique
+
+Islam
+islam
+Islamic
+islamique
+Muslim
+musulman
+Muslims
+musulmans
+Muslimah
+musulmane
+Muslim community
+communauté musulmane
+Ummah
+Oumma
+Allah
+Quran
+Coran
+Qur'an
+Koran
+Islamic faith
+foi islamique
+Islamic religion
+religion islamique
+Islamic belief
+croyance islamique
+Shahada
+Chahada
+Shahadah
+Five Pillars of Islam
+cinq piliers de l'islam
+Salat
+Salat
+Salah
+prière
+Zakat
+zakat
+Sawm
+jeûne
+Ramadan
+ramadan
+Hajj
+Hajj
+Hadith
+hadith
+Sunnah
+Sunna
+Sunni
+sunnite
+Sunni Islam
+islam sunnite
+Shia
+chiite
+Shia Islam
+islam chiite
+Shiism
+chiisme
+Sunniism
+sunnisme
+madhhab
+madhhab
+fiqh
+fiqh
+Sharia
+charia
+Sharia law
+droit islamique
+Islamic law
+droit musulman
+Fatwa
+fatwa
+Mufti
+mufti
+Imam
+imam
+Sheikh
+cheikh
+Ulama
+oulémas
+Ulema
+ouléma
+Mosque
+mosquée
+Masjid
+masjid
+Minaret
+minaret
+Mihrab
+mihrab
+Muezzin
+muezzin
+Adhan
+adhan
+Wudu
+ablutions
+ablutions
+Ghusl
+ghusl
+Tayammum
+tayammum
+Qibla
+qibla
+Kaaba
+Kaaba
+Mecca
+La Mecque
+Medina
+Médine
+Jerusalem
+Jérusalem
+Masjid al-Haram
+mosquée al-Haram
+Al-Masjid an-Nabawi
+mosquée du Prophète
+Al-Aqsa Mosque
+mosquée Al-Aqsa
+Prophet Muhammad
+prophète Mahomet
+Muhammad
+Mahomet
+Mohammed
+Mawlid
+Mawlid
+Islamic calendar
+calendrier islamique
+Hijri calendar
+calendrier hégirien
+Hijra
+Hégire
+Eid
+Aïd
+Eid al-Fitr
+Aïd el-Fitr
+Eid al-Adha
+Aïd al-Adha
+Ashura
+Achoura
+Laylat al-Qadr
+Nuit du Destin
+Jumu'ah
+prière du vendredi
+Friday prayer
+prière du vendredi
+Dua
+doua
+Dhikr
+dhikr
+Tasbih
+tasbih
+Bismillah
+bismillah
+Alhamdulillah
+alhamdulillah
+Allahu Akbar
+Allahou Akbar
+Inshallah
+inchallah
+Mashallah
+mashallah
+Subhanallah
+soubhanallah
+Astaghfirullah
+astaghfirullah
+Islamic theology
+théologie islamique
+Aqidah
+aqida
+Tawhid
+tawhid
+Shirk
+shirk
+Iman
+iman
+Ihsan
+ihsan
+Taqwa
+taqwa
+Jihad
+djihad
+Dawah
+da'wah
+Ummah
+oumma
+Halal
+halal
+Haram
+haram
+Makruh
+makruh
+Fard
+fard
+Sunnah
+sunna
+Bid'ah
+bid'ah
+Islamic jurisprudence
+jurisprudence islamique
+Qadi
+qadi
+Islamic scholar
+érudit musulman
+Quranic
+coranique
+Quranic verse
+verset coranique
+Surah
+sourate
+Ayah
+aya
+Basmala
+basmala
+Tafsir
+tafsir
+Tajwid
+tajwid
+Hafiz
+hafiz
+Madrasa
+madrasa
+Islamic school
+école islamique
+Dars
+dars
+Ahl al-Bayt
+Ahl al-Bayt
+Caliph
+calife
+Caliphate
+califat
+Caliphate of Islam
+califat islamique
+Rashidun
+Rachidoune
+Abu Bakr
+Abou Bakr
+Umar
+Omar
+Uthman
+Othman
+Ali
+Ali
+Aisha
+Aïcha
+Fatimah
+Fatima
+Hasan
+Hassan
+Husayn
+Hussein
+Islamic history
+histoire islamique
+Islamic civilization
+civilisation islamique
+Muslim world
+monde musulman
+Islamic world
+monde islamique
+Arab world
+monde arabe
+Islamic art
+art islamique
+Islamic architecture
+architecture islamique
+Islamic philosophy
+philosophie islamique
+Islamic culture
+culture islamique
+Islamic tradition
+tradition islamique
+Islamic teachings
+enseignements islamiques
+Islamic ethics
+éthique islamique
+Islamic theology
+théologie islamique
+Islamic studies
+études islamiques
+Quran studies
+études coraniques
+mosque
+mosquée
+Muslim prayer
+prière musulmane
+Islamic dress
+vêtement islamique
+Hijab
+hidjab
+Niqab
+niqab
+Burqa
+burqa
+Thobe
+qamis
+Abaya
+abaya
+Jilbab
+jilbab
+Kufi
+kufi
+Tasbih
+chapelet musulman
+Islamic calligraphy
+calligraphie islamique
+Arabic calligraphy
+calligraphie arabe
+Islamic geometric art
+art géométrique islamique
+Ar-Rahman
+Ar-Rahim
+Al-Malik
+Al-Quddus
+As-Salam
+Al-Mu'min
+Al-Muhaymin
+Al-'Aziz
+Al-Jabbar
+Al-Mutakabbir
+Al-Khaliq
+Al-Bari'
+Al-Musawwir
+Al-Ghaffar
+Al-Qahhar
+Al-Wahhab
+Ar-Razzaq
+Al-Fattah
+Al-'Alim
+Al-Qabid
+Al-Basit
+Al-Khafid
+Ar-Rafi'
+Al-Mu'izz
+Al-Mudhill
+As-Sami'
+Al-Basir
+Al-Hakam
+Al-'Adl
+Al-Latif
+Al-Khabir
+Al-Halim
+Al-'Azim
+Al-Ghafur
+Ash-Shakur
+Al-'Aliyy
+Al-Kabir
+Al-Hafiz
+Al-Muqit
+Al-Hasib
+Al-Jalil
+Al-Karim
+Ar-Raqib
+Al-Mujib
+Al-Wasi'
+Al-Hakim
+Al-Wadud
+Al-Majid
+Al-Ba'ith
+Ash-Shahid
+Al-Haqq
+Al-Wakil
+Al-Qawiyy
+Al-Matin
+Al-Waliyy
+Al-Hamid
+Al-Muhsi
+Al-Mubdi'
+Al-Mu'id
+Al-Muhyi
+Al-Mumit
+Al-Hayy
+Al-Qayyum
+Al-Wajid
+Al-Majid
+Al-Wahid
+Al-Ahad
+As-Samad
+Al-Qadir
+Al-Muqtadir
+Al-Muqaddim
+Al-Mu'akhkhir
+Al-Awwal
+Al-Akhir
+Az-Zahir
+Al-Batin
+Al-Wali
+Al-Muta'ali
+Al-Barr
+At-Tawwab
+Al-Muntaqim
+Al-'Afuww
+Ar-Ra'uf
+Malik al-Mulk
+Dhu al-Jalali wa al-Ikram
+Al-Muqsit
+Al-Jami'
+Al-Ghaniyy
+Al-Mughni
+Al-Mani'
+Ad-Darr
+An-Nafi'
+An-Nur
+Al-Hadi
+Al-Badi'
+Al-Baqi
+Al-Warith
+Ar-Rashid
+As-Sabur
+Ar Rahman
+Ar Rahim
+Al Malik
+Al Quddus
+As Salam
+Al Mumin
+Al Muhaymin
+Al Aziz
+Al Jabbar
+Al Mutakabbir
+Al Khaliq
+Al Bari
+Al Musawwir
+Al Ghaffar
+Al Qahhar
+Al Wahhab
+Ar Razzaq
+Al Fattah
+Al Alim
+Al Qabid
+Al Basit
+Al Khafid
+Ar Rafi
+Al Muizz
+Al Mudhill
+As Sami
+Al Basir
+Al Hakam
+Al Adl
+Al Latif
+Al Khabir
+Al Halim
+Al Azim
+Al Ghafur
+Ash Shakur
+Al Aliyy
+Al Kabir
+Al Hafiz
+Al Muqit
+Al Hasib
+Al Jalil
+Al Karim
+Ar Raqib
+Al Mujib
+Al Wasi
+Al Hakim
+Al Wadud
+Al Majid
+Al Baith
+Ash Shahid
+Al Haqq
+Al Wakil
+Al Qawiyy
+Al Matin
+Al Waliyy
+Al Hamid
+Al Muhsi
+Al Mubdi
+Al Muid
+Al Muhyi
+Al Mumit
+Al Hayy
+Al Qayyum
+Al Wajid
+Al Majid
+Al Wahid
+Al Ahad
+As Samad
+Al Qadir
+Al Muqtadir
+Al Muqaddim
+Al Muakhkhir
+Al Awwal
+Al Akhir
+Az Zahir
+Al Batin
+Al Wali
+Al Mutaali
+Al Barr
+At Tawwab
+Al Muntaqim
+Al Afuww
+Ar Rauf
+Malik al Mulk
+Dhu al Jalali wa al Ikram
+Al Muqsit
+Al Jami
+Al Ghaniyy
+Al Mughni
+Al Mani
+Ad Darr
+An Nafi
+An Nur
+Al Hadi
+Al Badi
+Al Baqi
+Al Warith
+Ar Rashid
+As Sabur
+Al Fatiha
+Al Baqara
+Al Imran
+An Nisa
+Al Maida
+Al Anam
+Al Araf
+Al Anfal
+At Tawba
+Yunus
+Hud
+Yusuf
+Ar Rad
+Ibrahim
+Al Hijr
+An Nahl
+Al Isra
+Al Kahf
+Maryam
+Ta Ha
+Al Anbiya
+Al Hajj
+Al Muminun
+An Nur
+Al Furqan
+Ash Shuara
+An Naml
+Al Qasas
+Al Ankabut
+Ar Rum
+Luqman
+As Sajda
+Al Ahzab
+Saba
+Fatir
+Ya Sin
+As Saffat
+Sad
+Az Zumar
+Ghafir
+Fussilat
+Ash Shura
+Az Zukhruf
+Ad Dukhan
+Al Jathiya
+Al Ahqaf
+Muhammad
+Al Fath
+Al Hujurat
+Qaf
+Adh Dhariyat
+At Tur
+An Najm
+Al Qamar
+Ar Rahman
+Al Waqia
+Al Hadid
+Al Mujadila
+Al Hashr
+Al Mumtahina
+As Saff
+Al Jumuah
+Al Munafiqun
+At Taghabun
+At Talaq
+At Tahrim
+Al Mulk
+Al Qalam
+Al Haqqa
+Al Maarij
+Nuh
+Al Jinn
+Al Muzzammil
+Al Muddaththir
+Al Qiyama
+Al Insan
+Al Mursalat
+An Naba
+An Naziat
+Abasa
+At Takwir
+Al Infitar
+Al Mutaffifin
+Al Inshiqaq
+Al Buruj
+At Tariq
+Al Ala
+Al Ghashiya
+Al Fajr
+Al Balad
+Ash Shams
+Al Layl
+Ad Duha
+Ash Sharh
+At Tin
+Al Alaq
+Al Qadr
+Al Bayyina
+Az Zalzala
+Al Adiyat
+Al Qaria
+At Takathur
+Al Asr
+Al Humaza
+Al Fil
+Quraysh
+Al Maun
+Al Kawthar
+Al Kafirun
+An Nasr
+Al Masad
+Al Ikhlas
+Al Falaq
+An Nas
+Al-Fatihah
+Al-Baqarah
+Al-'Imran
+An-Nisa'
+Al-Ma'idah
+Al-An'am
+Al-A'raf
+Al-Anfal
+At-Tawbah
+Yunus
+Hud
+Yusuf
+Ar-Ra'd
+Ibrahim
+Al-Hijr
+An-Nahl
+Al-Isra'
+Al-Kahf
+Maryam
+Ta-Ha
+Al-Anbiya'
+Al-Hajj
+Al-Mu'minun
+An-Nur
+Al-Furqan
+Ash-Shu'ara'
+An-Naml
+Al-Qasas
+Al-'Ankabut
+Ar-Rum
+Luqman
+As-Sajdah
+Al-Ahzab
+Saba'
+Fatir
+Ya-Sin
+As-Saffat
+Sad
+Az-Zumar
+Ghafir
+Fussilat
+Ash-Shura
+Az-Zukhruf
+Ad-Dukhan
+Al-Jathiyah
+Al-Ahqaf
+Muhammad
+Al-Fath
+Al-Hujurat
+Qaf
+Adh-Dhariyat
+At-Tur
+An-Najm
+Al-Qamar
+Ar-Rahman
+Al-Waqi'ah
+Al-Hadid
+Al-Mujadilah
+Al-Hashr
+Al-Mumtahanah
+As-Saff
+Al-Jumu'ah
+Al-Munafiqun
+At-Taghabun
+At-Talaq
+At-Tahrim
+Al-Mulk
+Al-Qalam
+Al-Haqqah
+Al-Ma'arij
+Nuh
+Al-Jinn
+Al-Muzzammil
+Al-Muddaththir
+Al-Qiyamah
+Al-Insan
+Al-Mursalat
+An-Naba'
+An-Nazi'at
+'Abasa
+At-Takwir
+Al-Infitar
+Al-Mutaffifin
+Al-Inshiqaq
+Al-Buruj
+At-Tariq
+Al-A'la
+Al-Ghashiyah
+Al-Fajr
+Al-Balad
+Ash-Shams
+Al-Layl
+Ad-Duha
+Ash-Sharh
+At-Tin
+Al-'Alaq
+Al-Qadr
+Al-Bayyinah
+Az-Zalzalah
+Al-'Adiyat
+Al-Qari'ah
+At-Takathur
+Al-'Asr
+Al-Humazah
+Al-Fil
+Quraysh
+Al-Ma'un
+Al-Kawthar
+Al-Kafirun
+An-Nasr
+Al-Masad
+Al-Ikhlas
+Al-Falaq
+An-Nas
+Al-Fātiḥah
+Al-Baqarah
+Āl-ʿImrān
+An-Nisāʾ
+Al-Māʾidah
+Al-Anʿām
+Al-Aʿrāf
+Al-Anfāl
+At-Tawbah
+Yūnus
+Hūd
+Yūsuf
+Ar-Raʿd
+Ibrāhīm
+Al-Ḥijr
+An-Naḥl
+Al-Isrāʾ
+Al-Kahf
+Maryam
+Ṭā-Hā
+Al-Anbiyāʾ
+Al-Ḥajj
+Al-Muʾminūn
+An-Nūr
+Al-Furqān
+Ash-Shuʿarāʾ
+An-Naml
+Al-Qaṣaṣ
+Al-ʿAnkabūt
+Ar-Rūm
+Luqmān
+As-Sajdah
+Al-Aḥzāb
+Sabaʾ
+Fāṭir
+Yā-Sīn
+Aṣ-Ṣāffāt
+Ṣād
+Az-Zumar
+Ghāfir
+Fuṣṣilat
+Ash-Shūrā
+Az-Zukhruf
+Ad-Dukhān
+Al-Jāthiyah
+Al-Aḥqāf
+Muḥammad
+Al-Fatḥ
+Al-Ḥujurāt
+Qāf
+Adh-Dhāriyāt
+Aṭ-Ṭūr
+An-Najm
+Al-Qamar
+Ar-Raḥmān
+Al-Wāqiʿah
+Al-Ḥadīd
+Al-Mujādilah
+Al-Ḥashr
+Al-Mumtaḥanah
+Aṣ-Ṣaff
+Al-Jumuʿah
+Al-Munāfiqūn
+At-Taghābun
+Aṭ-Ṭalāq
+At-Taḥrīm
+Al-Mulk
+Al-Qalam
+Al-Ḥāqqah
+Al-Maʿārij
+Nūḥ
+Al-Jinn
+Al-Muzzammil
+Al-Muddaththir
+Al-Qiyāmah
+Al-Insān
+Al-Mursalāt
+An-Nabaʾ
+An-Nāziʿāt
+ʿAbasa
+At-Takwīr
+Al-Infiṭār
+Al-Muṭaffifīn
+Al-Inshiqāq
+Al-Burūj
+Aṭ-Ṭāriq
+Al-Aʿlā
+Al-Ghāshiyah
+Al-Fajr
+Al-Balad
+Ash-Shams
+Al-Layl
+Aḍ-Ḍuḥā
+Ash-Sharḥ
+At-Tīn
+Al-ʿAlaq
+Al-Qadr
+Al-Bayyinah
+Az-Zalzalah
+Al-ʿĀdiyāt
+Al-Qāriʿah
+At-Takāthur
+Al-ʿAṣr
+Al-Humazah
+Al-Fīl
+Quraysh
+Al-Māʿūn
+Al-Kawthar
+Al-Kāfirūn
+An-Naṣr
+Al-Masad
+Al-Ikhlāṣ
+Al-Falaq
+An-Nās
+Ar-Raḥmān
+Ar-Raḥīm
+Al-Malik
+Al-Quddūs
+As-Salām
+Al-Muʾmin
+Al-Muhaymin
+Al-ʿAzīz
+Al-Jabbār
+Al-Mutakabbir
+Al-Khāliq
+Al-Bāriʾ
+Al-Muṣawwir
+Al-Ghaffār
+Al-Qahhār
+Al-Wahhāb
+Ar-Razzāq
+Al-Fattāḥ
+Al-ʿAlīm
+Al-Qābiḍ
+Al-Bāsiṭ
+Al-Khāfiḍ
+Ar-Rāfiʿ
+Al-Muʿizz
+Al-Mudhill
+As-Samīʿ
+Al-Baṣīr
+Al-Ḥakam
+Al-ʿAdl
+Al-Laṭīf
+Al-Khabīr
+Al-Ḥalīm
+Al-ʿAẓīm
+Al-Ghafūr
+Ash-Shakūr
+Al-ʿAliyy
+Al-Kabīr
+Al-Ḥafīẓ
+Al-Muqīt
+Al-Ḥasīb
+Al-Jalīl
+Al-Karīm
+Ar-Raqīb
+Al-Mujīb
+Al-Wāsiʿ
+Al-Ḥakīm
+Al-Wadūd
+Al-Majīd
+Al-Bāʿith
+Ash-Shahīd
+Al-Ḥaqq
+Al-Wakīl
+Al-Qawiyy
+Al-Matīn
+Al-Waliyy
+Al-Ḥamīd
+Al-Muḥṣī
+Al-Mubdiʾ
+Al-Muʿīd
+Al-Muḥyī
+Al-Mumīt
+Al-Ḥayy
+Al-Qayyūm
+Al-Wājid
+Al-Mājid
+Al-Wāḥid
+Al-Aḥad
+Aṣ-Ṣamad
+Al-Qādir
+Al-Muqtadir
+Al-Muqaddim
+Al-Muʾakhkhir
+Al-Awwal
+Al-Ākhir
+Aẓ-Ẓāhir
+Al-Bāṭin
+Al-Wālī
+Al-Mutaʿālī
+Al-Barr
+At-Tawwāb
+Al-Muntaqim
+Al-ʿAfuww
+Ar-Raʾūf
+Mālik al-Mulk
+Dhū al-Jalāli wa al-Ikrām
+Al-Muqsiṭ
+Al-Jāmiʿ
+Al-Ghaniyy
+Al-Mughnī
+Al-Māniʿ
+Aḍ-Ḍārr
+An-Nāfiʿ
+An-Nūr
+Al-Hādī
+Al-Badīʿ
+Al-Bāqī
+Al-Wārith
+Ar-Rashīd
+Aṣ-Ṣabūr
+Al-Qurʾān
+Al-Kitāb
+Al-Furqān
+Adh-Dhikr
+At-Tanzīl
+Al-Hudā
+An-Nūr
+Ar-Raḥmah
+Ash-Shifāʾ
+Al-Mawʿiẓah
+Al-Bayān
+Al-Burhān
+Al-Ḥaqq
+Al-Mubīn
+Al-Karīm
+Al-ʿAẓīm
+Al-Majīd
+Al-Ḥakīm
+Al-Ḥakīm
+Al-ʿAzīz
+Al-Mubārak
+Al-Qayyim
+Al-Qayyimah
+At-Tadhkirah
+Adh-Dhikr al-Ḥakīm
+Aḥsan al-Ḥadīth
+Aḥsan al-Ḥadīth
+Kitāb Allāh
+Kalām Allāh
+Waḥy Allāh
+Tanzīl Allāh
+Kitāb al-Mubīn
+Al-Qurʾān al-Karīm
+Al-Qurʾān al-ʿAẓīm
+Al-Qurʾān al-Majīd
+Al-Qurʾān al-Ḥakīm
+Al-Qurʾān al-Mubīn
+Al-Qurʾān al-Mubārak
+Al-Qurʾān al-ʿAzīz
+```text
+Al-Qur'an
+Al-Kitab
+Al-Furqan
+Adh-Dhikr
+At-Tanzil
+Al-Huda
+An-Nur
+Ar-Rahmah
+Ash-Shifa'
+Al-Maw'izhah
+Al-Bayan
+Al-Burhan
+Al-Haqq
+Al-Mubin
+Al-Karim
+Al-Azim
+Al-Majid
+Al-Hakim
+Al-Aziz
+Al-Mubarak
+Al-Qayyim
+Al-Qayyimah
+At-Tadhkirah
+Adh-Dhikr al-Hakim
+Ahsan al-Hadith
+Kitab Allah
+Kalam Allah
+Wahy Allah
+Tanzil Allah
+Kitab al-Mubin
+Al-Qur'an al-Karim
+Al-Qur'an al-Azim
+Al-Qur'an al-Majid
+Al-Qur'an al-Hakim
+Al-Qur'an al-Mubin
+Al-Qur'an al-Mubarak
+Al-Qur'an al-Aziz
+```
+```text
+Al Quran
+Al Kitab
+Al Furqan
+Adh Dhikr
+At Tanzil
+Al Huda
+An Nur
+Ar Rahmah
+Ash Shifa
+Al Mawizhah
+Al Bayan
+Al Burhan
+Al Haqq
+Al Mubin
+Al Karim
+Al Azim
+Al Majid
+Al Hakim
+Al Aziz
+Al Mubarak
+Al Qayyim
+Al Qayyimah
+At Tadhkirah
+Adh Dhikr al Hakim
+Ahsan al Hadith
+Kitab Allah
+Kalam Allah
+Wahy Allah
+Tanzil Allah
+Kitab al Mubin
+Al Quran al Karim
+Al Quran al Azim
+Al Quran al Majid
+Al Quran al Hakim
+Al Quran al Mubin
+Al Quran al Mubarak
+Al Quran al Aziz
+Ādam
+Idrīs
+Nūḥ
+Hūd
+Ṣāliḥ
+Ibrāhīm
+Lūṭ
+Ismāʿīl
+Isḥāq
+Yaʿqūb
+Yūsuf
+Ayyūb
+Shuʿayb
+Mūsā
+Hārūn
+Dāwūd
+Sulaymān
+Ilyās
+Al-Yasaʿ
+Yūnus
+Dhū al-Kifl
+Zakariyyā
+Yaḥyā
+ʿĪsā
+Muḥammad
+Aḥmad
+Maryam
+Āzar
+Firʿawn
+Hāmān
+Qārūn
+Jālūt
+Ṭālūt
+Uzayr
+Luqmān
+Dhū al-Qarnayn
+ʿUzayr
+Zayd
+Abū Lahab
+Voici la liste **sans diacritiques**, en gardant les apostrophes `'` :
+
+```text
+Adam
+Idris
+Nuh
+Hud
+Salih
+Ibrahim
+Lut
+Ismail
+Ishaq
+Yaqqub
+Yusuf
+Ayyub
+Shuayb
+Musa
+Harun
+Dawud
+Sulayman
+Ilyas
+Al-Yasa
+Yunus
+Dhu al-Kifl
+Zakariya
+Yahya
+Isa
+Muhammad
+Ahmad
+Maryam
+Azar
+Firaun
+Haman
+Qarun
+Jalut
+Talut
+Uzayr
+Luqman
+Dhu al-Qarnayn
+Zayd
+Abu Lahab
+```
+```text
+Adam
+Idris
+Nuh
+Hud
+Salih
+Ibrahim
+Lut
+Ismail
+Ishaq
+Yaqqub
+Yusuf
+Ayyub
+Shuayb
+Musa
+Harun
+Dawud
+Sulayman
+Ilyas
+Al Yasa
+Yunus
+Dhu al Kifl
+Zakariya
+Yahya
+Isa
+Muhammad
+Ahmad
+Maryam
+Azar
+Firaun
+Haman
+Qarun
+Jalut
+Talut
+Uzayr
+Luqman
+Dhu al Qarnayn
+Zayd
+Abu Lahab
+```
+☪
+☪️
+ﷲ
+الله
+ﷴ
+ﷺ
+ؐ
+ؑ
+ؒ
+ؓ
+ؔ
+ؕ
+۝
+۞
+۩
+ۚ
+ۛ
+ۖ
+ۗ
+ۙ
+ۜ
+۟
+۠
+ۡ
+ۢ
+ۣ
+ۤ
+ۥ
+ۦ
+ۧ
+ۨ
+۩
+﴿
+﴾
