@@ -146,15 +146,34 @@ async function loadPosts() {
 
 // Tri "Personnalisé" (par défaut) : épinglés d'abord, puis les publications sans mot
 // non recommandé triées par date, puis celles qui en contiennent, tout en bas.
+// Tri "Personnalisé" (par défaut) : épinglés d'abord, puis triés par score
+// (plus aimé en premier), les publications contenant un mot de personalized.txt
+// passant après les autres (elles aussi triées par score). Exception : pendant
+// les 2h suivant sa publication, LE CRÉATEUR voit son propre post tout en haut,
+// comme si le tri personnalisé ne s'appliquait pas — les autres utilisateurs le
+// voient à sa position normale.
 async function sortPersonalized(data) {
   const pinned = data.filter((p) => p.is_pinned);
   const rest = data.filter((p) => !p.is_pinned);
 
   const flags = await Promise.all(rest.map((p) => containsPersonalizedWord(`${p.title} ${p.body}`)));
-  const clean = rest.filter((_, i) => !flags[i]);
-  const flagged = rest.filter((_, i) => flags[i]);
+  const clean = rest.filter((_, i) => !flags[i]).sort((a, b) => (b.score || 0) - (a.score || 0));
+  const flagged = rest.filter((_, i) => flags[i]).sort((a, b) => (b.score || 0) - (a.score || 0));
 
-  return [...pinned, ...clean, ...flagged];
+  const ordered = [...pinned, ...clean, ...flagged];
+
+  if (currentUserId) {
+    const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
+    const ownRecentIndex = ordered.findIndex(
+      (p) => p.author_id === currentUserId && Date.now() - new Date(p.created_at).getTime() < TWO_HOURS_MS
+    );
+    if (ownRecentIndex > 0) {
+      const [ownPost] = ordered.splice(ownRecentIndex, 1);
+      ordered.unshift(ownPost);
+    }
+  }
+
+  return ordered;
 }
 
 function shuffleFeed() {

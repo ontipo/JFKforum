@@ -196,12 +196,20 @@ export function createPostCard(post, { currentUserId, currentProfile, forceExpan
     }
   }
 
+  function isVideoUrl(url) {
+    return /\.(mp4|webm|mov|ogg)(\?.*)?$/i.test(url || "");
+  }
+
   function renderImageBlock() {
+    const isVideo = isVideoUrl(post.image_url);
+
     if (post.image_status === "pending") {
       return `<div class="post-image-placeholder">VÉRIFICATION EN COURS D'APPROBATION</div>`;
     }
     if (post.image_status === "approved") {
-      return `<img src="${post.image_url}" alt="" class="post-image" />`;
+      return isVideo
+        ? `<video src="${post.image_url}" controls class="post-image"></video>`
+        : `<img src="${post.image_url}" alt="" class="post-image" />`;
     }
     if (post.image_status === "18+") {
       if (!currentProfile?.age_verified) {
@@ -209,6 +217,16 @@ export function createPostCard(post, { currentUserId, currentProfile, forceExpan
           🔞 Contenu 18+ — vérification d'âge requise (cliquer pour vérifier)
         </a>`;
       }
+
+      if (isVideo) {
+        return `
+          <div class="post-video-warning" id="video-warning-wrap">
+            <p>🔞 Avertissement vidéo 18 ans et plus.<br />Voulez-vous regarder ?</p>
+            <button class="btn-outline" id="watch-video-btn" onclick="event.stopPropagation()">Oui</button>
+          </div>
+        `;
+      }
+
       if (currentProfile?.settings?.blur_18plus_content) {
         return `
           <div class="post-image-blur-wrap" id="blur-wrap">
@@ -246,6 +264,10 @@ export function createPostCard(post, { currentUserId, currentProfile, forceExpan
       const wrap = article.querySelector("#blur-wrap");
       wrap.querySelector("img").classList.remove("blurred");
       e.target.remove();
+    }
+    if (e.target.id === "watch-video-btn") {
+      const wrap = article.querySelector("#video-warning-wrap");
+      wrap.outerHTML = `<video src="${post.image_url}" controls autoplay class="post-image"></video>`;
     }
   });
 

@@ -2,8 +2,10 @@ import { supabase } from "./supabaseClient.js";
 import { renderNavbar } from "./navbar.js";
 import { escapeHtml, avatarImgHtml } from "./utils.js";
 import { userBadgeHtml } from "./userBadge.js";
+import { mountAds } from "./ads.js";
 
 renderNavbar();
+mountAds();
 
 const params = new URLSearchParams(window.location.search);
 const q = (params.get("q") || "").trim();

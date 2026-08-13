@@ -1,7 +1,7 @@
 import { supabase } from "./supabaseClient.js";
 import { escapeHtml } from "./utils.js";
 
-// Charge ads/deploy.txt, choisit une pub au hasard (pondérée par le
+// Charge assets/ads/deploy.txt, choisit une pub au hasard (pondérée par le
 // multiplicateur de chances) et l'affiche dans un encart fixe sur le côté.
 // Dimension recommandée pour les images : 300 x 600 px (format "half page",
 // très visible, standard IAB — évite de faire trop large pour ne pas gêner
@@ -9,7 +9,7 @@ import { escapeHtml } from "./utils.js";
 export async function mountAds() {
   let ads = [];
   try {
-    const res = await fetch("ads/deploy.txt");
+    const res = await fetch("assets/ads/deploy.txt");
     const text = await res.text();
     ads = text
       .split("\n")
@@ -37,13 +37,15 @@ export async function mountAds() {
   slot.innerHTML = `
     <p class="ad-label">Publicité</p>
     <a href="${chosen.link}" target="_blank" rel="noopener sponsored" id="ad-link">
-      <img src="ads/${chosen.image}" alt="${escapeHtml(chosen.title)}" />
+      <img src="assets/ads/${chosen.image}" alt="${escapeHtml(chosen.title)}" />
       <span class="ad-title">${escapeHtml(chosen.title)}</span>
     </a>
   `;
   document.body.appendChild(slot);
 
   slot.querySelector("#ad-link").addEventListener("click", () => {
-    supabase.rpc("record_ad_click", { p_image_name: chosen.image });
+    supabase.rpc("record_ad_click", { p_image_name: chosen.image }).then(({ error }) => {
+      if (error) console.error("record_ad_click a échoué :", error.message);
+    });
   });
 }

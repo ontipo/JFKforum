@@ -580,6 +580,21 @@ a.avatar-link { display: inline-block; line-height: 0; }
 }
 .post-image-blur-btn:hover { border-color: var(--silver-500); box-shadow: var(--shadow-glow); }
 
+.post-video-warning {
+  margin-top: 12px;
+  padding: 28px 16px;
+  border-radius: 12px;
+  border: 1px dashed var(--line);
+  text-align: center;
+}
+.post-video-warning p {
+  font-size: 13px;
+  color: var(--silver-300);
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+video.post-image { width: 100%; max-height: 420px; border-radius: 12px; margin-top: 12px; border: 1px solid var(--line); }
+
 .au-tag {
   font-size: 10px;
   font-family: 'JetBrains Mono', monospace;
