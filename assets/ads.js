@@ -4,7 +4,7 @@ import { escapeHtml } from "./utils.js";
 // Charge ads/deploy.txt, choisit une pub au hasard (pondérée par le
 // multiplicateur de chances) et l'affiche dans un encart fixe sur le côté.
 // Dimension recommandée pour les images : 300 x 600 px (format "half page",
-// très visible, standard IAB — évite de faire trop large pour ne pas gêner
+// très visible, standard IAB — évite de faire trop large pour ne pas gêner.
 // la colonne principale du site).
 export async function mountAds() {
   let ads = [];
