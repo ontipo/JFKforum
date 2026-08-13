@@ -51,6 +51,22 @@ form.addEventListener("submit", async (e) => {
   const password = passwordInput.value;
   const birthdate = document.getElementById("reg-birthdate").value;
 
+  if (birthdate) {
+    const bd = new Date(birthdate);
+    const now = new Date();
+    if (Number.isNaN(bd.getTime()) || bd > now) {
+      showError("Cette date de naissance n'est pas valide.");
+      return;
+    }
+    let age = now.getFullYear() - bd.getFullYear();
+    const m = now.getMonth() - bd.getMonth();
+    if (m < 0 || (m === 0 && now.getDate() < bd.getDate())) age--;
+    if (age > 120) {
+      showError("Cette date de naissance n'est pas réaliste.");
+      return;
+    }
+  }
+
   if (!username.startsWith("!") || username.length < 3) {
     showError("Le nom d'utilisateur doit commencer par « ! » et faire au moins 3 caractères.");
     return;

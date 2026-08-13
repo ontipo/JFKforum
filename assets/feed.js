@@ -5,6 +5,7 @@ import { openPostModal } from "./postModal.js";
 import { escapeHtml, containsPersonalizedWord } from "./utils.js";
 import { setOgTags } from "./og.js";
 import { mountAds } from "./ads.js";
+import { mountFriendsSidebar } from "./friendsSidebar.js";
 
 const POST_SELECT =
   "id, title, body, is_anonymous, is_official, is_pinned, admin_boosted, is_18plus, is_edited, score, image_url, image_status, category_id, hashtags, created_at, author_id, profiles:author_id (username, role, likes_received, posts_count, pfp_url), categories:category_id (name, slug)";
@@ -31,6 +32,7 @@ async function init() {
   await renderNavbar();
   mountAds();
   await loadSession();
+  mountFriendsSidebar();
   supabase.auth.onAuthStateChange(() => loadSession());
   await loadCategories();
 

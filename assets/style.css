@@ -374,6 +374,38 @@ textarea.input { resize: vertical; }
   .ad-slot { display: block; }
 }
 
+.friends-sidebar {
+  position: fixed;
+  top: 100px;
+  left: 24px;
+  width: 260px;
+  max-height: calc(100vh - 140px);
+  display: none;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow-silver);
+  padding: 12px;
+  z-index: 10;
+}
+.friends-sidebar-header { display: flex; align-items: center; justify-content: space-between; }
+.friends-sidebar-scroll { overflow-y: auto; margin-top: 6px; }
+
+@media (min-width: 1400px) {
+  .friends-sidebar { display: flex; }
+}
+
+.emoji-btn {
+  background: var(--raised);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 16px;
+  padding: 4px 6px;
+  cursor: pointer;
+}
+.emoji-btn:hover { border-color: var(--silver-500); }
+
 /* --------------------- Badges --------------------- */
 .user-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; }
 .user-badge .name { font-weight: 500; color: var(--silver-100); }
