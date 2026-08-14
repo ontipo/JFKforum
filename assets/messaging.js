@@ -30,24 +30,16 @@ export async function openDirectMessage(currentUserId, friend) {
   }
 
   if (!threadId) {
-    const { data: whoami } = await supabase.rpc("whoami");
-    alert(
-      "DEBUG\ncurrentUserId (client) : " + currentUserId + "\nauth.uid() (serveur) : " + whoami
-    );
-    const { data: thread, error } = await supabase
-      .from("dm_threads")
-      .insert({ is_group: false, created_by: currentUserId })
-      .select("id")
-      .single();
+    const { data: newId, error } = await supabase.rpc("create_dm_thread", {
+      p_is_group: false,
+      p_name: null,
+      p_member_ids: [friend.id]
+    });
     if (error) {
       alert("Impossible d'ouvrir la conversation : " + error.message);
       return;
     }
-    threadId = thread.id;
-    await supabase.from("dm_thread_members").insert([
-      { thread_id: threadId, user_id: currentUserId },
-      { thread_id: threadId, user_id: friend.id }
-    ]);
+    threadId = newId;
   }
 
   openChatPanel(currentUserId, threadId, friend.username);
@@ -55,18 +47,16 @@ export async function openDirectMessage(currentUserId, friend) {
 
 // Crée un groupe avec les amis sélectionnés puis ouvre le panneau.
 export async function createGroupChat(currentUserId, name, memberIds) {
-  const { data: thread, error } = await supabase
-    .from("dm_threads")
-    .insert({ is_group: true, name, created_by: currentUserId })
-    .select("id")
-    .single();
+  const { data: newId, error } = await supabase.rpc("create_dm_thread", {
+    p_is_group: true,
+    p_name: name,
+    p_member_ids: memberIds
+  });
   if (error) {
     alert("Impossible de créer le groupe : " + error.message);
     return;
   }
-  const rows = [currentUserId, ...memberIds].map((user_id) => ({ thread_id: thread.id, user_id }));
-  await supabase.from("dm_thread_members").insert(rows);
-  openChatPanel(currentUserId, thread.id, name);
+  openChatPanel(currentUserId, newId, name);
 }
 
 function openChatPanel(currentUserId, threadId, title) {
