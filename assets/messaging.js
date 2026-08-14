@@ -30,6 +30,7 @@ export async function openDirectMessage(currentUserId, friend) {
   }
 
   if (!threadId) {
+    alert("DEBUG — currentUserId envoyé : " + currentUserId);
     const { data: thread, error } = await supabase
       .from("dm_threads")
       .insert({ is_group: false, created_by: currentUserId })
