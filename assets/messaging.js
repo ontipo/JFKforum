@@ -4,29 +4,34 @@ import { escapeHtml, timeAgo, avatarImgHtml } from "./utils.js";
 const EMOJIS = ["😀", "🤣", "😇", "😍", "😡", "😱", "👋🏻", "🩷"];
 const MAX_LEN = 100;
 
-// Trouve (ou crée) la conversation 1:1 avec `friendId`, puis ouvre le panneau de chat.
+// NB : les tables s'appellent "dm_threads" / "dm_thread_members" / "dm_entries"
+// (pas "conversations"/"messages") — beaucoup de bloqueurs de pub/vie privée
+// bloquent par défaut les requêtes contenant ces mots (règles anti-widgets de
+// chat tiers). Garder ces noms neutres évite ce faux positif à tout le monde.
+
+// Trouve (ou crée) le fil 1:1 avec `friend`, puis ouvre le panneau de chat.
 export async function openDirectMessage(currentUserId, friend) {
   const { data: mine } = await supabase
-    .from("conversation_members")
-    .select("conversation_id")
+    .from("dm_thread_members")
+    .select("thread_id")
     .eq("user_id", currentUserId);
 
-  const myConvIds = (mine || []).map((r) => r.conversation_id);
-  let conversationId = null;
+  const myThreadIds = (mine || []).map((r) => r.thread_id);
+  let threadId = null;
 
-  if (myConvIds.length > 0) {
+  if (myThreadIds.length > 0) {
     const { data: shared } = await supabase
-      .from("conversation_members")
-      .select("conversation_id, conversations!inner(is_group)")
+      .from("dm_thread_members")
+      .select("thread_id, dm_threads!inner(is_group)")
       .eq("user_id", friend.id)
-      .in("conversation_id", myConvIds)
-      .eq("conversations.is_group", false);
-    if (shared && shared.length > 0) conversationId = shared[0].conversation_id;
+      .in("thread_id", myThreadIds)
+      .eq("dm_threads.is_group", false);
+    if (shared && shared.length > 0) threadId = shared[0].thread_id;
   }
 
-  if (!conversationId) {
-    const { data: conv, error } = await supabase
-      .from("conversations")
+  if (!threadId) {
+    const { data: thread, error } = await supabase
+      .from("dm_threads")
       .insert({ is_group: false, created_by: currentUserId })
       .select("id")
       .single();
@@ -34,20 +39,20 @@ export async function openDirectMessage(currentUserId, friend) {
       alert("Impossible d'ouvrir la conversation : " + error.message);
       return;
     }
-    conversationId = conv.id;
-    await supabase.from("conversation_members").insert([
-      { conversation_id: conversationId, user_id: currentUserId },
-      { conversation_id: conversationId, user_id: friend.id }
+    threadId = thread.id;
+    await supabase.from("dm_thread_members").insert([
+      { thread_id: threadId, user_id: currentUserId },
+      { thread_id: threadId, user_id: friend.id }
     ]);
   }
 
-  openChatPanel(currentUserId, conversationId, friend.username);
+  openChatPanel(currentUserId, threadId, friend.username);
 }
 
 // Crée un groupe avec les amis sélectionnés puis ouvre le panneau.
 export async function createGroupChat(currentUserId, name, memberIds) {
-  const { data: conv, error } = await supabase
-    .from("conversations")
+  const { data: thread, error } = await supabase
+    .from("dm_threads")
     .insert({ is_group: true, name, created_by: currentUserId })
     .select("id")
     .single();
@@ -55,12 +60,12 @@ export async function createGroupChat(currentUserId, name, memberIds) {
     alert("Impossible de créer le groupe : " + error.message);
     return;
   }
-  const rows = [currentUserId, ...memberIds].map((user_id) => ({ conversation_id: conv.id, user_id }));
-  await supabase.from("conversation_members").insert(rows);
-  openChatPanel(currentUserId, conv.id, name);
+  const rows = [currentUserId, ...memberIds].map((user_id) => ({ thread_id: thread.id, user_id }));
+  await supabase.from("dm_thread_members").insert(rows);
+  openChatPanel(currentUserId, thread.id, name);
 }
 
-function openChatPanel(currentUserId, conversationId, title) {
+function openChatPanel(currentUserId, threadId, title) {
   document.getElementById("chat-panel")?.remove();
 
   const panel = document.createElement("div");
@@ -104,7 +109,7 @@ function openChatPanel(currentUserId, conversationId, title) {
 
   panel.querySelector("#chat-delete-history-btn").addEventListener("click", async () => {
     if (!confirm("Supprimer définitivement tout l'historique de cette conversation (pour tout le monde) ?")) return;
-    await supabase.from("messages").delete().eq("conversation_id", conversationId);
+    await supabase.from("dm_entries").delete().eq("thread_id", threadId);
     loadMessages();
   });
 
@@ -121,9 +126,9 @@ function openChatPanel(currentUserId, conversationId, title) {
 
   async function loadMessages() {
     const { data } = await supabase
-      .from("messages")
+      .from("dm_entries")
       .select("id, body, sender_id, created_at, profiles:sender_id (username)")
-      .eq("conversation_id", conversationId)
+      .eq("thread_id", threadId)
       .order("created_at", { ascending: true });
 
     messagesList.innerHTML = (data || [])
@@ -151,7 +156,7 @@ function openChatPanel(currentUserId, conversationId, title) {
     const input = panel.querySelector("#chat-input");
     const body = input.value.trim();
     if (!body) return;
-    const { error } = await supabase.from("messages").insert({ conversation_id: conversationId, sender_id: currentUserId, body });
+    const { error } = await supabase.from("dm_entries").insert({ thread_id: threadId, sender_id: currentUserId, body });
     if (error) {
       alert("Échec de l'envoi : " + error.message);
       return;
