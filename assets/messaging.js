@@ -6,7 +6,7 @@ const MAX_LEN = 100;
 
 // NB : les tables s'appellent "dm_threads" / "dm_thread_members" / "dm_entries"
 // (pas "conversations"/"messages") — beaucoup de bloqueurs de pub/vie privée
-// bloquent par défaut les requêtes contenant ces mots (règles anti-widgets de
+// bloquent par défaut les requêtes contenant ces mots (règles anti-widgets de,
 // chat tiers). Garder ces noms neutres évite ce faux positif à tout le monde.
 
 // Trouve (ou crée) le fil 1:1 avec `friend`, puis ouvre le panneau de chat.
